@@ -53,27 +53,19 @@ class FlareAnimation {
   void updateAnimation(String animation) {
     _animationName = animation;
 
-    if (_animationName != null && _artboard != null) {
-      _animationLayers.clear();
+    _animationLayers.clear();
 
-      final ActorAnimation animation = _artboard.getAnimation(_animationName);
-      if (animation != null) {
-        _animationLayers.add(FlareAnimationLayer()
-          ..name = _animationName
-          ..animation = animation
-          ..mix = 1.0
-          ..mixSeconds = 0.2);
-        animation.apply(0.0, _artboard, 1.0);
-        _artboard.advance(0.0);
-      }
-    }
-  }
+    final ActorAnimation animation = _artboard.getAnimation(_animationName);
+    _animationLayers.add(FlareAnimationLayer()
+      ..name = _animationName
+      ..animation = animation
+      ..mix = 1.0
+      ..mixSeconds = 0.2);
+    animation.apply(0.0, _artboard, 1.0);
+    _artboard.advance(0.0);
+        }
 
   void render(Canvas canvas, {double x = 0.0, double y = 0.0}) {
-    if (_picture == null) {
-      return;
-    }
-
     canvas.save();
     canvas.translate(x, y);
 
@@ -92,7 +84,7 @@ class FlareAnimation {
       layer.mix += elapsedSeconds;
       layer.time += elapsedSeconds;
 
-      lastMix = (layer.mixSeconds == null || layer.mixSeconds == 0.0)
+      lastMix = (layer.mixSeconds == 0.0)
           ? 1.0
           : min(1.0, layer.mix / layer.mixSeconds);
       if (layer.animation.isLooping) {
@@ -117,10 +109,8 @@ class FlareAnimation {
       _animationLayers.removeAt(0);
     }
 
-    if (_artboard != null) {
-      _artboard.advance(elapsedSeconds);
-    }
-
+    _artboard.advance(elapsedSeconds);
+  
     // Memory render frame
     final r = PictureRecorder();
     final c = Canvas(r);

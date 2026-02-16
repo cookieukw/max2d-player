@@ -46,39 +46,37 @@ class JoystickComponent extends JoystickController {
   });
 
   void addAction(JoystickAction action) {
-    if (gameRef?.size != null) {
-      action.initialize(gameRef.size, this);
-      actions?.add(action);
+    action.initialize(gameRef.size, this);
+    actions.add(action);
     }
-  }
 
   void removeAction(int actionId) {
-    actions?.removeWhere((action) => action.actionId == actionId);
+    actions.removeWhere((action) => action.actionId == actionId);
   }
 
   @override
   void render(Canvas canvas) {
-    directional?.render(canvas);
-    actions?.forEach((action) => action.render(canvas));
+    directional.render(canvas);
+    actions.forEach((action) => action.render(canvas));
   }
 
   @override
   void update(double t) {
-    directional?.update(t);
-    actions?.forEach((action) => action.update(t));
+    directional.update(t);
+    actions.forEach((action) => action.update(t));
   }
 
   @override
   void resize(Size size) {
-    directional?.initialize(size, this);
-    actions?.forEach((action) => action.initialize(size, this));
+    directional.initialize(size, this);
+    actions.forEach((action) => action.initialize(size, this));
     super.resize(size);
   }
 
   @override
   void onReceiveDrag(DragEvent event) {
-    directional?.onReceiveDrag(event);
-    actions?.forEach((action) => action.onReceiveDrag(event));
+    directional.onReceiveDrag(event);
+    actions.forEach((action) => action.onReceiveDrag(event));
   }
 
   @override

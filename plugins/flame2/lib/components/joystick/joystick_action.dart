@@ -5,7 +5,6 @@ import 'joystick_events.dart';
 import '../../gestures.dart';
 import '../../sprite.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../position.dart';
 
@@ -89,60 +88,16 @@ class JoystickAction {
       radius: _sizeBackgroundDirection / 2,
     );
 
-    if (spriteBackgroundDirection == null) {
-      _paintBackground = Paint()
-        ..color = color.withOpacity(opacityBackground)
-        ..style = PaintingStyle.fill;
-    }
-
-    if (sprite == null) {
-      _paintAction = Paint()
-        ..color = color.withOpacity(opacityKnob)
-        ..style = PaintingStyle.fill;
-    }
-
-    if (spritePressed == null) {
-      _paintActionPressed = Paint()
-        ..color = color.withOpacity(opacityBackground)
-        ..style = PaintingStyle.fill;
-    }
-
     _dragPosition = _rectAction.center;
   }
 
   void render(Canvas c) {
-    if (_rectBackgroundDirection != null && _dragging && enableDirection) {
-      if (spriteBackgroundDirection == null) {
-        final double radiusBackground = _rectBackgroundDirection.width / 2;
-        c.drawCircle(
-          Offset(
-            _rectBackgroundDirection.left + radiusBackground,
-            _rectBackgroundDirection.top + radiusBackground,
-          ),
-          radiusBackground,
-          _paintBackground,
-        );
-      } else {
-        spriteBackgroundDirection.renderRect(c, _rectBackgroundDirection);
-      }
-    }
+    if (_dragging && enableDirection) {
+      spriteBackgroundDirection.renderRect(c, _rectBackgroundDirection);
+        }
 
-    if (_spriteAction != null) {
-      if (_rectAction != null) {
-        _spriteAction.renderRect(c, _rectAction);
+    _spriteAction.renderRect(c, _rectAction);
       }
-    } else {
-      final double radiusAction = _rectAction.width / 2;
-      c.drawCircle(
-        Offset(
-          _rectAction.left + radiusAction,
-          _rectAction.top + radiusAction,
-        ),
-        radiusAction,
-        isPressed ? _paintActionPressed : _paintAction,
-      );
-    }
-  }
 
   void update(double dt) {
     if (_dragging) {
@@ -186,15 +141,13 @@ class JoystickAction {
         ),
       );
     } else {
-      if (_rectAction != null) {
-        final Offset diff = _dragPosition - _rectAction.center;
-        _rectAction = _rectAction.shift(diff);
-      }
-    }
+      final Offset diff = _dragPosition - _rectAction.center;
+      _rectAction = _rectAction.shift(diff);
+        }
   }
 
   void onReceiveDrag(DragEvent event) {
-    if (!_dragging && (_rectAction?.contains(event.initialPosition) ?? false)) {
+    if (!_dragging && (_rectAction.contains(event.initialPosition) ?? false)) {
       if (enableDirection) {
         _dragPosition = event.initialPosition;
         _dragging = true;
@@ -216,10 +169,8 @@ class JoystickAction {
 
   void tapDown() {
     isPressed = true;
-    if (spritePressed != null) {
-      _spriteAction = spritePressed;
+    _spriteAction = spritePressed;
     }
-  }
 
   void tapUp() {
     isPressed = false;

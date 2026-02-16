@@ -139,9 +139,6 @@ class TextBoxComponent extends PositionComponent with Resizable {
 
   @override
   void render(Canvas c) {
-    if (_cache == null) {
-      return;
-    }
     prepareCanvas(c);
     c.drawImage(_cache, Offset.zero, _imagePaint);
   }

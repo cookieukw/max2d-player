@@ -236,10 +236,6 @@ abstract class Contact {
       _flags &= ~TOUCHING_FLAG;
     }
 
-    if (listener == null) {
-      return;
-    }
-
     if (wasTouching == false && touching == true) {
       listener.beginContact(this);
     }

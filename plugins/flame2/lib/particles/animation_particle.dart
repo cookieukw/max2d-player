@@ -26,7 +26,7 @@ class AnimationParticle extends Particle {
   void setLifespan(double lifespan) {
     super.setLifespan(lifespan);
 
-    if (alignAnimationTime && lifespan != null) {
+    if (alignAnimationTime) {
       animation.stepTime = lifespan / animation.frames.length;
       animation.reset();
     }

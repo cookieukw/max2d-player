@@ -50,7 +50,7 @@ class AudioPool {
       final Stoppable stop = () {
         _lock.synchronized(() async {
           final AudioPlayer p = currentPlayers.remove(player.playerId);
-          subscription?.cancel();
+          subscription.cancel();
           await p.stop();
           if (availablePlayers.length >= maxPlayers) {
             await p.release();

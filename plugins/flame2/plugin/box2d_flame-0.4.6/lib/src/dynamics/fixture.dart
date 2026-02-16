@@ -102,12 +102,7 @@ class Fixture {
   /// Call this if you want to establish collision that was previously disabled by
   /// ContactFilter::ShouldCollide.
   void refilter() {
-    if (_body == null) {
-      return;
-    }
-
-    // Flag associated contacts for filtering.
-    ContactEdge edge = _body.getContactList();
+    ContactEdge edge = _body.getContact[];
     while (edge != null) {
       Contact contact = edge.contact;
       Fixture fixtureA = contact.fixtureA;
@@ -119,10 +114,6 @@ class Fixture {
     }
 
     World world = _body.world;
-
-    if (world == null) {
-      return;
-    }
 
     // Touch each proxy so that new pairs may be created
     BroadPhase broadPhase = world._contactManager.broadPhase;
@@ -246,14 +237,6 @@ class Fixture {
 
     // Reserve proxy space
     int childCount = _shape.getChildCount();
-    if (_proxies == null) {
-      _proxies = new List<FixtureProxy>(childCount);
-      for (int i = 0; i < childCount; i++) {
-        _proxies[i] = new FixtureProxy();
-        _proxies[i].fixture = null;
-        _proxies[i].proxyId = BroadPhase.NULL_PROXY;
-      }
-    }
 
     if (_proxies.length < childCount) {
       List<FixtureProxy> old = _proxies;

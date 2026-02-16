@@ -63,7 +63,7 @@ class ContactManager implements PairCallback {
     // TODO_ERIN use a hash table to remove a potential bottleneck when both
     // bodies have a lot of contacts.
     // Does a contact already exist?
-    ContactEdge edge = bodyB.getContactList();
+    ContactEdge edge = bodyB.getContact[];
     while (edge != null) {
       if (edge.other == bodyA) {
         Fixture fA = edge.contact.fixtureA;
@@ -91,16 +91,12 @@ class ContactManager implements PairCallback {
     }
 
     // Check user filtering.
-    if (contactFilter != null &&
-        contactFilter.shouldCollide(fixtureA, fixtureB) == false) {
+    if (contactFilter.shouldCollide(fixtureA, fixtureB) == false) {
       return;
     }
 
     // Call the factory.
     Contact c = _pool.popContact(fixtureA, indexA, fixtureB, indexB);
-    if (c == null) {
-      return;
-    }
 
     // Contact creation may swap fixtures.
     fixtureA = c.fixtureA;
@@ -113,10 +109,8 @@ class ContactManager implements PairCallback {
     // Insert into the world.
     c._prev = null;
     c._next = contactList;
-    if (contactList != null) {
-      contactList._prev = c;
-    }
-    contactList = c;
+    contactList._prev = c;
+      contactList = c;
 
     // Connect to island graph.
 
@@ -126,10 +120,8 @@ class ContactManager implements PairCallback {
 
     c._nodeA.prev = null;
     c._nodeA.next = bodyA._contactList;
-    if (bodyA._contactList != null) {
-      bodyA._contactList.prev = c._nodeA;
-    }
-    bodyA._contactList = c._nodeA;
+    bodyA._contactList.prev = c._nodeA;
+      bodyA._contactList = c._nodeA;
 
     // Connect to body B
     c._nodeB.contact = c;
@@ -137,10 +129,8 @@ class ContactManager implements PairCallback {
 
     c._nodeB.prev = null;
     c._nodeB.next = bodyB._contactList;
-    if (bodyB._contactList != null) {
-      bodyB._contactList.prev = c._nodeB;
-    }
-    bodyB._contactList = c._nodeB;
+    bodyB._contactList.prev = c._nodeB;
+      bodyB._contactList = c._nodeB;
 
     // wake up the bodies
     if (!fixtureA.isSensor() && !fixtureB.isSensor()) {
@@ -161,45 +151,33 @@ class ContactManager implements PairCallback {
     Body bodyA = fixtureA.getBody();
     Body bodyB = fixtureB.getBody();
 
-    if (contactListener != null && c.isTouching()) {
+    if (c.isTouching()) {
       contactListener.endContact(c);
     }
 
     // Remove from the world.
-    if (c._prev != null) {
-      c._prev._next = c._next;
-    }
-
-    if (c._next != null) {
-      c._next._prev = c._prev;
-    }
-
+    c._prev._next = c._next;
+  
+    c._next._prev = c._prev;
+  
     if (c == contactList) {
       contactList = c._next;
     }
 
     // Remove from body 1
-    if (c._nodeA.prev != null) {
-      c._nodeA.prev.next = c._nodeA.next;
-    }
-
-    if (c._nodeA.next != null) {
-      c._nodeA.next.prev = c._nodeA.prev;
-    }
-
+    c._nodeA.prev.next = c._nodeA.next;
+  
+    c._nodeA.next.prev = c._nodeA.prev;
+  
     if (c._nodeA == bodyA._contactList) {
       bodyA._contactList = c._nodeA.next;
     }
 
     // Remove from body 2
-    if (c._nodeB.prev != null) {
-      c._nodeB.prev.next = c._nodeB.next;
-    }
-
-    if (c._nodeB.next != null) {
-      c._nodeB.next.prev = c._nodeB.prev;
-    }
-
+    c._nodeB.prev.next = c._nodeB.next;
+  
+    c._nodeB.next.prev = c._nodeB.prev;
+  
     if (c._nodeB == bodyB._contactList) {
       bodyB._contactList = c._nodeB.next;
     }
@@ -233,8 +211,7 @@ class ContactManager implements PairCallback {
         }
 
         // Check user filtering.
-        if (contactFilter != null &&
-            contactFilter.shouldCollide(fixtureA, fixtureB) == false) {
+        if (contactFilter.shouldCollide(fixtureA, fixtureB) == false) {
           Contact cNuke = c;
           c = cNuke.getNext();
           destroy(cNuke);

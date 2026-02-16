@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/animation.dart';
 import 'package:meta/meta.dart';
@@ -51,7 +50,7 @@ class ScaleEffect extends PositionComponentEffect {
   @override
   void update(double dt) {
     super.update(dt);
-    final double c = curve?.transform(percentage) ?? 1.0;
+    final double c = curve.transform(percentage) ?? 1.0;
 
     component.width = _original.width + _diff.width * c * _dir.x;
     component.height = _original.height + _diff.height * c * _dir.y;

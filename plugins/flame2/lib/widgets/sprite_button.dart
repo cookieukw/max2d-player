@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 
 import '../sprite.dart';
 
@@ -39,7 +38,7 @@ class _ButtonState extends State<SpriteButton> {
       onTapUp: (_) {
         setState(() => _pressed = false);
 
-        widget.onPressed?.call();
+        widget.onPressed.call();
       },
       child: Container(
         width: width,

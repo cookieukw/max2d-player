@@ -81,7 +81,6 @@ class SpriteSheet {
   Sprite getSprite(int row, int column) {
     final Sprite s = _sprites[row][column];
 
-    assert(s != null, 'No sprite found for row $row and column $column');
 
     return s;
   }
@@ -93,7 +92,6 @@ class SpriteSheet {
       {double stepTime, bool loop = true, int from = 0, int to}) {
     final spriteRow = _sprites[row];
 
-    assert(spriteRow != null, 'There is no row for $row index');
 
     to ??= spriteRow.length;
 

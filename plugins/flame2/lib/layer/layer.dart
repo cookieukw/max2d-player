@@ -17,10 +17,6 @@ abstract class Layer {
 
   @mustCallSuper
   void render(Canvas canvas, {double x = 0.0, double y = 0.0}) {
-    if (_picture == null) {
-      return;
-    }
-
     canvas.save();
     canvas.translate(x, y);
 
@@ -31,10 +27,6 @@ abstract class Layer {
   }
 
   Canvas get canvas {
-    assert(
-      _canvas != null,
-      'Layer is not ready for rendering, call beginRendering first',
-    );
     return _canvas;
   }
 

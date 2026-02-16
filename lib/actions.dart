@@ -14,6 +14,7 @@ import 'admobads2.dart';
 import 'compandactvariables.dart';
 import 'globalvars.dart';
 import 'package:box2d_flame/box2d.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 import 'dart:ui' as ui;
 import 'dart:convert';
@@ -22,7 +23,7 @@ import 'dart:math' as math;
 bool isbanneradshowing = false;
 
 Actionsinitiator actionsinitiator = Actionsinitiator();
-BComponent bComponent;
+BComponent? bComponent;
 
 Size screensize = Size(0, 0);
 
@@ -33,7 +34,7 @@ Offset touchdownlocationphysical = Offset(0, 0);
 Offset touchmovelocationphysical = Offset(0, 0);
 Offset touchuplocationphysical = Offset(0, 0);
 
-MyContactListener contactListener;
+MyContactListener? contactListener;
 double deltatime = 0.0;
 
 Map<String, dynamic> uijoystickvalues = Map();
@@ -115,12 +116,12 @@ class MyContactListener extends ContactListener {
 }
 
 class Actionsinitiator {
-  final World world;
-  final v.Viewport viewport;
+  final World? world;
+  final v.Viewport? viewport;
 
-  Box2DComponent box2d;
+  Box2DComponent? box2d;
 
-  BuildContext context;
+  BuildContext? context;
 
   // List<Gameobject> bodies = List();
   bool isended = false;
@@ -205,7 +206,7 @@ class Actionsinitiator {
     if (trueindex == null && falseindex == null) return;
 
     bool iscollisiontrue =
-        contactListener.iscolliding(curobjectname, objectname, thegameobject);
+        contactListener!.iscolliding(curobjectname, objectname, thegameobject);
 
     if (trueindex != -1 && iscollisiontrue) {
       Clsscriptitem si2 =
@@ -379,15 +380,15 @@ class Actionsinitiator {
         Map<String, dynamic> thejson = Map();
 
         // for (int a = gameobjectitemscore.length;
-        //     a < bComponent.bodies.length;
+        //     a < bComponent!.bodies.length;
         //     a++) {
         //   // thejson.addAll({"gameobjectitem$a": gameobjectitemscore[a].toJson()});
-        //   print(bComponent.bodies[a].anglelimit);
+        //   print(bComponent!.bodies[a].anglelimit);
         // }
-        // print(bComponent.bodies.length);
-        for (int a = 0; a < bComponent.bodies.length; a++) {
+        // print(bComponent!.bodies.length);
+        for (int a = 0; a < bComponent!.bodies.length; a++) {
           // thejson.addAll({"gameobjectitem$a": gameobjectitemscore[a].toJson()});
-          Gameobject thet = bComponent.bodies.values.elementAt(a);
+          Gameobject thet = bComponent!.bodies.values.elementAt(a);
           // print(thet.bodyindex);
           // print(thet.goindex);
           thejson.addAll({
@@ -424,7 +425,7 @@ class Actionsinitiator {
               "compscript": thet.thescript.toJson()
             }
           });
-          // print(bComponent.bodies[a].anglelimit);
+          // print(bComponent!.bodies[a].anglelimit);
         }
         print(thejson);
 
@@ -454,7 +455,7 @@ class Actionsinitiator {
           Map<String, dynamic> tojson2 = json.decode(onValue);
 
           actionsinitiator.isended = true;
-          bComponent.tofollow = null;
+          bComponent!.tofollow = null;
           for (int a1 = 0; a1 < soundslistscore.length; a1++) {
             Clscompsound t = soundslistscore[a1];
             t.stop();
@@ -462,17 +463,17 @@ class Actionsinitiator {
           destroytimers();
 
           loadprojectcore2(currentscenecore).then((onValue) {
-            for (int thea = bComponent.bodies.length - 1; thea >= 0; thea--) {
-              Gameobject thet = bComponent.bodies.values.elementAt(thea);
+            for (int thea = bComponent!.bodies.length - 1; thea >= 0; thea--) {
+              Gameobject thet = bComponent!.bodies.values.elementAt(thea);
               thet.destroyobject(thet, "bcomponent", thet.bodyindex);
             }
 
-            bComponent.bodies.clear();
+            bComponent!.bodies.clear();
 
-            bComponent.initializeWorld();
+            bComponent!.initializeWorld();
 
-            for (int a = 0; a < bComponent.bodies.length; a++) {
-              Gameobject thet = bComponent.bodies.values.elementAt(a);
+            for (int a = 0; a < bComponent!.bodies.length; a++) {
+              Gameobject thet = bComponent!.bodies.values.elementAt(a);
 
               Map<String, dynamic> tojson2temp =
                   tojson2[thet.bodyindex.toString()];
@@ -543,24 +544,24 @@ class Actionsinitiator {
               // --- ending
             }
 
-            for (int a = bComponent.bodies.length; a < tojson2.length; a++) {
+            for (int a = bComponent!.bodies.length; a < tojson2.length; a++) {
               // print(tojson2[a.toString()]['goindex']);
-              // Gameobject thet = bComponent.bodies.values
+              // Gameobject thet = bComponent!.bodies.values
               //     .elementAt(tojson2[a.toString()]['goindex']);
 
               int newid = objectcounters;
               Map<String, dynamic> tojson2temp = tojson2[a.toString()];
               Gameobject thet = Gameobject(box2d, context,
                   tojson2temp['goindex'], objectcounters, "asdf",
-                  isdebug: bComponent.bodies[tojson2temp['goindex']] == null
+                  isdebug: bComponent!.bodies[tojson2temp['goindex']] == null
                       ? false
-                      : bComponent.bodies[tojson2temp['goindex']].isdebug,
+                      : bComponent!.bodies[tojson2temp['goindex']].isdebug,
                   naayid: newid);
 
               // print(thet.goindex);
 
-              bComponent.bodies.addAll({newid: thet});
-              box2d.add(thet);
+              bComponent!.bodies.addAll({newid: thet});
+              box2d!.add(thet);
               objectcounters++;
 
               // ----- starting
@@ -872,50 +873,50 @@ class Actionsinitiator {
   }
 
   void expressionobjectproperties(Map<String, dynamic> context) {
-    context.addAll({
+    context!.addAll({
       "obj_position_x": (int objectid) {
-        return bComponent.bodies[objectid].body.position.x;
+        return bComponent!.bodies[objectid].body.position.x;
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_position_y": (int objectid) {
-        return bComponent.bodies[objectid].body.position.y;
+        return bComponent!.bodies[objectid].body.position.y;
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_angle": (int objectid) {
-        return bComponent.bodies[objectid].body.getAngle();
+        return bComponent!.bodies[objectid].body.getAngle();
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_scale_x": (int objectid) {
-        return bComponent.bodies[objectid].transformprop.sx;
+        return bComponent!.bodies[objectid].transformprop.sx;
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_scale_y": (int objectid) {
-        return bComponent.bodies[objectid].transformprop.sy;
+        return bComponent!.bodies[objectid].transformprop.sy;
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_velocity_x": (int objectid) {
-        return bComponent.bodies[objectid].body.linearVelocity.x;
+        return bComponent!.bodies[objectid].body.linearVelocity.x;
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_velocity_y": (int objectid) {
-        return bComponent.bodies[objectid].body.linearVelocity.y;
+        return bComponent!.bodies[objectid].body.linearVelocity.y;
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_velocity_angle": (int objectid) {
-        return bComponent.bodies[objectid].body.angularVelocity;
+        return bComponent!.bodies[objectid].body.angularVelocity;
       }
     });
-    context.addAll({
+    context!.addAll({
       "obj_sprite_opacity": (int objectid) {
-        if (bComponent.bodies[objectid].compsprite.opacity != null) {
-          return bComponent.bodies[objectid].compsprite.opacity;
+        if (bComponent!.bodies[objectid].compsprite.opacity != null) {
+          return bComponent!.bodies[objectid].compsprite.opacity;
         }
         return 1;
       }
@@ -965,7 +966,7 @@ class Actionsinitiator {
       "deltatime": deltatime
     };
     if (thegameobject.compsprite != null) {
-      context.addAll({"sprite_opacity": thegameobject.compsprite.opacity});
+      context!.addAll({"sprite_opacity": thegameobject.compsprite.opacity});
     }
 
     expressionobjectproperties(context);
@@ -973,28 +974,28 @@ class Actionsinitiator {
     for (int a2 = 0; a2 < globalvariablescore.length; a2++) {
       Clsvariable t2 = globalvariablescore[a2];
       if (t2 is Clsvariablenumber) {
-        context.addAll({t2.name: t2.value});
+        context!.addAll({t2.name: t2.value});
       }
       if (t2 is Clsvariableboolean) {
-        context.addAll({t2.name: t2.value});
+        context!.addAll({t2.name: t2.value});
       }
     }
     for (int b2 = 0; b2 < thegameobject.thescript.localvariables.length; b2++) {
       Clsvariable t2 = thegameobject.thescript.localvariables[b2];
       if (t2 is Clsvariablenumber) {
-        context.addAll({t2.name: t2.value});
+        context!.addAll({t2.name: t2.value});
       }
       if (t2 is Clsvariableboolean) {
-        context.addAll({t2.name: t2.value});
+        context!.addAll({t2.name: t2.value});
       }
     }
 
     // print(uijoystickvalues.length);
     uijoystickvalues.forEach((key, value) {
-      context.addAll({key + "_angle": value["angle"]});
-      context.addAll({key + "_distance": value["distance"]});
-      context.addAll({key + "_value_x": value["valx"]});
-      context.addAll({key + "_value_y": value["valy"]});
+      context!.addAll({key + "_angle": value["angle"]});
+      context!.addAll({key + "_distance": value["distance"]});
+      context!.addAll({key + "_value_x": value["valx"]});
+      context!.addAll({key + "_value_y": value["valy"]});
     });
     expressionmathvariables(context);
 
@@ -1017,7 +1018,7 @@ class Actionsinitiator {
       if (t.scenename == null) return;
 
       actionsinitiator.isended = true;
-      bComponent.tofollow = null;
+      bComponent!.tofollow = null;
       for (int a1 = 0; a1 < soundslistscore.length; a1++) {
         Clscompsound t = soundslistscore[a1];
         t.stop();
@@ -1025,21 +1026,21 @@ class Actionsinitiator {
       destroytimers();
 
       loadprojectcore2(t.scenename).then((onValue) {
-        for (int thea = bComponent.bodies.length - 1; thea >= 0; thea--) {
-          Gameobject thet = bComponent.bodies.values.elementAt(thea);
+        for (int thea = bComponent!.bodies.length - 1; thea >= 0; thea--) {
+          Gameobject thet = bComponent!.bodies.values.elementAt(thea);
           thet.destroyobject(thet, "bcomponent", thet.bodyindex);
-          // bComponent.bodies.remove(thet);
-          // bComponent.bodies.remove(thet.thegameobject.theid);
+          // bComponent!.bodies.remove(thet);
+          // bComponent!.bodies.remove(thet.thegameobject.theid);
 
         }
-        // bComponent.bodies.forEach((key, val) {
+        // bComponent!.bodies.forEach((key, val) {
 
         // });
 
-        bComponent.bodies.clear();
+        bComponent!.bodies.clear();
         // bodies.clear();
 
-        bComponent.initializeWorld();
+        bComponent!.initializeWorld();
 
         refreshuicomponents();
         actionsinitiator.isended = false;
@@ -1290,13 +1291,13 @@ class Actionsinitiator {
 
       // if (a >= gameobjectitemscore.length) {
       //   //
-      //   // bComponent.bodies.removeAt(a);
+      //   // bComponent!.bodies.removeAt(a);
       // }
       // }
     } else if (t is Clsactcreateobject) {
       //  print("asdfasdfasdf");
-      // bComponent.isloadedna = false;
-      // bComponent.toaddtouchdown.clear();
+      // bComponent!.isloadedna = false;
+      // bComponent!.toaddtouchdown.clear();
       for (int indcreate = 0;
           indcreate < gameobjectitemscore.length;
           indcreate++) {
@@ -1306,16 +1307,16 @@ class Actionsinitiator {
           // print("newid" + newid.toString());
           Gameobject temp = Gameobject(
               box2d, context, indcreate, objectcounters, t.objectname,
-              isdebug: bComponent.bodies[indcreate] == null
+              isdebug: bComponent!.bodies[indcreate] == null
                   ? false
-                  : bComponent.bodies[indcreate].isdebug,
+                  : bComponent!.bodies[indcreate].isdebug,
               naayid: newid);
 
-          bComponent.bodies.addAll({newid: temp});
+          bComponent!.bodies.addAll({newid: temp});
 
           // print(indcreate);
 
-          box2d.add(temp);
+          box2d!.add(temp);
           objectcounters++;
 
           double posx = 0;
@@ -1390,7 +1391,7 @@ class Actionsinitiator {
             temp.body.setTransform(Vector2(posx, posy), temp.body.getAngle());
             temp.body.linearVelocity = Vector2(velx, vely);
           }
-          // print(bComponent.bodies.length.toString() + "    length");
+          // print(bComponent!.bodies.length.toString() + "    length");
           temp.onloaded();
           break;
         }
@@ -1982,44 +1983,44 @@ class Gameobject extends BodyComponent {
     // return;
     isdestroyed = true;
 
-    // world.destroyBody(this.body);
+    // world!.destroyBody(this.body);
     this.body.setActive(false);
     this.body.setAwake(false);
-    // bComponent.remove(this);
+    // bComponent!.remove(this);
 
     if (where == "bodies" && bodyindex >= gameobjectitemscore.length) {
       // actionsinitiator.bodies.removeAt(bodyindex);
     }
-    // bComponent.bodies
+    // bComponent!.bodies
     //     .removeWhere((key, value) => key == thegameobject2.bodyindex);
     if (where == "bcomponent" &&
         thegameobject2.bodyindex >= gameobjectitemscore.length) {
       // Future.delayed(Duration(seconds: 1),(){
-      // bComponent.bodies.removeAt(bodyindex);
+      // bComponent!.bodies.removeAt(bodyindex);
       // });
-      // bComponent.bodies.remove(this);
-      // print("  $objectname  b$bodyindex g$goindex       ${bComponent.bodies.length}");
+      // bComponent!.bodies.remove(this);
+      // print("  $objectname  b$bodyindex g$goindex       ${bComponent!.bodies.length}");
       // deletedobjects.add("$objectname$bodyindex");
-      //  actionsinitiator.bodies.remove(thegameobject2);// = bComponent.bodies;
-      // for (int a = 0; a < bComponent.bodies.length; a++) {
+      //  actionsinitiator.bodies.remove(thegameobject2);// = bComponent!.bodies;
+      // for (int a = 0; a < bComponent!.bodies.length; a++) {
       //   if (thegameobject2.bodyindex == bodyindex) {
-      // bComponent.bodies[a].box.remove(this);
+      // bComponent!.bodies[a].box.remove(this);
 
       //  print(thegameobject2.bodyindex);
 
-      // bComponent.bodies.remove(thet);
-      bComponent.bodies
+      // bComponent!.bodies.remove(thet);
+      bComponent!.bodies
           .removeWhere((key, value) => key == thegameobject2.bodyindex);
 
       // if (!thet.isdestroyed) {
       //   // thet.onupdate(t);
       // }
 
-      //     print(bComponent.bodies.length);
+      //     print(bComponent!.bodies.length);
       //     break;
       //   }
       // }
-      // bComponent.bodies.remove(thegameobject2);
+      // bComponent!.bodies.remove(thegameobject2);
 
       // print(bodyindex);
     }
@@ -2056,9 +2057,9 @@ class Gameobject extends BodyComponent {
 
       if (t is Clsactfollowobject) {
         // print("asdfasdfasdf");
-        // print(bComponent.bodies.length);
-        for (int a = 0; a < bComponent.bodies.length; a++) {
-          Gameobject thet = bComponent.bodies.values.elementAt(a);
+        // print(bComponent!.bodies.length);
+        for (int a = 0; a < bComponent!.bodies.length; a++) {
+          Gameobject thet = bComponent!.bodies.values.elementAt(a);
 
           if (thet.thegameobject.name == t.objectname) {
             //  print(asdf);
@@ -2121,7 +2122,7 @@ class Gameobject extends BodyComponent {
     // }
 
     if (isdebug) {
-      if (contactListener.isnaa(objectname, this)) {
+      if (contactListener!.isnaa(objectname, this)) {
         final Paint paint = Paint()
           ..color = Colors.redAccent
           ..style = PaintingStyle.stroke
@@ -2225,7 +2226,7 @@ class Gameobject extends BodyComponent {
     //  print(isdebug);
     if (isdebug) {
       final path = Path()..addPolygon(points, true);
-      if (contactListener.isnaa(objectname, this)) {
+      if (contactListener!.isnaa(objectname, this)) {
         final Paint paint = Paint()
           ..color = Colors.redAccent
           ..style = PaintingStyle.stroke
@@ -2442,7 +2443,7 @@ class Gameobject extends BodyComponent {
     revolutejointdef.localAnchorB
         .setFrom(Vector2(revolutejoint.objectx, revolutejoint.objecty));
 
-    world.createJoint(revolutejointdef);
+    world!.createJoint(revolutejointdef);
   }
 
   void createWheeljoint(Body a, Body b, Clscompwheeljoint wheeljoint) {
@@ -2460,7 +2461,7 @@ class Gameobject extends BodyComponent {
     wheeljointdef.dampingRatio = wheeljoint.dampingRatio;
     wheeljointdef.frequencyHz = wheeljoint.frequency;
 
-    world.createJoint(wheeljointdef);
+    world!.createJoint(wheeljointdef);
   }
 
   void createPrismaticJoint(Body a, Body b) {
@@ -2479,7 +2480,7 @@ class Gameobject extends BodyComponent {
     // wheeljoint.dampingRatio =  0.1;
     // wheeljoint.frequencyHz = 3;
 
-    world.createJoint(pjdef);
+    world!.createJoint(pjdef);
   }
 
   void createBody() {
@@ -2586,14 +2587,14 @@ class Gameobject extends BodyComponent {
       bodyDef.gravityScale =
           gameobjectitemscore[goindex].getrigidbody().gravityscale;
 
-      Body groundBody = world.createBody(bodyDef);
+      Body groundBody = world!.createBody(bodyDef);
 
       groundBody.createFixtureFromFixtureDef(fixtureDef);
 
       this.body = groundBody;
     } else {
       final bodyDef = BodyDef();
-      Body groundBody = world.createBody(bodyDef);
+      Body groundBody = world!.createBody(bodyDef);
 
       this.body = groundBody;
     }
@@ -2609,8 +2610,8 @@ class BComponent extends Box2DComponent {
   // Map<int, Gameobject> toaddtouchdown = Map();
 
   int indexforcamerafollow = -1;
-  Clscompcameracontroller cameracontroller = cameragetcameracontrollercore();
-  Gameobject tofollow;
+  Clscompcameracontroller? cameracontroller = cameragetcameracontrollercore();
+  Gameobject? tofollow;
   @override
   void initializeWorld() {
     isbanneradshowing = false;
@@ -2703,8 +2704,9 @@ class BComponent extends Box2DComponent {
     for (int a = 0; a < bodies.length; a++) {
       Gameobject thet = bodies.values.elementAt(a);
 
-      if (cameracontroller.objecttofollow ==
-          gameobjectitemscore[thet.goindex].getgameobject().name) {
+      if (cameracontroller != null &&
+          cameracontroller!.objecttofollow ==
+              gameobjectitemscore[thet.goindex].getgameobject().name) {
         tofollow = thet;
 
         // cameraFollow(thet,
@@ -2726,7 +2728,7 @@ class BComponent extends Box2DComponent {
 
     // print(bodies.length);
     contactListener = MyContactListener();
-    world.setContactListener(contactListener);
+    world!.setContactListener(contactListener!);
   }
 
   @override
@@ -2743,9 +2745,13 @@ class BComponent extends Box2DComponent {
     super.update(t);
     deltatime = t;
 
-    this.viewport.scale = cameracontroller.scale;
-    this.viewport.translation =
-        Vector2(-cameracontroller.x, cameracontroller.y);
+    if (cameracontroller != null) {
+      if (this.viewport != null) {
+        this.viewport!.scale = cameracontroller!.scale;
+        this.viewport!.translation =
+            Vector2(-cameracontroller!.x, cameracontroller!.y);
+      }
+    }
 
 //  bodies.forEach((key, value) {
 //       if (!value.isdestroyed) {
@@ -2760,9 +2766,9 @@ class BComponent extends Box2DComponent {
 //       }
 //     });
     // print(tofollow.thegameobject.theid);
-    if (tofollow != null) {
-      cameraFollow(tofollow,
-          horizontal: cameracontroller.h, vertical: cameracontroller.v);
+    if (tofollow != null && cameracontroller != null) {
+      cameraFollow(tofollow!,
+          horizontal: cameracontroller!.h, vertical: cameracontroller!.v);
     }
     // try {
     // bool nakitanna = false;

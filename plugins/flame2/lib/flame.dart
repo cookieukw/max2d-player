@@ -17,7 +17,7 @@ import 'util.dart';
 class Flame {
   // Flame asset bundle, defaults to root
   static AssetBundle _bundle;
-  static AssetBundle get bundle => _bundle == null ? rootBundle : _bundle;
+  static AssetBundle get bundle => _bundle;
 
   /// Access a shared instance of the [FlameAudio] class.
   static FlameAudio audio = FlameAudio();
@@ -45,10 +45,8 @@ class Flame {
       await util.fullScreen();
     }
 
-    if (orientation != null) {
-      await util.setOrientation(orientation);
-    }
-
+    await util.setOrientation(orientation);
+  
     _bundle = bundle;
   }
 

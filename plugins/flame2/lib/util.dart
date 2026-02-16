@@ -24,7 +24,7 @@ class Util {
     if (kIsWeb) {
       return Future.value();
     }
-    return SystemChrome.setEnabledSystemUIOverlays([]);
+    return SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   }
 
   /// Sets the preferred orientation (landscape or portrait) for the app.
@@ -131,11 +131,6 @@ class Util {
     'This method can lead to confuse behaviour, use the gestures methods provided by the Game class',
   )
   void addGestureRecognizer(GestureRecognizer recognizer) {
-    if (GestureBinding.instance == null) {
-      throw Exception(
-          'GestureBinding is not initialized yet, this probably happened because addGestureRecognizer was called before the runApp method');
-    }
-
     GestureBinding.instance.pointerRouter.addGlobalRoute((PointerEvent e) {
       if (e is PointerDownEvent) {
         recognizer.addPointer(e);

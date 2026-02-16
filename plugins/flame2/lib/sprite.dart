@@ -55,7 +55,7 @@ class Sprite {
   }
 
   bool loaded() {
-    return image != null && src != null;
+    return src != null;
   }
 
   double get _imageWidth => image.width.toDouble();

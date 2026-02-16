@@ -19,17 +19,17 @@ class DragEvent extends Drag {
 
   @override
   void update(details) {
-    onUpdate?.call(details);
+    onUpdate.call(details);
   }
 
   @override
   void cancel() {
-    onCancel?.call();
+    onCancel.call();
   }
 
   @override
   void end(details) {
-    onEnd?.call(details);
+    onEnd.call(details);
   }
 }
 

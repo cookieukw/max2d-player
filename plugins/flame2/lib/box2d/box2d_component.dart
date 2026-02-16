@@ -115,8 +115,8 @@ abstract class BodyComponent extends Component {
 
   @override
   void render(Canvas canvas) {
-    body.getFixtureList();
-    for (Fixture fixture = body.getFixtureList();
+    body.getFixture[];
+    for (Fixture fixture = body.getFixture[];
         fixture != null;
         fixture = fixture.getNext()) {
       switch (fixture.getType()) {

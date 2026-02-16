@@ -24,11 +24,11 @@ class Gameview extends BaseGame {
     bComponent = BComponent(context, isdebug: isdebug);
 
     if (bComponent == null) return;
-    bComponent.initializeWorld();
+    bComponent!.initializeWorld();
 
     uicomponents.forEach((f) {
       if (f is Clsuijoystickdirectional) {
-        bComponent.onjoystickdirectionchanged(
+        bComponent!.onjoystickdirectionchanged(
             Joystickvalues(0, 0, 0, 0, f.variablename));
       }
     });
@@ -69,35 +69,35 @@ class Gameview extends BaseGame {
         Rect.fromLTWH(0, 0, MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height),
         Paint()
-          ..color = cameragetcameracontrollercore().backgroundcolor != null
-              ? Color(cameragetcameracontrollercore().backgroundcolor)
+          ..color = cameragetcameracontrollercore()!.backgroundcolor != null
+              ? Color(cameragetcameracontrollercore()!.backgroundcolor)
               : Colors.blueGrey);
 
     super.render(canvas);
 
     // print(camera_getcameracontroller().backgroundcolor);
 
-    bComponent.render(canvas);
+    bComponent!.render(canvas);
 
     if (isdebug) {
       drawtext(canvas, "fps: " + fps(1).toStringAsFixed(0), themargin);
 
-      if (getprojectsettingscore().usingmicrophone) {
+      if (getprojectsettingscore()!.usingmicrophone == true) {
         themargin = themargin + 20;
         drawtext(canvas, "microphone dblevel: $miclevel", themargin);
       }
-      if (getprojectsettingscore().usinggyroscope) {
+      if (getprojectsettingscore()!.usinggyroscope == true) {
         themargin = themargin + 20;
         drawtext(
             canvas,
-            "gyroscope x=${gyroscopevalue.x.toStringAsFixed(1)}, y=${gyroscopevalue.y.toStringAsFixed(1)}, z=${gyroscopevalue.z.toStringAsFixed(1)}",
+            "gyroscope x=${(gyroscopevalue.x ?? 0).toStringAsFixed(1)}, y=${(gyroscopevalue.y ?? 0).toStringAsFixed(1)}, z=${(gyroscopevalue.z ?? 0).toStringAsFixed(1)}",
             themargin);
       }
-      if (getprojectsettingscore().usingaccelerometer) {
+      if (getprojectsettingscore()!.usingaccelerometer == true) {
         themargin = themargin + 20;
         drawtext(
             canvas,
-            "accelerometer x=${accelerometervalue.x.toStringAsFixed(1)}, y=${accelerometervalue.y.toStringAsFixed(1)}, z=${accelerometervalue.z.toStringAsFixed(1)}",
+            "accelerometer x=${(accelerometervalue.x ?? 0).toStringAsFixed(1)}, y=${(accelerometervalue.y ?? 0).toStringAsFixed(1)}, z=${(accelerometervalue.z ?? 0).toStringAsFixed(1)}",
             themargin);
       }
       int b = 0;
@@ -126,7 +126,7 @@ class Gameview extends BaseGame {
         }
       }
 
-      bComponent.bodies.forEach((key, value) {
+      bComponent!.bodies.forEach((key, value) {
         // print(key);
         for (int a = 0; a < value.thescript.localvariables.length; a++) {
           if (value.isdestroyed == false) {
@@ -210,39 +210,39 @@ class Gameview extends BaseGame {
     super.update(t);
     if (bComponent == null) return;
 
-    bComponent.update(t);
+    bComponent!.update(t);
   }
 
   @override
   void resize(Size size) {
     if (bComponent == null) return;
 
-    bComponent.resize(size);
+    bComponent!.resize(size);
   }
 
   void onTouchDown(PointerDownEvent details) {
     if (bComponent == null) return;
-    bComponent.ontouchdown(details);
+    bComponent!.ontouchdown(details);
   }
 
   void onTouchUp(PointerUpEvent details) {
     if (bComponent == null) return;
-    bComponent.ontouchup(details);
+    bComponent!.ontouchup(details);
   }
 
   void onTouchMove(PointerMoveEvent details) {
     if (bComponent == null) return;
-    bComponent.ontouchmove(details);
+    bComponent!.ontouchmove(details);
   }
 
   void onJoystickDirectionChanged(Joystickvalues joystickvalues) {
     if (bComponent == null) return;
-    bComponent.onjoystickdirectionchanged(joystickvalues);
+    bComponent!.onjoystickdirectionchanged(joystickvalues);
   }
 
   void onButtonEvent(Buttonvalues buttonvalues) {
     if (bComponent == null) return;
     print(buttonvalues);
-    bComponent.onbuttonevent(buttonvalues);
+    bComponent!.onbuttonevent(buttonvalues);
   }
 }

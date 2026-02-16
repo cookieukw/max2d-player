@@ -136,10 +136,8 @@ class ParallaxLayer {
   Future<Image> _load(filename) {
     return Flame.images.load(filename).then((image) {
       _image = image;
-      if (_screenSize != null) {
-        resize(_screenSize);
-      }
-      return _image;
+      resize(_screenSize);
+          return _image;
     });
   }
 }
@@ -195,7 +193,7 @@ class ParallaxComponent extends PositionComponent {
   }
 
   void _load(List<ParallaxImage> images) {
-    _layers = images.map((image) => ParallaxLayer(image)).toList();
+    _layers = images.map((image) => ParallaxLayer(image)).to[];
     Future.wait(_layers.map((layer) => layer.future))
         .then((_) => _loaded = true);
   }

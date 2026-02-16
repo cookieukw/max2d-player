@@ -21,8 +21,8 @@ class ImageParticle extends Particle {
   }) : super(lifespan: lifespan) {
     final srcWidth = image.width.toDouble();
     final srcHeight = image.height.toDouble();
-    final destWidth = size?.width ?? srcWidth;
-    final destHeight = size?.height ?? srcHeight;
+    final destWidth = size.width ?? srcWidth;
+    final destHeight = size.height ?? srcHeight;
 
     src = Rect.fromLTWH(0, 0, srcWidth, srcHeight);
     dest =

@@ -41,5 +41,5 @@ class PadButtonItem {
     this.backgroundColor = Colors.white54,
     this.pressedColor = Colors.lightBlueAccent,
     this.supportedGestures = const [Gestures.TAP],
-  }) : assert(index != null);
+  });
 }

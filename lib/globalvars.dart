@@ -30,17 +30,17 @@ List<Clsvariable> globalvariablescore = [];
 List<Clssoundcomponent> soundslistscore = [];
 List<Clsuicomponent> uicomponentscore = [];
 
-Function refreshuicomponents;
+Function? refreshuicomponents;
 
 Map<String, ui.Image> loadedimages = Map();
 bool isprojectloaded = false;
-ui.Image noimage;
+late ui.Image noimage;
 
 bool isdefloaded = false;
 bool gameisdebug = false;
 bool isworkspace = false;
 
-Gameview gv;
+late Gameview gv;
 
 Future loadimagesfromfile(BuildContext context) async {
   if (isdefloaded == false) {
@@ -95,11 +95,11 @@ class Spriteanimation {
   double counter = 0;
   String id = "";
   double frameinterval = 0;
-  double interval = 0;
-  List<String> images = List();
+  double? interval = 0;
+  List<String> images = [];
 
-  Spriteanimation({this.id, this.images, this.interval}) {
-    frameinterval = (60 * interval) / this.images.length;
+  Spriteanimation({required this.id, required this.images, required this.interval}) {
+    frameinterval = (60 * interval!) / this.images.length;
   }
 
   void loadimages() async {}
@@ -256,8 +256,10 @@ Future loadprojectcore2(String scenename) async {
   String contents = await file.readAsString();
 
   for (int a1 = 0; a1 < soundslistscore.length; a1++) {
-    Clscompsound t = soundslistscore[a1];
-    t.stop();
+    var t = soundslistscore[a1];
+    if (t is Clscompsound) {
+      t.stop();
+    }
   }
 
   Map<String, dynamic> tojson = json.decode(contents);
@@ -318,7 +320,7 @@ void expressionmathvariables(Map<String, dynamic> context) {
   var temprandom = math.Random();
 
   context.addAll({
-    "math_random": (int number, [int number2]) {
+    "math_random": (int number, [int? number2]) {
       if (number2 == null) {
         return temprandom.nextInt(number);
       } else {
@@ -410,7 +412,7 @@ void expressionmathvariables(Map<String, dynamic> context) {
   });
   context.addAll({
     "math_lerp": (num number1, num number2, num number3) {
-      return ui.lerpDouble(number1, number2, number3);
+      return ui.lerpDouble(number1, number2, number3.toDouble());
     }
   });
 }

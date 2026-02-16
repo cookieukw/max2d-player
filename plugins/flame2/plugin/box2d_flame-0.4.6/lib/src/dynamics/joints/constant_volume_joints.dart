@@ -64,25 +64,11 @@ class ConstantVolumeJoint extends Joint {
     }
     _targetVolume = getBodyArea();
 
-    if (def.joints != null && def.joints.length != def.bodies.length) {
+    if (def.joints.length != def.bodies.length) {
       throw "Incorrect joint definition.  Joints have to correspond to the _bodies";
     }
-    if (def.joints == null) {
-      final DistanceJointDef djd = new DistanceJointDef();
-      _distanceJoints = new List<DistanceJoint>(_bodies.length);
-      for (int i = 0; i < _targetLengths.length; ++i) {
-        final int next = (i == _targetLengths.length - 1) ? 0 : i + 1;
-        djd.frequencyHz = def.frequencyHz; // 20.0;
-        djd.dampingRatio = def.dampingRatio; // 50.0;
-        djd.collideConnected = def.collideConnected;
-        djd.initialize(_bodies[i], _bodies[next], _bodies[i].worldCenter,
-            _bodies[next].worldCenter);
-        _distanceJoints[i] = _world.createJoint(djd) as DistanceJoint;
-      }
-    } else {
-      _distanceJoints = def.joints.toList();
-    }
-
+    _distanceJoints = def.joints.to[];
+  
     _normals = new List<Vector2>(_bodies.length);
     for (int i = 0; i < _normals.length; ++i) {
       _normals[i] = new Vector2.zero();

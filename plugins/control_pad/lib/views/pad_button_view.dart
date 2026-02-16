@@ -45,18 +45,14 @@ class PadButtonsView extends StatelessWidget {
     this.padButtonPressedCallback,
     this.buttonsPadding = 0,
     this.backgroundPadButtonsColor = Colors.transparent,
-  }) : assert(buttons != null && buttons.isNotEmpty) {
+  }) : assert(buttons.isNotEmpty) {
     buttons.forEach(
         (button) => buttonsStateMap[button.index] = button.backgroundColor);
   }
 
   @override
   Widget build(BuildContext context) {
-    double actualSize = size != null
-        ? size
-        : _math.min(MediaQuery.of(context).size.width,
-                MediaQuery.of(context).size.height) *
-            0.5;
+    double actualSize = size;
     double innerCircleSize = actualSize / 3;
 
     return Center(
@@ -64,7 +60,7 @@ class PadButtonsView extends StatelessWidget {
   }
 
   List<Widget> createButtons(double innerCircleSize, double actualSize) {
-    List<Widget> list = List();
+    List<Widget> list = [];
     list.add(CircleView.padBackgroundCircle(
         actualSize,
         backgroundPadButtonsColor,
@@ -146,8 +142,7 @@ class PadButtonsView extends StatelessWidget {
   }
 
   void _processGesture(PadButtonItem button, Gestures gesture) {
-    if (padButtonPressedCallback != null &&
-        button.supportedGestures.contains(gesture)) {
+    if (button.supportedGestures.contains(gesture)) {
       padButtonPressedCallback(button.index, gesture);
       print("$gesture paddbutton id =  ${[button.index]}");
     }

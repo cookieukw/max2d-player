@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 
 import '../anchor.dart';
 import '../sprite.dart';

@@ -210,6 +210,6 @@ class SpriteComponent extends PositionComponent {
 
   @override
   bool loaded() {
-    return sprite != null && sprite.loaded() && x != null && y != null;
+    return sprite.loaded();
   }
 }

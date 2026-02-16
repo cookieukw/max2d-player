@@ -60,7 +60,7 @@ abstract class PositionComponentEffect {
       currentTime += dt * curveDirection + driftTime * driftMultiplier;
       percentage = min(1.0, max(0.0, currentTime / travelTime));
       if (hasFinished()) {
-        onComplete?.call();
+        onComplete.call();
       }
     }
   }
@@ -89,8 +89,8 @@ abstract class PositionComponentEffect {
         isDisposed;
   }
 
-  bool isMax() => percentage == null ? false : percentage == 1.0;
-  bool isMin() => percentage == null ? false : percentage == 0.0;
+  bool isMax() => percentage == 1.0;
+  bool isMin() => percentage == 0.0;
 
   void reset() {
     _isDisposed = false;

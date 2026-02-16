@@ -71,11 +71,7 @@ class JoystickView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double actualSize = size != null
-        ? size
-        : _math.min(MediaQuery.of(context).size.width,
-                MediaQuery.of(context).size.height) *
-            0.5;
+    double actualSize = size;
     double innerCircleSize = actualSize / 2;
     Offset lastPosition = Offset(innerCircleSize, innerCircleSize);
     Offset joystickInnerPosition = _calculatePositionOfInnerCircle(
@@ -112,10 +108,8 @@ class JoystickView extends StatelessWidget {
             },
             onPanEnd: (details) {
               _callbackTimestamp = null;
-              if (onDirectionChanged != null) {
-                onDirectionChanged(theangle, 0,0,0);
-              }
-              joystickInnerPosition = _calculatePositionOfInnerCircle(
+              onDirectionChanged(theangle, 0,0,0);
+                          joystickInnerPosition = _calculatePositionOfInnerCircle(
                   Offset(innerCircleSize, innerCircleSize),
                   innerCircleSize,
                   actualSize,
@@ -208,8 +202,7 @@ class JoystickView extends StatelessWidget {
     double normalizedDistance = _math.min(distance / (size / 2), 1.0);
 
     DateTime _callbackTimestamp = callbackTimestamp;
-    if (onDirectionChanged != null &&
-        _canCallOnDirectionChanged(callbackTimestamp)) {
+    if (_canCallOnDirectionChanged(callbackTimestamp)) {
       _callbackTimestamp = DateTime.now();
       onDirectionChanged(degrees, normalizedDistance,(dx2-0.5)*2,(dy2-0.5)*2);
     }
@@ -222,17 +215,15 @@ class JoystickView extends StatelessWidget {
   /// Returns true if enough time has passed since last time it was called
   /// or when there is no [interval] set.
   bool _canCallOnDirectionChanged(DateTime callbackTimestamp) {
-    if (interval != null && callbackTimestamp != null) {
-      int intervalMilliseconds = interval.inMilliseconds;
-      int timestampMilliseconds = callbackTimestamp.millisecondsSinceEpoch;
-      int currentTimeMilliseconds = DateTime.now().millisecondsSinceEpoch;
+    int intervalMilliseconds = interval.inMilliseconds;
+    int timestampMilliseconds = callbackTimestamp.millisecondsSinceEpoch;
+    int currentTimeMilliseconds = DateTime.now().millisecondsSinceEpoch;
 
-      if (currentTimeMilliseconds - timestampMilliseconds <=
-          intervalMilliseconds) {
-        return false;
-      }
+    if (currentTimeMilliseconds - timestampMilliseconds <=
+        intervalMilliseconds) {
+      return false;
     }
-
+  
     return true;
   }
 

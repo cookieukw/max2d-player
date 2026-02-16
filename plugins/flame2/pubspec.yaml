@@ -6,14 +6,14 @@ homepage: https://github.com/flame-engine/flame
 dependencies:
   flutter:
     sdk: flutter
-  audioplayers: ^0.15.1
-  ordered_set: ^2.0.1
+  audioplayers: ^0.20.1 # Migrated from 0.15.1
+  ordered_set: ^4.0.3 # Migrated from 2.0.1
   box2d_flame:
     path: plugin/box2d_flame-0.4.6
-  synchronized: ^2.1.0
-  convert: ^2.0.1
-  flare_flutter: ^2.0.1
-  meta: ^1.1.8
+  synchronized: ^3.0.0
+  convert: ^3.0.0
+  flare_flutter: ^3.0.2
+  meta: ^1.7.0
 
 dev_dependencies:
   flutter_test:
@@ -21,7 +21,7 @@ dev_dependencies:
   test: ^1.9.4
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
   flutter: ">=1.6.0"
 
 flutter:

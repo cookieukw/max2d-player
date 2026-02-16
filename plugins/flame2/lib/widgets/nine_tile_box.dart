@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart' as widgets;
-import 'package:meta/meta.dart';
 
 import '../sprite.dart';
 

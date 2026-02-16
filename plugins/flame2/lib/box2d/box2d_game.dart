@@ -38,7 +38,7 @@ class Box2DGame extends BaseGame {
     super.update(t);
     box.components
         .where((c) => c.destroy())
-        .toList()
+        .to[]
         .forEach((c) => box.remove(c));
     box.addAll(_addLater);
     _addLater.clear();

@@ -205,20 +205,16 @@ class World {
     final ShapeType type2 = fixtureB.getType();
 
     final ContactRegister reg = contactStacks[type1.index][type2.index];
-    if (reg != null) {
-      if (reg.primary) {
-        Contact c = reg.creator.pop();
-        c.init(fixtureA, indexA, fixtureB, indexB);
-        return c;
-      } else {
-        Contact c = reg.creator.pop();
-        c.init(fixtureB, indexB, fixtureA, indexA);
-        return c;
-      }
+    if (reg.primary) {
+      Contact c = reg.creator.pop();
+      c.init(fixtureA, indexA, fixtureB, indexB);
+      return c;
     } else {
-      return null;
+      Contact c = reg.creator.pop();
+      c.init(fixtureB, indexB, fixtureA, indexA);
+      return c;
     }
-  }
+    }
 
   void pushContact(Contact contact) {
     Fixture fixtureA = contact.fixtureA;
@@ -289,10 +285,8 @@ class World {
     // add to world doubly linked list
     b._prev = null;
     b._next = bodyList;
-    if (bodyList != null) {
-      bodyList._prev = b;
-    }
-    bodyList = b;
+    bodyList._prev = b;
+      bodyList = b;
     ++_bodyCount;
 
     return b;
@@ -315,10 +309,8 @@ class World {
     while (je != null) {
       JointEdge je0 = je;
       je = je.next;
-      if (_destructionListener != null) {
-        _destructionListener.sayGoodbyeJoint(je0.joint);
-      }
-
+      _destructionListener.sayGoodbyeJoint(je0.joint);
+    
       destroyJoint(je0.joint);
 
       body._jointList = je;
@@ -339,10 +331,8 @@ class World {
       Fixture f0 = f;
       f = f._next;
 
-      if (_destructionListener != null) {
-        _destructionListener.sayGoodbyeFixture(f0);
-      }
-
+      _destructionListener.sayGoodbyeFixture(f0);
+    
       f0.destroyProxies(_contactManager.broadPhase);
       f0.destroy();
       // TODO djm recycle fixtures (here or in that destroy method)
@@ -353,14 +343,10 @@ class World {
     body._fixtureCount = 0;
 
     // Remove world body list.
-    if (body._prev != null) {
-      body._prev._next = body._next;
-    }
-
-    if (body._next != null) {
-      body._next._prev = body._prev;
-    }
-
+    body._prev._next = body._next;
+  
+    body._next._prev = body._prev;
+  
     if (body == bodyList) {
       bodyList = body._next;
     }
@@ -384,10 +370,8 @@ class World {
     // Connect to the world list.
     j._prev = null;
     j._next = _jointList;
-    if (_jointList != null) {
-      _jointList._prev = j;
-    }
-    _jointList = j;
+    _jointList._prev = j;
+      _jointList = j;
     ++_jointCount;
 
     // Connect to the bodies' doubly linked lists.
@@ -395,26 +379,22 @@ class World {
     j._edgeA.other = j.getBodyB();
     j._edgeA.prev = null;
     j._edgeA.next = j.getBodyA()._jointList;
-    if (j.getBodyA()._jointList != null) {
-      j.getBodyA()._jointList.prev = j._edgeA;
-    }
-    j.getBodyA()._jointList = j._edgeA;
+    j.getBodyA()._jointList.prev = j._edgeA;
+      j.getBodyA()._jointList = j._edgeA;
 
     j._edgeB.joint = j;
     j._edgeB.other = j.getBodyA();
     j._edgeB.prev = null;
     j._edgeB.next = j.getBodyB()._jointList;
-    if (j.getBodyB()._jointList != null) {
-      j.getBodyB()._jointList.prev = j._edgeB;
-    }
-    j.getBodyB()._jointList = j._edgeB;
+    j.getBodyB()._jointList.prev = j._edgeB;
+      j.getBodyB()._jointList = j._edgeB;
 
     Body bodyA = def.bodyA;
     Body bodyB = def.bodyB;
 
     // If the joint prevents collisions, then flag any contacts for filtering.
     if (def.collideConnected == false) {
-      ContactEdge edge = bodyB.getContactList();
+      ContactEdge edge = bodyB.getContact[];
       while (edge != null) {
         if (edge.other == bodyA) {
           // Flag the contact for filtering at the next time step (where either
@@ -444,14 +424,10 @@ class World {
     bool collideConnected = j.getCollideConnected();
 
     // Remove from the doubly linked list.
-    if (j._prev != null) {
-      j._prev._next = j._next;
-    }
-
-    if (j._next != null) {
-      j._next._prev = j._prev;
-    }
-
+    j._prev._next = j._next;
+  
+    j._next._prev = j._prev;
+  
     if (j == _jointList) {
       _jointList = j._next;
     }
@@ -465,14 +441,10 @@ class World {
     bodyB.setAwake(true);
 
     // Remove from body 1.
-    if (j._edgeA.prev != null) {
-      j._edgeA.prev.next = j._edgeA.next;
-    }
-
-    if (j._edgeA.next != null) {
-      j._edgeA.next.prev = j._edgeA.prev;
-    }
-
+    j._edgeA.prev.next = j._edgeA.next;
+  
+    j._edgeA.next.prev = j._edgeA.prev;
+  
     if (j._edgeA == bodyA._jointList) {
       bodyA._jointList = j._edgeA.next;
     }
@@ -481,14 +453,10 @@ class World {
     j._edgeA.next = null;
 
     // Remove from body 2
-    if (j._edgeB.prev != null) {
-      j._edgeB.prev.next = j._edgeB.next;
-    }
-
-    if (j._edgeB.next != null) {
-      j._edgeB.next.prev = j._edgeB.prev;
-    }
-
+    j._edgeB.prev.next = j._edgeB.next;
+  
+    j._edgeB.next.prev = j._edgeB.prev;
+  
     if (j._edgeB == bodyB._jointList) {
       bodyB._jointList = j._edgeB.next;
     }
@@ -503,7 +471,7 @@ class World {
 
     // If the joint prevents collisions, then flag any contacts for filtering.
     if (collideConnected == false) {
-      ContactEdge edge = bodyB.getContactList();
+      ContactEdge edge = bodyB.getContact[];
       while (edge != null) {
         if (edge.other == bodyA) {
           // Flag the contact for filtering at the next time step (where either
@@ -610,17 +578,13 @@ class World {
 
   /// Call this to draw shapes and other debug draw data.
   void drawDebugData() {
-    if (debugDraw == null) {
-      return;
-    }
-
     int flags = debugDraw.drawFlags;
     bool wireframe = (flags & DebugDraw.WIREFRAME_DRAWING_BIT) != 0;
 
     if ((flags & DebugDraw.SHAPE_BIT) != 0) {
       for (Body b = bodyList; b != null; b = b.getNext()) {
         xf.set(b._transform);
-        for (Fixture f = b.getFixtureList(); f != null; f = f.getNext()) {
+        for (Fixture f = b.getFixture[]; f != null; f = f.getNext()) {
           if (b.isActive() == false) {
             color.setFromRGBd(0.5, 0.5, 0.3);
             drawShape(f, xf, color, wireframe);
@@ -669,19 +633,17 @@ class World {
           continue;
         }
 
-        for (Fixture f = b.getFixtureList(); f != null; f = f.getNext()) {
+        for (Fixture f = b.getFixture[]; f != null; f = f.getNext()) {
           for (int i = 0; i < f._proxyCount; ++i) {
             FixtureProxy proxy = f._proxies[i];
             AABB aabb = _contactManager.broadPhase.getFatAABB(proxy.proxyId);
-            if (aabb != null) {
-              List<Vector2> vs = avs.get(4);
-              vs[0].setValues(aabb.lowerBound.x, aabb.lowerBound.y);
-              vs[1].setValues(aabb.upperBound.x, aabb.lowerBound.y);
-              vs[2].setValues(aabb.upperBound.x, aabb.upperBound.y);
-              vs[3].setValues(aabb.lowerBound.x, aabb.upperBound.y);
-              debugDraw.drawPolygon(vs, 4, color);
-            }
-          }
+            List<Vector2> vs = avs.get(4);
+            vs[0].setValues(aabb.lowerBound.x, aabb.lowerBound.y);
+            vs[1].setValues(aabb.upperBound.x, aabb.lowerBound.y);
+            vs[2].setValues(aabb.upperBound.x, aabb.upperBound.y);
+            vs[3].setValues(aabb.lowerBound.x, aabb.upperBound.y);
+            debugDraw.drawPolygon(vs, 4, color);
+                    }
         }
       }
     }
@@ -793,7 +755,7 @@ class World {
   /// @return the head of the world contact list.
   /// @warning contacts are created and destroyed in the middle of a time step. Use ContactListener
   ///          to avoid missing contacts.
-  Contact getContactList() {
+  Contact getContact[] {
     return _contactManager.contactList;
   }
 
@@ -1144,7 +1106,7 @@ class World {
         }
       }
 
-      if (minContact == null || 1.0 - 10.0 * Settings.EPSILON < minAlpha) {
+      if (1.0 - 10.0 * Settings.EPSILON < minAlpha) {
         // No more TOI events. Done!
         _stepComplete = true;
         break;
@@ -1381,7 +1343,7 @@ class World {
           double radius = circle.radius;
           xf.q.getXAxis(axis);
 
-          if (fixture.userData != null && fixture.userData == LIQUID_INT) {
+          if (fixture.userData == LIQUID_INT) {
             Body b = fixture.getBody();
             liquidOffset.setFrom(b._linearVelocity);
             double linVelLength = b._linearVelocity.length;
@@ -1460,10 +1422,8 @@ class World {
       double particleRadius = system.getParticleRadius();
       List<Vector2> positionBuffer = system.getParticlePositionBuffer();
       List<ParticleColor> colorBuffer = null;
-      if (system.colorBuffer.data != null) {
-        colorBuffer = system.getParticleColorBuffer();
-      }
-      if (wireframe) {
+      colorBuffer = system.getParticleColorBuffer();
+          if (wireframe) {
         debugDraw.drawParticlesWireframe(
             positionBuffer, particleRadius, colorBuffer, particleCount);
       } else {
@@ -1588,8 +1548,8 @@ class World {
   /// the next group in the world list. A NULL group indicates the end of the list.
   ///
   /// @return the head of the world particle group list.
-  List<ParticleGroup> getParticleGroupList() {
-    return _particleSystem.getParticleGroupList();
+  List<ParticleGroup> getParticleGroup[] {
+    return _particleSystem.getParticleGroup[];
   }
 
   /// Get the number of particle groups.

@@ -53,7 +53,7 @@ class Animation {
     if (sprites.isEmpty) {
       throw Exception('You must have at least one frame!');
     }
-    frames = sprites.map((s) => Frame(s, stepTime)).toList();
+    frames = sprites.map((s) => Frame(s, stepTime)).to[];
   }
 
   /// Automatically creates a sequenced animation, that is, an animation based on a sprite sheet.
@@ -81,7 +81,7 @@ class Animation {
     double textureHeight,
     double stepTime = 0.1,
     this.loop = true,
-  }) : assert(amountPerRow == null || amount >= amountPerRow) {
+  }) : assert(amount >= amountPerRow) {
     amountPerRow ??= amount;
     frames = List<Frame>.filled(amount, null);
     for (var i = 0; i < amount; i++) {
@@ -107,7 +107,7 @@ class Animation {
     double textureWidth,
     double textureHeight,
     this.loop = true,
-  }) : assert(amountPerRow == null || amount >= amountPerRow) {
+  }) : assert(amount >= amountPerRow) {
     amountPerRow ??= amount;
     frames = List<Frame>.filled(amount, null);
     for (var i = 0; i < amount; i++) {
@@ -154,7 +154,7 @@ class Animation {
       return Frame(sprite, stepTime);
     });
 
-    return Animation(frames.toList(), loop: true);
+    return Animation(frames.to[], loop: true);
   }
 
   /// The current frame that should be displayed.
@@ -209,7 +209,7 @@ class Animation {
       return;
     }
     if (!loop && isLastFrame) {
-      onCompleteAnimation?.call();
+      onCompleteAnimation.call();
       return;
     }
     while (clock > currentFrame.stepTime) {
@@ -227,7 +227,7 @@ class Animation {
 
   /// Returns a new Animation based on this animation, but with its frames in reversed order
   Animation reversed() {
-    return Animation(frames.reversed.toList(), loop: loop);
+    return Animation(frames.reversed.to[], loop: loop);
   }
 
   /// Whether all sprites composing this animation are loaded.

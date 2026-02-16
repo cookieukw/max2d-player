@@ -70,13 +70,13 @@ class _GameplayerState extends State<Gameplayer> {
   String splashimagepath = imagespath;
 
   void loadsplashimage() {
-    if (getprojectsettingscore().splashimage == null) {
+    if (getprojectsettingscore()!.splashimage == null) {
       return;
     }
-    if (getprojectsettingscore().splashimage == "Max2D Logo") {
+    if (getprojectsettingscore()!.splashimage == "Max2D Logo") {
       return;
     }
-    File imagepath = File(imagespath + getprojectsettingscore().splashimage);
+    File imagepath = File(imagespath + getprojectsettingscore()!.splashimage!);
 
     splashimage = Image.file(imagepath);
 
@@ -107,10 +107,10 @@ class _GameplayerState extends State<Gameplayer> {
       } else if (getprojectsettingscore().orientation == "landscape") {
         Flame.util.setLandscape();
       }
-      if (getprojectsettingscore().splashbackground != null) {
+      if (getprojectsettingscore()!.splashbackground != null) {
         // print(splashbackground);
-        splashbackground = getprojectsettingscore().splashbackground;
-        splashtext = getprojectsettingscore().splashtext;
+        splashbackground = getprojectsettingscore()!.splashbackground ?? 0xFF2A2E49;
+        splashtext = getprojectsettingscore()!.splashtext ?? "M A D E  W I T H";
         // print(splashbackground);
       }
       await theads2.initialize(widget.isdebug);
@@ -277,8 +277,9 @@ class _TheUIcomponentsState extends State<TheUIcomponents> {
   void initState() {
     // TODO: implement initState
     refreshuicomponents = () {
-      setState(() {});
+      if (mounted) setState(() {});
     };
+    theads2.onBannerLoaded = refreshuicomponents;
     super.initState();
   }
 
@@ -322,18 +323,27 @@ class _TheUIcomponentsState extends State<TheUIcomponents> {
             child: theuibutton(t));
       }
       if (t is Clsuiadbanner) {
-        theads2.anchor = t.anchor;
-        theads2.bannersize = t.bannersize;
+        theads2.anchor = t.anchor ?? "bottom";
+        theads2.bannersize = t.bannersize ?? "banner";
         if (t.bannerid != null) {
-          if (t.bannerid.length > 0) {
-            theads2.bannerid = t.bannerid;
+          if (t.bannerid!.length > 0) {
+            theads2.bannerid = t.bannerid!;
           }
         }
-        if (getprojectsettingscore().admobapplicationid != null) {
-          if (getprojectsettingscore().admobapplicationid.length > 0) {
-            theads2.appid = getprojectsettingscore().admobapplicationid;
+        if (getprojectsettingscore()!.admobapplicationid != null) {
+          if (getprojectsettingscore()!.admobapplicationid!.length > 0) {
+            theads2.appid = getprojectsettingscore()!.admobapplicationid!;
           }
         }
+        
+        // Render the banner if ready
+        return Positioned(
+          top: theads2.anchor == "top" ? 0 : null,
+          bottom: theads2.anchor == "bottom" ? 0 : null,
+          left: 0,
+          right: 0,
+          child: theads2.getBannerWidget(),
+        );
       }
 
       return Container();
@@ -388,7 +398,7 @@ void buttononfocus(Clsuibutton t) {
   if (t.isentering == false) {
     t.isentering = true;
     t.scale = 1.1;
-    refreshuicomponents();
+    refreshuicomponents?.call();
     gv.onButtonEvent(Buttonvalues(t.variablename, "tapdown"));
   }
 }
@@ -424,10 +434,10 @@ Widget theuibutton(Clsuibutton t) {
       double screenheight = MediaQuery.of(playercontext).size.height;
       double screenwidth = MediaQuery.of(playercontext).size.width;
 
-      double top = t.postop;
-      double bottom = t.posbottom;
-      double left = t.posleft;
-      double right = t.posright;
+      double top = t.postop ?? double.nan;
+      double bottom = t.posbottom ?? double.nan;
+      double left = t.posleft ?? double.nan;
+      double right = t.posright ?? double.nan;
 
       double height = t.height;
       double width = t.width;

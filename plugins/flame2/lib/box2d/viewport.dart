@@ -58,32 +58,28 @@ class Viewport extends ViewportTransform {
     double x = center.x;
     double y = center.y;
 
-    if (horizontal != null) {
-      final temp = getWorldToScreen(position);
+    final temp = getWorldToScreen(position);
 
-      final margin = horizontal / 2 * size.width / 2;
-      final focus = size.width / 2 - temp.x;
+    final margin = horizontal / 2 * size.width / 2;
+    final focus = size.width / 2 - temp.x;
 
-      if (focus.abs() > margin) {
-        x = size.width / 2 +
-            (position.x * scale) +
-            (focus > 0 ? margin : -margin);
-      }
+    if (focus.abs() > margin) {
+      x = size.width / 2 +
+          (position.x * scale) +
+          (focus > 0 ? margin : -margin);
     }
+  
+    final temp = getWorldToScreen(position);
 
-    if (vertical != null) {
-      final temp = getWorldToScreen(position);
+    final margin = vertical / 2 * size.height / 2;
+    final focus = size.height / 2 - temp.y;
 
-      final margin = vertical / 2 * size.height / 2;
-      final focus = size.height / 2 - temp.y;
-
-      if (focus.abs() > margin) {
-        y = size.height / 2 +
-            (position.y * scale) +
-            (focus < 0 ? margin : -margin);
-      }
+    if (focus.abs() > margin) {
+      y = size.height / 2 +
+          (position.y * scale) +
+          (focus < 0 ? margin : -margin);
     }
-
+  
     if (x != center.x || y != center.y) {
       setCamera(x, y, scale);
     }

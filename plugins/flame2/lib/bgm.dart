@@ -47,7 +47,7 @@ class Bgm extends WidgetsBindingObserver {
   Future<void> play(String filename, {double volume}) async {
     volume ??= 1;
 
-    if (audioPlayer != null && audioPlayer.state != AudioPlayerState.STOPPED) {
+    if (audioPlayer.state != AudioPlayerState.STOPPED) {
       audioPlayer.stop();
     }
 
@@ -58,27 +58,21 @@ class Bgm extends WidgetsBindingObserver {
   /// Stops the currently playing background music track (if any).
   Future<void> stop() async {
     isPlaying = false;
-    if (audioPlayer != null) {
-      await audioPlayer.stop();
+    await audioPlayer.stop();
     }
-  }
 
   /// Resumes the currently played (but resumed) background music.
   Future<void> resume() async {
-    if (audioPlayer != null) {
-      isPlaying = true;
-      await audioPlayer.resume();
+    isPlaying = true;
+    await audioPlayer.resume();
     }
-  }
 
   /// Pauses the background music without unloading or resetting the audio
   /// player.
   Future<void> pause() async {
-    if (audioPlayer != null) {
-      isPlaying = false;
-      await audioPlayer.pause();
+    isPlaying = false;
+    await audioPlayer.pause();
     }
-  }
 
   /// Pre-fetch an audio and store it in the cache.
   ///
@@ -108,11 +102,11 @@ class Bgm extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      if (isPlaying && audioPlayer?.state == AudioPlayerState.PAUSED) {
+      if (isPlaying && audioPlayer.state == AudioPlayerState.PAUSED) {
         audioPlayer.resume();
       }
     } else {
-      audioPlayer?.pause();
+      audioPlayer.pause();
     }
   }
 }

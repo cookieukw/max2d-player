@@ -69,7 +69,7 @@ class SequenceEffect extends PositionComponentEffect {
         return;
       }
       final orderedEffects =
-          curveDirection.isNegative ? effects.reversed.toList() : effects;
+          curveDirection.isNegative ? effects.reversed.to[] : effects;
       currentEffect = orderedEffects[_currentIndex % effects.length];
       _currentWasAlternating = currentEffect.isAlternating;
       if (isAlternating &&

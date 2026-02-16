@@ -58,13 +58,13 @@ Widget _applyAdvancedGesturesDetectors(Game game, Widget child) {
       () => MultiTapGestureRecognizer(),
       (MultiTapGestureRecognizer instance) {
         instance.onTapDown = (pointerId, d) =>
-            _tapHandlers.forEach((h) => h.onTapDown?.call(pointerId, d));
+            _tapHandlers.forEach((h) => h.onTapDown.call(pointerId, d));
         instance.onTapUp = (pointerId, d) =>
-            _tapHandlers.forEach((h) => h.onTapUp?.call(pointerId, d));
+            _tapHandlers.forEach((h) => h.onTapUp.call(pointerId, d));
         instance.onTapCancel = (pointerId) =>
-            _tapHandlers.forEach((h) => h.onTapCancel?.call(pointerId));
+            _tapHandlers.forEach((h) => h.onTapCancel.call(pointerId));
         instance.onTap = (pointerId) =>
-            _tapHandlers.forEach((h) => h.onTap?.call(pointerId));
+            _tapHandlers.forEach((h) => h.onTap.call(pointerId));
       },
     );
   }
@@ -265,12 +265,8 @@ class _OverlayGameWidgetState extends State<OverlayGameWidget> {
     super.initState();
     widget.game.widgetOverlayController.stream.listen((overlay) {
       setState(() {
-        if (overlay.widget == null) {
-          _overlays.remove(overlay.name);
-        } else {
-          _overlays[overlay.name] = overlay.widget;
-        }
-      });
+        _overlays[overlay.name] = overlay.widget;
+            });
     });
   }
 
@@ -279,7 +275,7 @@ class _OverlayGameWidgetState extends State<OverlayGameWidget> {
     return Directionality(
         textDirection: TextDirection.ltr,
         child:
-            Stack(children: [widget.gameChild, ..._overlays.values.toList()]));
+            Stack(children: [widget.gameChild, ..._overlays.values.to[]]));
   }
 }
 

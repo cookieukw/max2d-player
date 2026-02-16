@@ -240,12 +240,8 @@ class Body {
     assert(found);
 
     // java change, remove it from the list
-    if (last == null) {
-      _fixtureList = fixture._next;
-    } else {
-      last._next = fixture._next;
-    }
-
+    last._next = fixture._next;
+  
     // Destroy any contacts associated with the fixture.
     ContactEdge edge = _contactList;
     while (edge != null) {
@@ -910,12 +906,12 @@ class Body {
   }
 
   /// Get the list of all fixtures attached to this body.
-  Fixture getFixtureList() {
+  Fixture getFixture[] {
     return _fixtureList;
   }
 
   /// Get the list of all joints attached to this body.
-  JointEdge getJointList() {
+  JointEdge getJoint[] {
     return _jointList;
   }
 
@@ -923,7 +919,7 @@ class Body {
   ///
   /// @warning this list changes during the time step and you may miss some collisions if you don't
   /// use ContactListener.
-  ContactEdge getContactList() {
+  ContactEdge getContact[] {
     return _contactList;
   }
 

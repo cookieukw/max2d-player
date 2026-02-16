@@ -183,9 +183,6 @@ class PolygonShape extends Shape {
 
     // Copy vertices.
     for (int i = 0; i < count; ++i) {
-      if (vertices[i] == null) {
-        vertices[i] = Vector2.zero();
-      }
       vertices[i].setFrom(ps[hull[i]]);
     }
 

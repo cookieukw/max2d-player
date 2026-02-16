@@ -31,9 +31,7 @@ List<T> reallocateBufferWithAlloc<T>(
     List oldBuffer, int oldCapacity, int newCapacity, T alloc()) {
   assert(newCapacity > oldCapacity);
   List<T> newBuffer = List<T>(newCapacity);
-  if (oldBuffer != null) {
-    arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
-  }
+  arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
   for (int i = oldCapacity; i < newCapacity; i++) {
     try {
       newBuffer[i] = alloc();
@@ -49,9 +47,7 @@ List<int> reallocateBufferInt(
     List<int> oldBuffer, int oldCapacity, int newCapacity) {
   assert(newCapacity > oldCapacity);
   List<int> newBuffer = List<int>(newCapacity);
-  if (oldBuffer != null) {
-    arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
-  }
+  arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
   for (int i = oldCapacity; i < newCapacity; i++) {
     newBuffer[i] = 0;
   }
@@ -63,9 +59,7 @@ Float64List reallocateBuffer(
     Float64List oldBuffer, int oldCapacity, int newCapacity) {
   assert(newCapacity > oldCapacity);
   Float64List newBuffer = Float64List(newCapacity);
-  if (oldBuffer != null) {
-    arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
-  }
+  arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
   return newBuffer;
 }
 

@@ -25,10 +25,8 @@ class Timer {
           _running = false;
         }
 
-        if (_callback != null) {
-          _callback();
-        }
-      }
+        _callback();
+            }
     }
   }
 

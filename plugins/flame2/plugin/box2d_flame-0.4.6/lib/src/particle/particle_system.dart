@@ -67,9 +67,8 @@ class PsProxy implements Comparable<PsProxy> {
 
   bool equals(Object obj) {
     if (this == obj) return true;
-    if (obj == null) return false;
     if (obj is! PsProxy) return false;
-    final other = obj as PsProxy;
+    final other = obj;
     if (tag != other.tag) return false;
     return true;
   }
@@ -600,10 +599,8 @@ class ParticleSystem {
 //    assertNotSamePosition();
     velocityBuffer.data[index].setFrom(def.velocity);
     groupBuffer[index] = null;
-    if (depthBuffer != null) {
-      depthBuffer[index] = 0.0;
-    }
-    if (colorBuffer.data != null || def.color != null) {
+    depthBuffer[index] = 0.0;
+      if (colorBuffer.data != null || def.color != null) {
       colorBuffer.data =
           requestParticleBuffer(colorBuffer.data, colorBuffer.allocClosure);
       colorBuffer.data[index].setParticleColor(def.color);
@@ -646,23 +643,10 @@ class ParticleSystem {
   }
 
   List<T> requestParticleBuffer<T>(List<T> buffer, T allocClosure()) {
-    if (buffer == null) {
-      buffer = List<T>(internalAllocatedCapacity);
-      for (int i = 0; i < internalAllocatedCapacity; i++) {
-        try {
-          buffer[i] = allocClosure();
-        } catch (e) {
-          throw "Exception $e";
-        }
-      }
-    }
     return buffer;
   }
 
   Float64List requestParticleBufferFloat64(Float64List buffer) {
-    if (buffer == null) {
-      buffer = Float64List(internalAllocatedCapacity);
-    }
     return buffer;
   }
 
@@ -708,49 +692,47 @@ class ParticleSystem {
     Transform transform = _tempTransform2;
     transform.setIdentity();
     int firstIndex = count;
-    if (groupDef.shape != null) {
-      final ParticleDef particleDef = _tempParticleDef;
-      particleDef.flags = groupDef.flags;
-      particleDef.color = groupDef.color;
-      particleDef.userData = groupDef.userData;
-      Shape shape = groupDef.shape;
-      transform.setVec2Angle(groupDef.position, groupDef.angle);
-      AABB aabb = _temp;
-      int childCount = shape.getChildCount();
-      for (int childIndex = 0; childIndex < childCount; childIndex++) {
-        if (childIndex == 0) {
-          shape.computeAABB(aabb, identity, childIndex);
-        } else {
-          AABB childAABB = _temp2;
-          shape.computeAABB(childAABB, identity, childIndex);
-          aabb.combine(childAABB);
-        }
+    final ParticleDef particleDef = _tempParticleDef;
+    particleDef.flags = groupDef.flags;
+    particleDef.color = groupDef.color;
+    particleDef.userData = groupDef.userData;
+    Shape shape = groupDef.shape;
+    transform.setVec2Angle(groupDef.position, groupDef.angle);
+    AABB aabb = _temp;
+    int childCount = shape.getChildCount();
+    for (int childIndex = 0; childIndex < childCount; childIndex++) {
+      if (childIndex == 0) {
+        shape.computeAABB(aabb, identity, childIndex);
+      } else {
+        AABB childAABB = _temp2;
+        shape.computeAABB(childAABB, identity, childIndex);
+        aabb.combine(childAABB);
       }
-      final double upperBoundY = aabb.upperBound.y;
-      final double upperBoundX = aabb.upperBound.x;
-      for (double y = (aabb.lowerBound.y / stride).floor() * stride;
-          y < upperBoundY;
-          y += stride) {
-        for (double x = (aabb.lowerBound.x / stride).floor() * stride;
-            x < upperBoundX;
-            x += stride) {
-          Vector2 p = _tempVec;
-          p.x = x;
-          p.y = y;
-          if (shape.testPoint(identity, p)) {
-            Transform.mulToOutVec2(transform, p, p);
-            particleDef.position.x = p.x;
-            particleDef.position.y = p.y;
-            p.sub(groupDef.position);
-            p.scaleOrthogonalInto(
-                groupDef.angularVelocity, particleDef.velocity);
-            particleDef.velocity.add(groupDef.linearVelocity);
-            createParticle(particleDef);
-          }
+    }
+    final double upperBoundY = aabb.upperBound.y;
+    final double upperBoundX = aabb.upperBound.x;
+    for (double y = (aabb.lowerBound.y / stride).floor() * stride;
+        y < upperBoundY;
+        y += stride) {
+      for (double x = (aabb.lowerBound.x / stride).floor() * stride;
+          x < upperBoundX;
+          x += stride) {
+        Vector2 p = _tempVec;
+        p.x = x;
+        p.y = y;
+        if (shape.testPoint(identity, p)) {
+          Transform.mulToOutVec2(transform, p, p);
+          particleDef.position.x = p.x;
+          particleDef.position.y = p.y;
+          p.sub(groupDef.position);
+          p.scaleOrthogonalInto(
+              groupDef.angularVelocity, particleDef.velocity);
+          particleDef.velocity.add(groupDef.linearVelocity);
+          createParticle(particleDef);
         }
       }
     }
-    int lastIndex = count;
+      int lastIndex = count;
 
     ParticleGroup group = ParticleGroup();
     group._system = this;
@@ -763,10 +745,8 @@ class ParticleSystem {
     group._destroyAutomatically = groupDef.destroyAutomatically;
     group._prev = null;
     group._next = groupList;
-    if (groupList != null) {
-      groupList._prev = group;
-    }
-    groupList = group;
+    groupList._prev = group;
+      groupList = group;
     ++groupCount;
     for (int i = firstIndex; i < lastIndex; i++) {
       groupBuffer[i] = group;
@@ -904,23 +884,16 @@ class ParticleSystem {
   // Only called from solveZombie() or joinParticleGroups().
   void destroyParticleGroup(ParticleGroup group) {
     assert(groupCount > 0);
-    assert(group != null);
 
-    if (world.getParticleDestructionListener() != null) {
-      world.getParticleDestructionListener().sayGoodbyeParticleGroup(group);
-    }
-
+    world.getParticleDestructionListener().sayGoodbyeParticleGroup(group);
+  
     for (int i = group._firstIndex; i < group._lastIndex; i++) {
       groupBuffer[i] = null;
     }
 
-    if (group._prev != null) {
-      group._prev._next = group._next;
-    }
-    if (group._next != null) {
+    group._prev._next = group._next;
       group._next._prev = group._prev;
-    }
-    if (group == groupList) {
+      if (group == groupList) {
       groupList = group._next;
     }
 
@@ -1664,8 +1637,7 @@ class ParticleSystem {
       if ((flags & ParticleType.b2_zombieParticle) != 0) {
         ParticleDestructionListener destructionListener =
             world.getParticleDestructionListener();
-        if ((flags & ParticleType.b2_destructionListener) != 0 &&
-            destructionListener != null) {
+        if ((flags & ParticleType.b2_destructionListener) != 0) {
           destructionListener.sayGoodbyeIndex(i);
         }
         newIndices[i] = Settings.invalidParticleIndex;
@@ -1676,16 +1648,10 @@ class ParticleSystem {
           positionBuffer.data[newCount].setFrom(positionBuffer.data[i]);
           velocityBuffer.data[newCount].setFrom(velocityBuffer.data[i]);
           groupBuffer[newCount] = groupBuffer[i];
-          if (depthBuffer != null) {
-            depthBuffer[newCount] = depthBuffer[i];
-          }
-          if (colorBuffer.data != null) {
-            colorBuffer.data[newCount].setParticleColor(colorBuffer.data[i]);
-          }
-          if (userDataBuffer.data != null) {
-            userDataBuffer.data[newCount] = userDataBuffer.data[i];
-          }
-        }
+          depthBuffer[newCount] = depthBuffer[i];
+                  colorBuffer.data[newCount].setParticleColor(colorBuffer.data[i]);
+                  userDataBuffer.data[newCount] = userDataBuffer.data[i];
+                }
         newCount++;
       }
     }
@@ -1862,16 +1828,10 @@ class ParticleSystem {
     BufferUtils.rotate(positionBuffer.data, start, mid, end);
     BufferUtils.rotate(velocityBuffer.data, start, mid, end);
     BufferUtils.rotate(groupBuffer, start, mid, end);
-    if (depthBuffer != null) {
-      BufferUtils.rotate(depthBuffer, start, mid, end);
-    }
-    if (colorBuffer.data != null) {
+    BufferUtils.rotate(depthBuffer, start, mid, end);
       BufferUtils.rotate(colorBuffer.data, start, mid, end);
-    }
-    if (userDataBuffer.data != null) {
       BufferUtils.rotate(userDataBuffer.data, start, mid, end);
-    }
-
+  
     // update proxies
     for (int k = 0; k < proxyCount; k++) {
       PsProxy proxy = proxyBuffer[k];
@@ -2011,7 +1971,7 @@ class ParticleSystem {
 
   void setParticleBufferInt(
       ParticleBufferInt buffer, List<int> newData, int newCapacity) {
-    assert((newData != null && newCapacity != 0) ||
+    assert((newCapacity != 0) ||
         (newData == null && newCapacity == 0));
     if (buffer.userSuppliedCapacity != 0) {
       // _world._blockAllocator.Free(buffer.data, sizeof(T) * _internalAllocatedCapacity);
@@ -2021,7 +1981,7 @@ class ParticleSystem {
   }
 
   void setParticleBuffer(ParticleBuffer buffer, List newData, int newCapacity) {
-    assert((newData != null && newCapacity != 0) ||
+    assert((newCapacity != 0) ||
         (newData == null && newCapacity == 0));
     if (buffer.userSuppliedCapacity != 0) {
       // _world._blockAllocator.Free(buffer.data, sizeof(T) * _internalAllocatedCapacity);
@@ -2054,7 +2014,7 @@ class ParticleSystem {
     return groupCount;
   }
 
-  List<ParticleGroup> getParticleGroupList() {
+  List<ParticleGroup> getParticleGroup[] {
     return groupBuffer;
   }
 

@@ -173,20 +173,20 @@ class Island {
 
     _listener = listener;
 
-    if (_bodies == null || _bodyCapacity > _bodies.length) {
+    if (_bodyCapacity > _bodies.length) {
       _bodies = new List<Body>(_bodyCapacity);
     }
-    if (_joints == null || _jointCapacity > _joints.length) {
+    if (_jointCapacity > _joints.length) {
       _joints = new List<Joint>(_jointCapacity);
     }
-    if (_contacts == null || _contactCapacity > _contacts.length) {
+    if (_contactCapacity > _contacts.length) {
       _contacts = new List<Contact>(_contactCapacity);
     }
 
     // dynamic array
-    if (_velocities == null || _bodyCapacity > _velocities.length) {
+    if (_bodyCapacity > _velocities.length) {
       final List<Velocity> old =
-          _velocities == null ? new List<Velocity>(0) : _velocities;
+          _velocities;
       _velocities = new List<Velocity>(_bodyCapacity);
       BufferUtils.arraycopy(old, 0, _velocities, 0, old.length);
       for (int i = old.length; i < _velocities.length; i++) {
@@ -195,9 +195,9 @@ class Island {
     }
 
     // dynamic array
-    if (_positions == null || _bodyCapacity > _positions.length) {
+    if (_bodyCapacity > _positions.length) {
       final List<Position> old =
-          _positions == null ? new List<Position>(0) : _positions;
+          _positions;
       _positions = new List<Position>(_bodyCapacity);
       BufferUtils.arraycopy(old, 0, _positions, 0, old.length);
       for (int i = old.length; i < _positions.length; i++) {
@@ -555,10 +555,6 @@ class Island {
   final ContactImpulse _impulse = new ContactImpulse();
 
   void report(List<ContactVelocityConstraint> constraints) {
-    if (_listener == null) {
-      return;
-    }
-
     for (int i = 0; i < _contactCount; ++i) {
       Contact c = _contacts[i];
 

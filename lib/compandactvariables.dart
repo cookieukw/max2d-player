@@ -7,27 +7,27 @@ import 'package:flutter/material.dart';
 import 'actions.dart';
 import 'globalvars.dart';
 
-String codeisnan = "{mobilegameengine.double.nan}";
-String codeisnull = "{mobilegameengine.text.null}";
-String codeseparator = "{mobilegameengine.separator}";
+String? codeisnan = "{mobilegameengine.double.nan}";
+String? codeisnull = "{mobilegameengine.text.null}";
+String? codeseparator = "{mobilegameengine.separator}";
 
-double miclevel = 0;
+double? miclevel = 0;
 
 class Xyz {
-  double x, y, z;
+  double? x, y, z;
 }
 
 Xyz accelerometervalue = Xyz();
 Xyz gyroscopevalue = Xyz();
 
-int objectcount = 0;
+int? objectcount = 0;
 
 class Clsgameobjectitem {
   List<Clscomponent> components = [];
   Clsgameobjectitem({this.components});
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> thelist = Map();
+    Map<String, dynamic> thelist = {};
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompgameobject) {
@@ -72,7 +72,7 @@ class Clsgameobjectitem {
   }
 
   factory Clsgameobjectitem.fromJson(Map<String, dynamic> json) {
-    List<Clscomponent> components2 = List();
+    List<Clscomponent> components2 = [];
     json.forEach((key, value) {
       if (key == "compgameobject") {
         components2.add(Clscompgameobject.fromJson(objectcount, value));
@@ -117,7 +117,7 @@ class Clsgameobjectitem {
   }
 
   void setsprite(Map tvalue) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompsprite) {
@@ -176,7 +176,7 @@ class Clsgameobjectitem {
   }
 
   void setscript(Map tvalue) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompscript) {
@@ -211,7 +211,7 @@ class Clsgameobjectitem {
     return gameobject;
   }
 
-  String getspriteanimationimage(String animation) {
+  String? getspriteanimationimage(String animation) {
     for (int b = 0; b < components.length; b++) {
       Clscomponent t = components[b];
       if (t is Clscompspriteanimation) {
@@ -250,7 +250,7 @@ class Clsgameobjectitem {
     return null;
   }
 
-  double getspriteanimationimageinterval(String animation) {
+  double? getspriteanimationimageinterval(String animation) {
     for (int b = 0; b < components.length; b++) {
       Clscomponent t = components[b];
       if (t is Clscompspriteanimation) {
@@ -285,8 +285,8 @@ class Clsgameobjectitem {
 
   void settransform(
       {double x,
-      double y,
-      double angle,
+      double? y,
+      double? angle,
       @required double sx,
       @required double sy}) {
     for (int a = 0; a < components.length; a++) {
@@ -333,7 +333,7 @@ class Clsgameobjectitem {
   }
 
   void setwheeljoint(Map tvalue) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompwheeljoint) {
@@ -348,7 +348,7 @@ class Clsgameobjectitem {
   }
 
   void setrevolutejoint(Map tvalue) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscomprevolutejoint) {
@@ -363,12 +363,12 @@ class Clsgameobjectitem {
   }
 
   void setboxcollider({
-    double posx,
-    double posy,
-    double width,
-    double height,
+    double? posx,
+    double? posy,
+    double? width,
+    double? height,
   }) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompboxcollider) {
@@ -393,11 +393,11 @@ class Clsgameobjectitem {
   }
 
   void setcirclecollider({
-    double posx,
-    double posy,
-    double radius,
+    double? posx,
+    double? posy,
+    double? radius,
   }) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompcirclecollider) {
@@ -420,16 +420,16 @@ class Clsgameobjectitem {
 
   void setspriteanimation(
       {List images,
-      String variablename,
-      double interval,
-      bool addifnone = false}) {
-    Map<int, dynamic> temp = images.asMap();
+      String? variablename,
+      double? interval,
+      bool? addifnone = false}) {
+    Map<int, dynamic> temp = images.as{};
 
-    List<String> newlist = List();
+    List<String> newlist = [];
     temp.forEach((index, value) {
       newlist.add(value);
     });
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompspriteanimation) {
@@ -451,8 +451,8 @@ class Clsgameobjectitem {
     }
   }
 
-  String getlastcollider() {
-    String lastcollider = "";
+  String? getlastcollider() {
+    String? lastcollider = "";
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscompboxcollider) {
         lastcollider = "box";
@@ -475,7 +475,7 @@ class Clsgameobjectitem {
   }
 
   void settext(Map tvalue) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscomptext) {
@@ -490,7 +490,7 @@ class Clsgameobjectitem {
   }
 
   void setlifebar(Map tvalue) {
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscomplifebar) {
@@ -506,7 +506,7 @@ class Clsgameobjectitem {
 
   void setrigidbody(Map tvalue) {
     //
-    bool isnaa = false;
+    bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscomprigidbody) {
@@ -536,14 +536,14 @@ class Clsgameobjectitem {
 class Clscomponent {}
 
 class Clscompgameobject extends Clscomponent {
-  String name;
-  String isactive;
-  String ischild;
-  int priority;
-  double vsoffsetx = 0;
-  double vsoffsety = 0;
-  double vsscale = 0;
-  int theid;
+  String? name;
+  String? isactive;
+  String? ischild;
+  int? priority;
+  double? vsoffsetx = 0;
+  double? vsoffsety = 0;
+  double? vsscale = 0;
+  int? theid;
   Clscompgameobject(
       {this.name,
       this.isactive,
@@ -567,20 +567,20 @@ class Clscompgameobject extends Clscomponent {
   }
 
   factory Clscompgameobject.fromJson(
-      int theobjectcount, Map<String, dynamic> json) {
-    String name = json['name'];
-    String isactive = json['isactive'];
-    double vsoffsetx = json['vsoffsetx'];
-    double vsoffsety = json['vsoffsety'];
-    double vsscale = json['vsscale'];
-    String ischild = json['ischild'];
-    int priority = 0;
+      int? theobjectcount, Map<String, dynamic> json) {
+    String? name = json['name'];
+    String? isactive = json['isactive'];
+    double? vsoffsetx = json['vsoffsetx'];
+    double? vsoffsety = json['vsoffsety'];
+    double? vsscale = json['vsscale'];
+    String? ischild = json['ischild'];
+    int? priority = 0;
     if (json['priority'] == null) {
       priority = 0;
     } else {
       priority = json['priority'];
     }
-    int theid;
+    int? theid;
     if (json['theid'] == null) {
       // print("asdfasfasdfasdf");
       theid = theobjectcount;
@@ -601,13 +601,13 @@ class Clscompgameobject extends Clscomponent {
 }
 
 class Clscomptransform extends Clscomponent {
-  double x;
-  double y;
+  double? x;
+  double? y;
 
-  double sx;
-  double sy;
+  double? sx;
+  double? sy;
 
-  double angle;
+  double? angle;
 
   Clscomptransform(
       {this.x, this.y, this.angle, @required this.sx, @required this.sy});
@@ -631,12 +631,12 @@ class Clscomptransform extends Clscomponent {
 }
 
 class Clscomprevolutejoint extends Clscomponent {
-  String object;
-  double mainx;
-  double mainy;
+  String? object;
+  double? mainx;
+  double? mainy;
 
-  double objectx;
-  double objecty;
+  double? objectx;
+  double? objecty;
 
   Clscomprevolutejoint(
       {this.object, this.mainx, this.mainy, this.objectx, this.objecty});
@@ -660,14 +660,14 @@ class Clscomprevolutejoint extends Clscomponent {
 }
 
 class Clscompwheeljoint extends Clscomponent {
-  String object;
-  double mainx;
-  double mainy;
+  String? object;
+  double? mainx;
+  double? mainy;
 
-  double objectx;
-  double objecty;
-  double dampingRatio;
-  double frequency;
+  double? objectx;
+  double? objecty;
+  double? dampingRatio;
+  double? frequency;
 
   Clscompwheeljoint(
       {this.object,
@@ -701,12 +701,12 @@ class Clscompwheeljoint extends Clscomponent {
 }
 
 class Clscompsprite extends Clscomponent {
-  String imagepath;
-  double w;
-  double h;
-  String spriteanimation;
-  double opacity;
-  int spriteindex;
+  String? imagepath;
+  double? w;
+  double? h;
+  String? spriteanimation;
+  double? opacity;
+  int? spriteindex;
   Clscompsprite(
       {this.imagepath,
       this.w,
@@ -736,8 +736,8 @@ class Clscompsprite extends Clscomponent {
 
 class Clscompspriteanimation extends Clscomponent {
   List<String> images;
-  double interval;
-  String variablename;
+  double? interval;
+  String? variablename;
   Clscompspriteanimation({this.images, this.interval, this.variablename});
   Map<String, dynamic> toJson() {
     return {
@@ -754,13 +754,13 @@ class Clscompspriteanimation extends Clscomponent {
 }
 
 class Clscomprigidbody extends Clscomponent {
-  double density;
-  double gravityscale;
-  double friction;
-  double bounciness;
-  String bodytype;
-  bool fixedrotation;
-  bool issensor;
+  double? density;
+  double? gravityscale;
+  double? friction;
+  double? bounciness;
+  String? bodytype;
+  bool? fixedrotation;
+  bool? issensor;
   Clscomprigidbody(
       {this.density,
       this.gravityscale,
@@ -793,7 +793,7 @@ class Clscomprigidbody extends Clscomponent {
 }
 
 class Clscompboxcollider extends Clscomponent {
-  double x, y, w, h, angle;
+  double? x, y, w, h, angle;
   Clscompboxcollider({this.x, this.y, this.w, this.h, this.angle});
 
   Map<String, dynamic> toJson() {
@@ -815,7 +815,7 @@ class Clscompboxcollider extends Clscomponent {
 }
 
 class Clscompcirclecollider extends Clscomponent {
-  double x, y, radius;
+  double? x, y, radius;
   Clscompcirclecollider({this.x, this.y, this.radius});
 
   Map<String, dynamic> toJson() {
@@ -833,16 +833,16 @@ class Clscompcirclecollider extends Clscomponent {
 }
 
 class Clscomplifebar extends Clscomponent {
-  double maxvalue;
-  double thevalue;
-  int backgroundcolor;
-  int foregroundcolor;
-  double width;
-  double height;
-  double top;
-  double left;
+  double? maxvalue;
+  double? thevalue;
+  int? backgroundcolor;
+  int? foregroundcolor;
+  double? width;
+  double? height;
+  double? top;
+  double? left;
 
-  String alignment;
+  String? alignment;
 
   Clscomplifebar({
     this.maxvalue,
@@ -883,15 +883,15 @@ class Clscomplifebar extends Clscomponent {
 }
 
 class Clscomptext extends Clscomponent {
-  String text;
+  String? text;
 
-  double width;
-  double height;
+  double? width;
+  double? height;
 
-  double blurradius;
-  double fontsize;
-  int textcolor;
-  String fontfamily;
+  double? blurradius;
+  double? fontsize;
+  int? textcolor;
+  String? fontfamily;
 
   Clscomptext(
       {this.text,
@@ -925,13 +925,13 @@ class Clscomptext extends Clscomponent {
 }
 
 class Clscompscript extends Clscomponent {
-  List<Clsscriptitem> components = List();
-  List<Clsvariable> localvariables = List();
+  List<Clsscriptitem> components = [];
+  List<Clsvariable> localvariables = [];
 
   Clscompscript({this.components, this.localvariables});
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> thelist = Map();
+    Map<String, dynamic> thelist = {};
     for (int a = 0; a < localvariables.length; a++) {
       Clsvariable t = localvariables[a];
       if (t is Clsvariableboolean) {
@@ -1039,8 +1039,8 @@ class Clscompscript extends Clscomponent {
   }
 
   factory Clscompscript.fromJson(Map<String, dynamic> json) {
-    List<Clsscriptitem> components2 = List();
-    List<Clsvariable> localvariables2 = List();
+    List<Clsscriptitem> components2 = [];
+    List<Clsvariable> localvariables2 = [];
     json.forEach((key, value) {
       if (key.contains("complocalvariableboolean")) {
         localvariables2.add(Clsvariableboolean.fromJson((value)));
@@ -1619,39 +1619,39 @@ class Clsscriptitem {
     return getproperties("pos");
   }
 
-  double getvswidth() {
+  double? getvswidth() {
     return getproperties("vswidth");
   }
 
-  bool getisstart() {
+  bool? getisstart() {
     return getproperties('isstart');
   }
 
-  int getchildindex() {
+  int? getchildindex() {
     return getproperties("childindex");
   }
 
-  int getfalseindex() {
+  int? getfalseindex() {
     return getproperties("falseindex");
   }
 
-  int gettrueindex() {
+  int? gettrueindex() {
     return getproperties("trueindex");
   }
 
-  int getasyncindex() {
+  int? getasyncindex() {
     return getproperties("asyncindex");
   }
 
-  bool getiscondition() {
+  bool? getiscondition() {
     return getproperties("iscondition");
   }
 
-  bool getisasync() {
+  bool? getisasync() {
     return getproperties("isasync");
   }
 
-  bool getisend() {
+  bool? getisend() {
     return getproperties("isend");
   }
 
@@ -1973,13 +1973,13 @@ class Clsscriptitem {
 }
 
 class Clscompadbanner extends Clsscriptitem {
-  String variable;
-  String joystickevent;
+  String? variable;
+  String? joystickevent;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 160;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 160;
 
   Clscompadbanner({this.variable, this.joystickevent});
 
@@ -2002,13 +2002,13 @@ class Clscompadbanner extends Clsscriptitem {
 }
 
 class Clscomponjoystick extends Clsscriptitem {
-  String variable;
-  String joystickevent;
+  String? variable;
+  String? joystickevent;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 160;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 160;
 
   Clscomponjoystick({this.variable, this.joystickevent});
 
@@ -2031,13 +2031,13 @@ class Clscomponjoystick extends Clsscriptitem {
 }
 
 class Clscompobjectontouch extends Clsscriptitem {
-  String touchevent;
+  String? touchevent;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 160;
-  String continuous;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 160;
+  String? continuous;
 
   Clscompobjectontouch({this.touchevent});
 
@@ -2060,14 +2060,14 @@ class Clscompobjectontouch extends Clsscriptitem {
 }
 
 class Clscompscreenontouch extends Clsscriptitem {
-  String touchevent;
+  String? touchevent;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
-  String continuous;
-  String location;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
+  String? continuous;
+  String? location;
 
   Clscompscreenontouch({this.touchevent});
 
@@ -2092,10 +2092,10 @@ class Clscompscreenontouch extends Clsscriptitem {
 }
 
 class Clscomponobjectloaded extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 120;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 120;
 
   Clscomponobjectloaded();
 
@@ -2114,10 +2114,10 @@ class Clscomponobjectloaded extends Clsscriptitem {
 }
 
 class Clscompstep extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 100;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 100;
   Clscompstep();
 
   Map<String, dynamic> toJson() {
@@ -2135,19 +2135,19 @@ class Clscompstep extends Clsscriptitem {
 }
 
 class Clsactsetvelocity extends Clsscriptitem {
-  double x;
-  double y;
-  double angular;
-  double anglelimit;
-  String expx;
-  String expy;
-  String expangular;
-  String expanglelimit;
+  double? x;
+  double? y;
+  double? angular;
+  double? anglelimit;
+  String? expx;
+  String? expy;
+  String? expangular;
+  String? expanglelimit;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
 
   Clsactsetvelocity(
       {this.x,
@@ -2189,15 +2189,15 @@ class Clsactsetvelocity extends Clsscriptitem {
 }
 
 class Clsactsetadvertisement extends Clsscriptitem {
-  String network;
-  String adtype;
-  String action;
+  String? network;
+  String? adtype;
+  String? action;
   // String expanglelimit;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
 
   Clsactsetadvertisement({this.network, this.adtype, this.action});
   Map<String, dynamic> toJson() {
@@ -2221,23 +2221,23 @@ class Clsactsetadvertisement extends Clsscriptitem {
 }
 
 class Clsactsettransform extends Clsscriptitem {
-  double x;
-  String expx;
-  double y;
-  String expy;
-  double sx;
-  String expsx;
-  double sy;
-  String expsy;
-  double angle;
-  String expangle;
+  double? x;
+  String? expx;
+  double? y;
+  String? expy;
+  double? sx;
+  String? expsx;
+  double? sy;
+  String? expsy;
+  double? angle;
+  String? expangle;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
 
-  bool isnew;
+  bool? isnew;
 
   Clsactsettransform({
     this.x = double.nan,
@@ -2290,14 +2290,14 @@ class Clsactsettransform extends Clsscriptitem {
 }
 
 class Clsactiscollidingwith extends Clsscriptitem {
-  String objectname;
+  String? objectname;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int trueindex = -1;
-  int falseindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? trueindex = -1;
+  int? falseindex = -1;
+  double? vswidth = 150;
   // bool isstart = false;
   Clsactiscollidingwith({this.objectname});
   Map<String, dynamic> toJson() {
@@ -2321,16 +2321,16 @@ class Clsactiscollidingwith extends Clsscriptitem {
 }
 
 class Clsactiscardinal extends Clsscriptitem {
-  double angle = double.nan;
-  String expangle;
+  double? angle = double.nan;
+  String? expangle;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int trueindex = -1;
-  int falseindex = -1;
-  double vswidth = 150;
-  String direction;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? trueindex = -1;
+  int? falseindex = -1;
+  double? vswidth = 150;
+  String? direction;
   Clsactiscardinal({this.angle = double.nan, this.direction});
   Map<String, dynamic> toJson() {
     return {
@@ -2357,17 +2357,17 @@ class Clsactiscardinal extends Clsscriptitem {
 }
 
 class Clsacttimerdelayed extends Clsscriptitem {
-  double seconds;
+  double? seconds;
 
   Timer timer;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int asyncindex = -1;
-  double vswidth = 150;
-  bool cancel;
-  bool iscancelled = false;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? asyncindex = -1;
+  double? vswidth = 150;
+  bool? cancel;
+  bool? iscancelled = false;
 
   Clsacttimerdelayed({this.seconds, this.cancel});
 
@@ -2412,17 +2412,17 @@ class Clsacttimerdelayed extends Clsscriptitem {
 }
 
 class Clsacttimerperiodic extends Clsscriptitem {
-  double seconds;
+  double? seconds;
 
   Timer timer;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int asyncindex = -1;
-  double vswidth = 150;
-  bool cancel;
-  bool iscancelled = false;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? asyncindex = -1;
+  double? vswidth = 150;
+  bool? cancel;
+  bool? iscancelled = false;
   Clsacttimerperiodic({this.seconds, this.cancel});
 
   void start(Function function) {
@@ -2467,21 +2467,21 @@ class Clsacttimerperiodic extends Clsscriptitem {
 }
 
 class Clsactcreateobject extends Clsscriptitem {
-  double x;
-  double y;
-  String expx;
-  String expy;
-  String objectname;
-  bool isrelative;
-  double velx;
-  double vely;
-  String expvelx;
-  String expvely;
+  double? x;
+  double? y;
+  String? expx;
+  String? expy;
+  String? objectname;
+  bool? isrelative;
+  double? velx;
+  double? vely;
+  String? expvelx;
+  String? expvely;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
   Clsactcreateobject(
       {this.expx,
       this.expy,
@@ -2528,14 +2528,14 @@ class Clsactcreateobject extends Clsscriptitem {
 }
 
 class Clsactfollowobject extends Clsscriptitem {
-  String objectname;
-  double speed;
-  String expspeed;
+  String? objectname;
+  double? speed;
+  String? expspeed;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
 
   Clsactfollowobject({this.objectname, this.speed, this.expspeed});
   Map<String, dynamic> toJson() {
@@ -2563,10 +2563,10 @@ enum Variabletype { text, number, boolean }
 class Clsactvariablecomparison extends Clsscriptitem {}
 
 class Clsactdestroyobject extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 120;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 120;
   Clsactdestroyobject();
   Map<String, dynamic> toJson() {
     return {
@@ -2583,20 +2583,20 @@ class Clsactdestroyobject extends Clsscriptitem {
 }
 
 class Clsactsettext extends Clsscriptitem {
-  String text;
-  String exptext;
-  double width;
-  double height;
+  String? text;
+  String? exptext;
+  double? width;
+  double? height;
 
-  double blurradius;
-  double fontsize;
-  int textcolor;
-  String fontfamily;
+  double? blurradius;
+  double? fontsize;
+  int? textcolor;
+  String? fontfamily;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
   Clsactsettext({
     this.text,
     this.exptext,
@@ -2638,18 +2638,18 @@ class Clsactsettext extends Clsscriptitem {
 }
 
 class Clsactsetlifebar extends Clsscriptitem {
-  double maxvalue;
-  double thevalue;
-  int backgroundcolor;
-  int foregroundcolor;
+  double? maxvalue;
+  double? thevalue;
+  int? backgroundcolor;
+  int? foregroundcolor;
 
-  String expmaxvalue;
-  String expthevalue;
+  String? expmaxvalue;
+  String? expthevalue;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
   Clsactsetlifebar({
     this.maxvalue,
     this.thevalue,
@@ -2685,17 +2685,17 @@ class Clsactsetlifebar extends Clsscriptitem {
 }
 
 class Clsactsetvariable extends Clsscriptitem {
-  String variablename;
-  double numbervalue;
-  String textvalue;
-  bool booleanvalue;
-  String expnumbervalue;
-  String scope;
+  String? variablename;
+  double? numbervalue;
+  String? textvalue;
+  bool? booleanvalue;
+  String? expnumbervalue;
+  String? scope;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
   Clsactsetvariable(
       {this.variablename,
       this.numbervalue,
@@ -2731,19 +2731,19 @@ class Clsactsetvariable extends Clsscriptitem {
 
 class Clsactsetcamera extends Clsscriptitem {
   // String variablename;
-  double posx;
-  double posy;
-  double scale;
-  double smoothvalue;
+  double? posx;
+  double? posy;
+  double? scale;
+  double? smoothvalue;
 
-  String expposx;
-  String expposy;
-  String expscale;
+  String? expposx;
+  String? expposy;
+  String? expscale;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
   Clsactsetcamera(
       {this.posx, this.posy, this.scale, this.smoothvalue = double.nan});
   Map<String, dynamic> toJson() {
@@ -2775,15 +2775,15 @@ class Clsactsetcamera extends Clsscriptitem {
 }
 
 class Clsactsetsprite extends Clsscriptitem {
-  String image;
-  String animation;
-  double opacity = 0;
-  String expopacity = "";
+  String? image;
+  String? animation;
+  double? opacity = 0;
+  String? expopacity = "";
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
   Clsactsetsprite({
     this.image,
     this.animation,
@@ -2812,15 +2812,15 @@ class Clsactsetsprite extends Clsscriptitem {
 }
 
 class Clsactsetsound extends Clsscriptitem {
-  String variablename;
-  String playerstate;
-  double volume;
-  String expvolume;
+  String? variablename;
+  String? playerstate;
+  double? volume;
+  String? expvolume;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
   Clsactsetsound(
       {this.variablename, this.playerstate, this.volume, this.expvolume});
   Map<String, dynamic> toJson() {
@@ -2846,12 +2846,12 @@ class Clsactsetsound extends Clsscriptitem {
 }
 
 class Clsactloadscene extends Clsscriptitem {
-  String scenename;
+  String? scenename;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 150;
 
   Clsactloadscene({this.scenename});
   Map<String, dynamic> toJson() {
@@ -2871,10 +2871,10 @@ class Clsactloadscene extends Clsscriptitem {
 }
 
 class Clsactrestartscene extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  double vswidth = 120;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  double? vswidth = 120;
 
   Clsactrestartscene();
   Map<String, dynamic> toJson() {
@@ -2892,13 +2892,13 @@ class Clsactrestartscene extends Clsscriptitem {
 }
 
 class Clsactsavevalue extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int asyncindex = -1;
-  double vswidth = 150;
-  String filename;
-  String variable;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? asyncindex = -1;
+  double? vswidth = 150;
+  String? filename;
+  String? variable;
 
   Clsactsavevalue();
   Map<String, dynamic> toJson() {
@@ -2922,13 +2922,13 @@ class Clsactsavevalue extends Clsscriptitem {
 }
 
 class Clsactloadvalue extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int asyncindex = -1;
-  double vswidth = 150;
-  String filename;
-  String variable;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? asyncindex = -1;
+  double? vswidth = 150;
+  String? filename;
+  String? variable;
 
   Clsactloadvalue();
   Map<String, dynamic> toJson() {
@@ -2952,12 +2952,12 @@ class Clsactloadvalue extends Clsscriptitem {
 }
 
 class Clsactsavestate extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int asyncindex = -1;
-  double vswidth = 150;
-  String filename;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? asyncindex = -1;
+  double? vswidth = 150;
+  String? filename;
 
   Clsactsavestate();
   Map<String, dynamic> toJson() {
@@ -2979,13 +2979,13 @@ class Clsactsavestate extends Clsscriptitem {
 }
 
 class Clsactloadstate extends Clsscriptitem {
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int asyncindex = -1;
-  double vswidth = 150;
-  String filename;
-  bool ignorephysics = false;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? asyncindex = -1;
+  double? vswidth = 150;
+  String? filename;
+  bool? ignorephysics = false;
 
   Clsactloadstate();
   Map<String, dynamic> toJson() {
@@ -3009,14 +3009,14 @@ class Clsactloadstate extends Clsscriptitem {
 }
 
 class Clsactbooleanexpression extends Clsscriptitem {
-  String expexpression;
+  String? expexpression;
 
-  double vsPosX = 0;
-  double vsPosY = 0;
-  int childindex = -1;
-  int trueindex = -1;
-  int falseindex = -1;
-  double vswidth = 150;
+  double? vsPosX = 0;
+  double? vsPosY = 0;
+  int? childindex = -1;
+  int? trueindex = -1;
+  int? falseindex = -1;
+  double? vswidth = 150;
   // bool isstart = false;
   Clsactbooleanexpression({this.expexpression});
   Map<String, dynamic> toJson() {
@@ -3041,12 +3041,12 @@ class Clsactbooleanexpression extends Clsscriptitem {
 
 class Clsvariable {}
 
-List<Clsvariable> globalvariables = List();
+List<Clsvariable> globalvariables = [];
 
 class Clsvariablenumber extends Clsvariable {
-  String name;
-  double value;
-  bool showdebug;
+  String? name;
+  double? value;
+  bool? showdebug;
 
   Clsvariablenumber({this.name, this.value, this.showdebug = false});
   Map<String, dynamic> toJson() {
@@ -3064,9 +3064,9 @@ class Clsvariablenumber extends Clsvariable {
 }
 
 class Clsvariabletext extends Clsvariable {
-  String name;
-  String value;
-  bool showdebug;
+  String? name;
+  String? value;
+  bool? showdebug;
   Clsvariabletext({this.name, this.value, this.showdebug = false});
   Map<String, dynamic> toJson() {
     return {
@@ -3083,9 +3083,9 @@ class Clsvariabletext extends Clsvariable {
 }
 
 class Clsvariableboolean extends Clsvariable {
-  String name;
-  bool value;
-  bool showdebug;
+  String? name;
+  bool? value;
+  bool? showdebug;
   Clsvariableboolean({this.name, this.value, this.showdebug = false});
   Map<String, dynamic> toJson() {
     return {
@@ -3104,13 +3104,13 @@ class Clsvariableboolean extends Clsvariable {
 class Clscameracomponent {}
 
 class Clscompcameracontroller extends Clscameracomponent {
-  String objecttofollow;
-  double x;
-  double y;
-  double scale;
-  double h;
-  double v;
-  int backgroundcolor;
+  String? objecttofollow;
+  double? x;
+  double? y;
+  double? scale;
+  double? h;
+  double? v;
+  int? backgroundcolor;
   Clscompcameracontroller(
       {this.objecttofollow,
       this.x = double.nan,
@@ -3142,15 +3142,20 @@ class Clscompcameracontroller extends Clscameracomponent {
         backgroundcolor = json['backgroundcolor'];
 }
 
-dynamic tojsondouble(double thenum) {
+dynamic tojsondouble(double? thenum) {
+  if (thenum == null) return null;
   return thenum.isNaN ? codeisnan : thenum;
 }
 
-double fromjsondouble(dynamic thenum) {
-  return thenum == codeisnan ? double.nan : thenum;
+double? fromjsondouble(dynamic thenum) {
+  if (thenum == null) return null;
+  if (thenum == codeisnan) return double.nan;
+  if (thenum is int) return thenum.toDouble();
+  if (thenum is String) return double.tryParse(thenum);
+  return thenum;
 }
 
-Clscompcameracontroller cameragetcameracontrollercore() {
+Clscompcameracontroller? cameragetcameracontrollercore() {
   for (int b = 0; b < cameracomponentscore.length; b++) {
     Clscameracomponent t = cameracomponentscore[b];
     if (t is Clscompcameracontroller) {
@@ -3160,9 +3165,9 @@ Clscompcameracontroller cameragetcameracontrollercore() {
   return null;
 }
 
-List<Clscameracomponent> cameracomponents = List();
+List<Clscameracomponent> cameracomponents = [];
 
-Clscompcameracontroller cameragetcameracontroller() {
+Clscompcameracontroller? cameragetcameracontroller() {
   for (int b = 0; b < cameracomponents.length; b++) {
     Clscameracomponent t = cameracomponents[b];
     if (t is Clscompcameracontroller) {
@@ -3188,16 +3193,16 @@ enum Eevents {
   step
 }
 
-List<Clssoundcomponent> soundslists = List();
+List<Clssoundcomponent> soundslists = [];
 
 class Clssoundcomponent {}
 
 class Clscompsound extends Clssoundcomponent {
-  String variablename;
-  String soundpath;
-  double volume;
-  String playertstate;
-  bool isloop;
+  String? variablename;
+  String? soundpath;
+  double? volume;
+  String? playertstate;
+  bool? isloop;
   AudioPlayer audioPlayer = AudioPlayer();
   void play() {
     if (audioPlayer.state == AudioPlayerState.PLAYING) {
@@ -3248,9 +3253,9 @@ class Clscompsound extends Clssoundcomponent {
 
 class Clssettings {}
 
-List<Clssettings> thesettings = List();
+List<Clssettings> thesettings = [];
 
-Clscompprojectsettings getprojectsettings() {
+Clscompprojectsettings? getprojectsettings() {
   for (int b = 0; b < thesettings.length; b++) {
     Clssettings t = thesettings[b];
 
@@ -3261,7 +3266,7 @@ Clscompprojectsettings getprojectsettings() {
   return null;
 }
 
-Clscompprojectsettings getprojectsettingscore() {
+Clscompprojectsettings? getprojectsettingscore() {
   for (int b = 0; b < projectsettingscore.length; b++) {
     Clssettings t = projectsettingscore[b];
 
@@ -3273,27 +3278,27 @@ Clscompprojectsettings getprojectsettingscore() {
 }
 
 class Clscompprojectsettings extends Clssettings {
-  bool usingmicrophone;
-  bool usinggyroscope;
-  bool usingaccelerometer;
-  String packagename;
-  String orientation;
-  String projectname;
-  String version;
-  String startingscene;
-  String icon;
-  String playgroundid;
-  String backupid;
-  bool opensource;
-  String repositorylink;
-  String optimization = "smooth";
-  String imagequality = "low";
-  int appversion = 0;
-  double gridspacing = 32;
-  String admobapplicationid = "";
-  String splashtext = "M A D E  W I T H";
-  String splashimage = "Max2D Logo";
-  int splashbackground = Color(0xFF2A2E49).value;
+  bool? usingmicrophone;
+  bool? usinggyroscope;
+  bool? usingaccelerometer;
+  String? packagename;
+  String? orientation;
+  String? projectname;
+  String? version;
+  String? startingscene;
+  String? icon;
+  String? playgroundid;
+  String? backupid;
+  bool? opensource;
+  String? repositorylink;
+  String? optimization = "smooth";
+  String? imagequality = "low";
+  int? appversion = 0;
+  double? gridspacing = 32;
+  String? admobapplicationid = "";
+  String? splashtext = "M A D E  W I T H";
+  String? splashimage = "Max2D Logo";
+  int? splashbackground = Color(0xFF2A2E49).value;
 
   Clscompprojectsettings(
       {this.usinggyroscope = false,
@@ -3394,31 +3399,31 @@ class Clscompprojectsettings extends Clssettings {
 //         gridvalue = json['gridvalue'];
 // }
 
-List<Clsuicomponent> uicomponents = List();
+List<Clsuicomponent> uicomponents = [];
 
 class Clsuicomponent {}
 
 class Joystickvalues {
-  String variable;
-  double angle;
-  double distance;
-  double valx;
-  double valy;
+  String? variable;
+  double? angle;
+  double? distance;
+  double? valx;
+  double? valy;
   Joystickvalues(
       this.angle, this.distance, this.valx, this.valy, this.variable);
 }
 
 class Clsuijoystickdirectional extends Clsuicomponent {
-  int backgroundcolor;
-  int knobcolor;
-  double size;
+  int? backgroundcolor;
+  int? knobcolor;
+  double? size;
 
-  double postop;
-  double posleft;
-  double posright;
-  double posbottom;
+  double? postop;
+  double? posleft;
+  double? posright;
+  double? posbottom;
 
-  String variablename;
+  String? variablename;
 
   Clsuijoystickdirectional(
       {this.size = 100,
@@ -3455,10 +3460,10 @@ class Clsuijoystickdirectional extends Clsuicomponent {
 }
 
 class Clsuiadbanner extends Clsuicomponent {
-  String network;
-  String bannerid;
-  String anchor;
-  String bannersize;
+  String? network;
+  String? bannerid;
+  String? anchor;
+  String? bannersize;
 
   Clsuiadbanner({
     this.network = "admob",
@@ -3484,38 +3489,38 @@ class Clsuiadbanner extends Clsuicomponent {
 }
 
 class Buttonvalues {
-  String variable;
-  String event;
+  String? variable;
+  String? event;
   Buttonvalues(this.variable, this.event);
 }
 
 class Clsuibutton extends Clsuicomponent {
-  String variablename;
-  double postop;
-  double posleft;
-  double posright;
-  double posbottom;
+  String? variablename;
+  double? postop;
+  double? posleft;
+  double? posright;
+  double? posbottom;
 
-  double width;
-  double height;
+  double? width;
+  double? height;
 
-  double borderradius;
+  double? borderradius;
 
-  int color;
-  String image;
-  String imagefilltype;
+  int? color;
+  String? image;
+  String? imagefilltype;
 
-  String text;
+  String? text;
 
-  double fontsize;
-  int textcolor;
-  String fontfamily;
+  double? fontsize;
+  int? textcolor;
+  String? fontfamily;
 
-  bool isenteredoutside = false;
-  bool istappingdown = false;
+  bool? isenteredoutside = false;
+  bool? istappingdown = false;
 
-  bool isentering = false;
-  double scale = 1;
+  bool? isentering = false;
+  double? scale = 1;
 
   Clsuibutton(
       {this.variablename = "button",

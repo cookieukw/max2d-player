@@ -97,7 +97,7 @@ abstract class Particle {
   /// See [SingleChildParticle] or [ComposedParticle] for details.
   void setLifespan(double lifespan) {
     _lifespan = lifespan;
-    _timer?.stop();
+    _timer.stop();
     _timer = Timer(lifespan);
     _timer.start();
   }

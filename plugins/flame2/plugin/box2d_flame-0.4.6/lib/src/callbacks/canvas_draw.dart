@@ -34,7 +34,6 @@ class CanvasDraw extends DebugDraw {
   final CanvasRenderingContext2D ctx;
 
   CanvasDraw(ViewportTransform viewport, this.ctx) : super(viewport) {
-    assert(null != viewport && null != ctx);
   }
 
   /// Draw a closed polygon provided in CCW order. WARNING: This mutates
