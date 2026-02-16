@@ -25,7 +25,7 @@
 part of box2d;
 
 class StackQueue<T> {
-  List<T> _buffer;
+  late List<T> _buffer;
   int _front = 0;
   int _back = 0;
   int _end = 0;

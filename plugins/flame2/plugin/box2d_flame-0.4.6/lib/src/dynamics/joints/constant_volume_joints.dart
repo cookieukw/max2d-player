@@ -69,7 +69,7 @@ class ConstantVolumeJoint extends Joint {
     }
     _distanceJoints = def.joints.to[];
   
-    _normals = new List<Vector2>(_bodies.length);
+    _normals = List<Vector2>.generate(_bodies.length, (_) => Vector2.zero());
     for (int i = 0; i < _normals.length; ++i) {
       _normals[i] = new Vector2.zero();
     }

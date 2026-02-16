@@ -75,7 +75,7 @@ class _Simplex {
   final _SimplexVertex v1 = new _SimplexVertex();
   final _SimplexVertex v2 = new _SimplexVertex();
   final _SimplexVertex v3 = new _SimplexVertex();
-  final List<_SimplexVertex> vertices = new List<_SimplexVertex>(3);
+  final List<_SimplexVertex?> vertices = new List<_SimplexVertex?>(3);
   int count = 0;
 
   _Simplex() {
@@ -485,8 +485,8 @@ class DistanceProxy {
   final List<Vector2> buffer;
 
   DistanceProxy()
-      : vertices = new List<Vector2>(Settings.maxPolygonVertices),
-        buffer = new List<Vector2>(2) {
+      : vertices = List<Vector2>.generate(Settings.maxPolygonVertices, (_) => Vector2.zero()),
+        buffer = List<Vector2>.generate(2, (_) => Vector2.zero()) {
     for (int i = 0; i < vertices.length; i++) {
       vertices[i] = new Vector2.zero();
     }
@@ -615,7 +615,7 @@ class Distance {
     _simplex.readCache(cache, proxyA, transformA, proxyB, transformB);
 
     // Get simplex vertices as an array.
-    List<_SimplexVertex> vertices = _simplex.vertices;
+    List<_SimplexVertex?> vertices = _simplex.vertices;
 
     // These store the vertices of the last simplex so that we
     // can check for duplicates and prevent cycling.

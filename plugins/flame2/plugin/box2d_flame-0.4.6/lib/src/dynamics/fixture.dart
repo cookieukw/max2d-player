@@ -40,7 +40,7 @@ class Fixture {
   double _friction = 0.0;
   double _restitution = 0.0;
 
-  List<FixtureProxy> _proxies;
+  List<FixtureProxy?> _proxies;
   int _proxyCount = 0;
 
   final Filter _filter = new Filter();
@@ -239,9 +239,9 @@ class Fixture {
     int childCount = _shape.getChildCount();
 
     if (_proxies.length < childCount) {
-      List<FixtureProxy> old = _proxies;
+      List<FixtureProxy?> old = _proxies;
       int newLen = Math.max(old.length * 2, childCount);
-      _proxies = new List<FixtureProxy>(newLen);
+      _proxies = new List<FixtureProxy?>(newLen);
       BufferUtils.arraycopy(old, 0, _proxies, 0, old.length);
       for (int i = 0; i < newLen; i++) {
         if (i >= old.length) {

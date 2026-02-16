@@ -34,13 +34,13 @@ class Vec2Array {
       _map[argLength] = getInitializedArray(argLength);
     }
 
-    assert(_map[argLength].length ==
+    assert(_map[argLength]!.length ==
         argLength); // : "Array not built of correct length";
-    return _map[argLength];
+    return _map[argLength]!;
   }
 
   List<Vector2> getInitializedArray(int argLength) {
-    final List<Vector2> ray = new List<Vector2>(argLength);
+    final List<Vector2> ray = List<Vector2>.generate(argLength, (_) => Vector2.zero());
     for (int i = 0; i < ray.length; i++) {
       ray[i] = new Vector2.zero();
     }

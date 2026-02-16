@@ -30,27 +30,18 @@ import 'dart:typed_data';
 List<T> reallocateBufferWithAlloc<T>(
     List oldBuffer, int oldCapacity, int newCapacity, T alloc()) {
   assert(newCapacity > oldCapacity);
-  List<T> newBuffer = List<T>(newCapacity);
-  arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
-  for (int i = oldCapacity; i < newCapacity; i++) {
-    try {
-      newBuffer[i] = alloc();
-    } catch (e) {
-      throw "ReallocateBuffer Exception: $e";
-    }
-  }
-  return newBuffer;
+  return List<T>.generate(newCapacity, (i) {
+    if (i < oldCapacity) return oldBuffer[i];
+    return alloc();
+  });
 }
 
 /// Reallocate a buffer.
 List<int> reallocateBufferInt(
     List<int> oldBuffer, int oldCapacity, int newCapacity) {
   assert(newCapacity > oldCapacity);
-  List<int> newBuffer = List<int>(newCapacity);
+  List<int> newBuffer = List<int>.filled(newCapacity, 0);
   arraycopy(oldBuffer, 0, newBuffer, 0, oldCapacity);
-  for (int i = oldCapacity; i < newCapacity; i++) {
-    newBuffer[i] = 0;
-  }
   return newBuffer;
 }
 
@@ -66,7 +57,7 @@ Float64List reallocateBuffer(
 /// Reallocate a buffer. A 'deferred' buffer is reallocated only if it is not NULL.
 /// If 'userSuppliedCapacity' is not zero, buffer is user supplied and must be kept.
 List<T> reallocateBufferWithAllocDeferred<T>(
-    List<T> buffer,
+    List<T>? buffer,
     int userSuppliedCapacity,
     int oldCapacity,
     int newCapacity,
@@ -82,7 +73,7 @@ List<T> reallocateBufferWithAllocDeferred<T>(
 
 /// Reallocate an int buffer. A 'deferred' buffer is reallocated only if it is not NULL.
 /// If 'userSuppliedCapacity' is not zero, buffer is user supplied and must be kept.
-List<int> reallocateBufferIntDeferred(List<int> buffer,
+List<int> reallocateBufferIntDeferred(List<int>? buffer,
     int userSuppliedCapacity, int oldCapacity, int newCapacity, bool deferred) {
   assert(newCapacity > oldCapacity);
   assert(userSuppliedCapacity == 0 || newCapacity <= userSuppliedCapacity);
@@ -94,7 +85,7 @@ List<int> reallocateBufferIntDeferred(List<int> buffer,
 
 /// Reallocate a float buffer. A 'deferred' buffer is reallocated only if it is not NULL.
 /// If 'userSuppliedCapacity' is not zero, buffer is user supplied and must be kept.
-Float64List reallocateBufferFloat64Deferred(Float64List buffer,
+Float64List reallocateBufferFloat64Deferred(Float64List? buffer,
     int userSuppliedCapacity, int oldCapacity, int newCapacity, bool deferred) {
   assert(newCapacity > oldCapacity);
   assert(userSuppliedCapacity == 0 || newCapacity <= userSuppliedCapacity);

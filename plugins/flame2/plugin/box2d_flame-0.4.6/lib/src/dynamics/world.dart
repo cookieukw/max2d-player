@@ -814,8 +814,8 @@ class World {
   }
 
   final Island island = new Island();
-  List<Body> stack =
-      new List<Body>(10); // TODO djm find a good initial stack number;
+  List<Body?> stack =
+      List<Body?>.filled(10, null); // TODO djm find a good initial stack number;
   final Timer broadphaseTimer = new Timer();
 
   void solve(TimeStep step) {
@@ -846,7 +846,7 @@ class World {
     // Build and simulate all awake islands.
     int stackSize = _bodyCount;
     if (stack.length < stackSize) {
-      stack = new List<Body>(stackSize);
+      stack = List<Body?>.filled(stackSize, null);
     }
     for (Body seed = bodyList; seed != null; seed = seed._next) {
       if ((seed._flags & Body.ISLAND_FLAG) == Body.ISLAND_FLAG) {
@@ -985,7 +985,7 @@ class World {
   final TOIInput toiInput = new TOIInput();
   final TOIOutput toiOutput = new TOIOutput();
   final TimeStep subStep = new TimeStep();
-  final List<Body> tempBodies = new List<Body>(2);
+  final List<Body?> tempBodies = List<Body?>.filled(2, null);
   final Sweep backup1 = new Sweep();
   final Sweep backup2 = new Sweep();
 

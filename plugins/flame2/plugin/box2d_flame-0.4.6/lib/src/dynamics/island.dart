@@ -146,12 +146,12 @@ part of box2d;
 class Island {
   ContactListener _listener;
 
-  List<Body> _bodies;
-  List<Contact> _contacts;
-  List<Joint> _joints;
+  List<Body?> _bodies;
+  List<Contact?> _contacts;
+  List<Joint?> _joints;
 
-  List<Position> _positions;
-  List<Velocity> _velocities;
+  List<Position?> _positions;
+  List<Velocity?> _velocities;
 
   int _bodyCount = 0;
   int _jointCount = 0;
@@ -174,20 +174,20 @@ class Island {
     _listener = listener;
 
     if (_bodyCapacity > _bodies.length) {
-      _bodies = new List<Body>(_bodyCapacity);
+      _bodies = List<Body?>.filled(_bodyCapacity, null);
     }
     if (_jointCapacity > _joints.length) {
-      _joints = new List<Joint>(_jointCapacity);
+      _joints = new List<Joint?>(_jointCapacity);
     }
     if (_contactCapacity > _contacts.length) {
-      _contacts = new List<Contact>(_contactCapacity);
+      _contacts = new List<Contact?>(_contactCapacity);
     }
 
     // dynamic array
     if (_bodyCapacity > _velocities.length) {
-      final List<Velocity> old =
+      final List<Velocity?> old =
           _velocities;
-      _velocities = new List<Velocity>(_bodyCapacity);
+      _velocities = new List<Velocity?>(_bodyCapacity);
       BufferUtils.arraycopy(old, 0, _velocities, 0, old.length);
       for (int i = old.length; i < _velocities.length; i++) {
         _velocities[i] = new Velocity();
@@ -196,9 +196,9 @@ class Island {
 
     // dynamic array
     if (_bodyCapacity > _positions.length) {
-      final List<Position> old =
+      final List<Position?> old =
           _positions;
-      _positions = new List<Position>(_bodyCapacity);
+      _positions = new List<Position?>(_bodyCapacity);
       BufferUtils.arraycopy(old, 0, _positions, 0, old.length);
       for (int i = old.length; i < _positions.length; i++) {
         _positions[i] = new Position();

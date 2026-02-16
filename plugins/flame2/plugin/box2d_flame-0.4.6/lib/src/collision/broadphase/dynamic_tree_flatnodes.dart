@@ -42,7 +42,7 @@ class DynamicTreeFlatNodes implements BroadPhaseStrategy {
 
   int _freeList;
 
-  final List<Vector2> drawVecs = new List<Vector2>(4);
+  final List<Vector2> drawVecs = List<Vector2>.generate(4, (_) => Vector2.zero());
 
   DynamicTreeFlatNodes() {
     _expandBuffers(0, _nodeCapacity);

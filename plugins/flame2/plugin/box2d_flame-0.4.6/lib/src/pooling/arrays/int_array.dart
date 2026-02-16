@@ -34,9 +34,9 @@ class IntArray {
       _map[argLength] = getInitializedArray(argLength);
     }
 
-    assert(_map[argLength].length ==
+    assert(_map[argLength]!.length ==
         argLength); // : "Array not built of correct length";
-    return _map[argLength];
+    return _map[argLength]!;
   }
 
   List<int> getInitializedArray(int argLength) {

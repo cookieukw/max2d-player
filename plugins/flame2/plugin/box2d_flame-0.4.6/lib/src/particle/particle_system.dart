@@ -25,7 +25,7 @@
 part of box2d;
 
 class ParticleBuffer<T> {
-  List<T> data;
+  List<T> data = [];
   final AllocClosure<T> allocClosure;
   int userSuppliedCapacity = 0;
   ParticleBuffer(this.allocClosure);
@@ -34,7 +34,7 @@ class ParticleBuffer<T> {
 typedef T AllocClosure<T>();
 
 class ParticleBufferInt {
-  List<int> data;
+  List<int> data = [];
   int userSuppliedCapacity;
 }
 
@@ -478,40 +478,40 @@ class ParticleSystem {
   int count = 0;
   int internalAllocatedCapacity = 0;
   int maxCount = 0;
-  ParticleBufferInt flagsBuffer;
-  ParticleBuffer<Vector2> positionBuffer;
-  ParticleBuffer<Vector2> velocityBuffer;
+  late ParticleBufferInt flagsBuffer;
+  late ParticleBuffer<Vector2> positionBuffer;
+  late ParticleBuffer<Vector2> velocityBuffer;
 
-  Float64List accumulationBuffer; // temporary values
-  List<Vector2> accumulation2Buffer; // temporary vector values
-  Float64List depthBuffer; // distance from the surface
+  Float64List accumulationBuffer = Float64List(0); // temporary values
+  List<Vector2> accumulation2Buffer = []; // temporary vector values
+  Float64List depthBuffer = Float64List(0); // distance from the surface
 
-  ParticleBuffer<ParticleColor> colorBuffer;
-  List<ParticleGroup> groupBuffer;
-  ParticleBuffer<Object> userDataBuffer;
+  late ParticleBuffer<ParticleColor> colorBuffer;
+  List<ParticleGroup> groupBuffer = [];
+  late ParticleBuffer<Object> userDataBuffer;
 
   int proxyCount = 0;
   int proxyCapacity = 0;
-  List<PsProxy> proxyBuffer;
+  List<PsProxy> proxyBuffer = [];
 
   int contactCount = 0;
   int contactCapacity = 0;
-  List<ParticleContact> contactBuffer;
+  List<ParticleContact> contactBuffer = [];
 
   int bodyContactCount = 0;
   int bodyContactCapacity = 0;
-  List<ParticleBodyContact> bodyContactBuffer;
+  List<ParticleBodyContact> bodyContactBuffer = [];
 
   int pairCount = 0;
   int pairCapacity = 0;
-  List<PsPair> pairBuffer;
+  List<PsPair> pairBuffer = [];
 
   int triadCount = 0;
   int triadCapacity = 0;
-  List<PsTriad> triadBuffer;
+  List<PsTriad> triadBuffer = [];
 
   int groupCount = 0;
-  ParticleGroup groupList;
+  ParticleGroup? groupList;
 
   double pressureStrength;
   double dampingStrength;
@@ -532,9 +532,7 @@ class ParticleSystem {
   static ParticleGroup allocParticleGroup() => ParticleGroup();
   static PsProxy allocPsProxy() => PsProxy();
 
-  ParticleSystem(World world) {
-    world = world;
-
+  ParticleSystem(this.world) {
     pressureStrength = 0.05;
     dampingStrength = 1.0;
     elasticStrength = 0.25;
@@ -551,6 +549,16 @@ class ParticleSystem {
     velocityBuffer = ParticleBuffer<Vector2>(allocVec2);
     colorBuffer = ParticleBuffer<ParticleColor>(allocParticleColor);
     userDataBuffer = ParticleBuffer<Object>(allocObject);
+    
+    accumulationBuffer = Float64List(0);
+    accumulation2Buffer = [];
+    depthBuffer = Float64List(0);
+    groupBuffer = [];
+    proxyBuffer = [];
+    contactBuffer = [];
+    bodyContactBuffer = [];
+    pairBuffer = [];
+    triadBuffer = [];
   }
 
   int createParticle(ParticleDef def) {
@@ -1970,23 +1978,23 @@ class ParticleSystem {
   }
 
   void setParticleBufferInt(
-      ParticleBufferInt buffer, List<int> newData, int newCapacity) {
+      ParticleBufferInt buffer, List<int>? newData, int newCapacity) {
     assert((newCapacity != 0) ||
         (newData == null && newCapacity == 0));
     if (buffer.userSuppliedCapacity != 0) {
       // _world._blockAllocator.Free(buffer.data, sizeof(T) * _internalAllocatedCapacity);
     }
-    buffer.data = newData;
+    buffer.data = newData ?? [];
     buffer.userSuppliedCapacity = newCapacity;
   }
 
-  void setParticleBuffer(ParticleBuffer buffer, List newData, int newCapacity) {
+  void setParticleBuffer(ParticleBuffer buffer, List? newData, int newCapacity) {
     assert((newCapacity != 0) ||
         (newData == null && newCapacity == 0));
     if (buffer.userSuppliedCapacity != 0) {
       // _world._blockAllocator.Free(buffer.data, sizeof(T) * _internalAllocatedCapacity);
     }
-    buffer.data = newData;
+    buffer.data = newData ?? [];
     buffer.userSuppliedCapacity = newCapacity;
   }
 
@@ -2014,7 +2022,7 @@ class ParticleSystem {
     return groupCount;
   }
 
-  List<ParticleGroup> getParticleGroup[] {
+  List<ParticleGroup> getParticleGroupList() {
     return groupBuffer;
   }
 

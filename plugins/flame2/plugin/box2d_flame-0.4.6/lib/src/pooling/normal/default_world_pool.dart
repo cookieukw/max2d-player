@@ -128,20 +128,20 @@ class DefaultWorldPool implements IWorldPool {
   final HashMap<int, List<int>> _aints = new HashMap<int, List<int>>();
   final HashMap<int, List<Vector2>> _avecs = new HashMap<int, List<Vector2>>();
 
-  IWorldPool _world;
+  late IWorldPool _world;
 
   IWorldPool get world => _world;
 
-  MutableStackWithPool<PolygonContact> _pcstack;
-  MutableStackWithPool<CircleContact> _ccstack;
-  MutableStackWithPool<PolygonAndCircleContact> _cpstack;
-  MutableStackWithPool<EdgeAndCircleContact> _ecstack;
-  MutableStackWithPool<EdgeAndPolygonContact> _epstack;
-  MutableStackWithPool<ChainAndCircleContact> _chcstack;
-  MutableStackWithPool<ChainAndPolygonContact> _chpstack;
+  late MutableStackWithPool<PolygonContact> _pcstack;
+  late MutableStackWithPool<CircleContact> _ccstack;
+  late MutableStackWithPool<PolygonAndCircleContact> _cpstack;
+  late MutableStackWithPool<EdgeAndCircleContact> _ecstack;
+  late MutableStackWithPool<EdgeAndPolygonContact> _epstack;
+  late MutableStackWithPool<ChainAndCircleContact> _chcstack;
+  late MutableStackWithPool<ChainAndPolygonContact> _chpstack;
 
-  Collision _collision;
-  TimeOfImpact _toi;
+  late Collision _collision;
+  late TimeOfImpact _toi;
   final Distance _dist;
 
   DefaultWorldPool(int argSize, int argContainerSize)
@@ -280,9 +280,9 @@ class DefaultWorldPool implements IWorldPool {
       _afloats[argLength] = new Float64List(argLength);
     }
 
-    assert(_afloats[argLength].length ==
+    assert(_afloats[argLength]!.length ==
         argLength); // : "Array not built with correct length";
-    return _afloats[argLength];
+    return _afloats[argLength]!;
   }
 
   List<int> getIntArray(int argLength) {
@@ -290,9 +290,9 @@ class DefaultWorldPool implements IWorldPool {
       _aints[argLength] = BufferUtils.allocClearIntList(argLength);
     }
 
-    assert(_aints[argLength].length ==
+    assert(_aints[argLength]!.length ==
         argLength); // : "Array not built with correct length";
-    return _aints[argLength];
+    return _aints[argLength]!;
   }
 
   List<Vector2> getVec2Array(int argLength) {
@@ -304,8 +304,8 @@ class DefaultWorldPool implements IWorldPool {
       _avecs[argLength] = ray;
     }
 
-    assert(_avecs[argLength].length ==
+    assert(_avecs[argLength]!.length ==
         argLength); // : "Array not built with correct length";
-    return _avecs[argLength];
+    return _avecs[argLength]!;
   }
 }

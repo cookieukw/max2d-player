@@ -74,8 +74,8 @@ class EPAxis {
 
 /// This holds polygon B expressed in frame A.
 class TempPolygon {
-  final List<Vector2> vertices = new List<Vector2>(Settings.maxPolygonVertices);
-  final List<Vector2> normals = new List<Vector2>(Settings.maxPolygonVertices);
+  final List<Vector2> vertices = List<Vector2>.generate(Settings.maxPolygonVertices, (_) => Vector2.zero());
+  final List<Vector2> normals = List<Vector2>.generate(Settings.maxPolygonVertices, (_) => Vector2.zero());
   int count = 0;
 
   TempPolygon() {
@@ -569,15 +569,15 @@ class Collision {
 
   final _EdgeResults _results1 = new _EdgeResults();
   final _EdgeResults results2 = new _EdgeResults();
-  final List<ClipVertex> _incidentEdge = new List<ClipVertex>(2);
+  final List<ClipVertex> _incidentEdge = List<ClipVertex>.generate(2, (_) => new ClipVertex());
   final Vector2 _localTangent = new Vector2.zero();
   final Vector2 _localNormal = new Vector2.zero();
   final Vector2 _planePoint = new Vector2.zero();
   final Vector2 _tangent = new Vector2.zero();
   final Vector2 _v11 = new Vector2.zero();
   final Vector2 _v12 = new Vector2.zero();
-  final List<ClipVertex> _clipPoints1 = new List<ClipVertex>(2);
-  final List<ClipVertex> _clipPoints2 = new List<ClipVertex>(2);
+  final List<ClipVertex> _clipPoints1 = List<ClipVertex>.generate(2, (_) => new ClipVertex());
+  final List<ClipVertex> _clipPoints2 = List<ClipVertex>.generate(2, (_) => new ClipVertex());
 
   /// Compute the collision manifold between two polygons.
   void collidePolygons(Manifold manifold, final PolygonShape polyA,
@@ -934,9 +934,9 @@ class EPCollider {
   final Vector2 _temp = new Vector2.zero();
   final Vector2 _edge0 = new Vector2.zero();
   final Vector2 _edge2 = new Vector2.zero();
-  final List<ClipVertex> _ie = new List<ClipVertex>(2);
-  final List<ClipVertex> _clipPoints1 = new List<ClipVertex>(2);
-  final List<ClipVertex> _clipPoints2 = new List<ClipVertex>(2);
+  final List<ClipVertex> _ie = List<ClipVertex>.generate(2, (_) => new ClipVertex());
+  final List<ClipVertex> _clipPoints1 = List<ClipVertex>.generate(2, (_) => new ClipVertex());
+  final List<ClipVertex> _clipPoints2 = List<ClipVertex>.generate(2, (_) => new ClipVertex());
   final _ReferenceFace _rf = new _ReferenceFace();
   final EPAxis _edgeAxis = new EPAxis();
   final EPAxis _polygonAxis = new EPAxis();

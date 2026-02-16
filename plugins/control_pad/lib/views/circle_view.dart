@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CircleView extends StatelessWidget {
-  final double size;
-
-  final Color color;
-
-  final List<BoxShadow> boxShadow;
-
-  final Border border;
-
-  final double opacity;
-
-  final Image buttonImage;
-
-  final Icon buttonIcon;
-
-  final String buttonText;
+  final double? size;
+  final Color? color;
+  final List<BoxShadow>? boxShadow;
+  final Border? border;
+  final double? opacity;
+  final Image? buttonImage;
+  final Icon? buttonIcon;
+  final String? buttonText;
 
   CircleView({
     this.size,
@@ -34,18 +26,16 @@ class CircleView extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      child: Center(
-        child: buttonIcon != null
-            ? buttonIcon
-            : (buttonImage != null)
-                ? buttonImage
-                : (buttonText != null) ? Text(buttonText) : null,
-      ),
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle,
         border: border,
         boxShadow: boxShadow,
+      ),
+      child: Center(
+        child: buttonIcon ?? ((buttonImage != null)
+                ? buttonImage
+                : (buttonText != null) ? Text(buttonText) : null),
       ),
     );
   }
@@ -86,8 +76,8 @@ class CircleView extends StatelessWidget {
       );
 
   factory CircleView.padBackgroundCircle(
-          double size, Color backgroundColour, borderColor, Color shadowColor,
-          {double opacity}) =>
+          double? size, Color backgroundColour, borderColor, Color? shadowColor,
+          {double? opacity}) =>
       CircleView(
         size: size,
         color: backgroundColour,
@@ -107,11 +97,11 @@ class CircleView extends StatelessWidget {
       );
 
   factory CircleView.padButtonCircle(
-    double size,
-    Color color,
-    Image image,
-    Icon icon,
-    String text,
+    double? size,
+    Color? color,
+    Image? image,
+    Icon? icon,
+    String? text,
   ) =>
       CircleView(
         size: size,
