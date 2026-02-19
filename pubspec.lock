@@ -361,10 +361,10 @@ packages:
     dependency: transitive
     description:
       name: ordered_set
-      sha256: "1bafe1332b93dc3d7e6a19b9ce3ba5a0bd23996161dd6d0f71f16f2ac4a1296f"
+      sha256: "1bfaaaee0419e43ecc9eaebd410eb4bd5039657b72011de75ff3e2915c9aac60"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "5.0.3"
   path:
     dependency: transitive
     description:

@@ -1,1 +1,0 @@
- /home/cookie/Documents/Projetos/max2d-player-main/.dart_tool/flutter_build/c488681133c0a3b3f858a7f5e48fe1b6/native_assets.json: 
