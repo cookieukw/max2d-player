@@ -24,7 +24,7 @@ int? objectcount = 0;
 
 class Clsgameobjectitem {
   List<Clscomponent> components = [];
-  Clsgameobjectitem({this.components});
+  Clsgameobjectitem({this.components = const []});
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> thelist = {};
@@ -287,8 +287,8 @@ class Clsgameobjectitem {
       {double x,
       double? y,
       double? angle,
-      @required double sx,
-      @required double sy}) {
+      required double sx,
+      required double sy}) {
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscomptransform) {
@@ -610,7 +610,7 @@ class Clscomptransform extends Clscomponent {
   double? angle;
 
   Clscomptransform(
-      {this.x, this.y, this.angle, @required this.sx, @required this.sy});
+      {this.x, this.y, this.angle, required this.sx, required this.sy});
 
   Map<String, dynamic> toJson() {
     return {
@@ -2135,10 +2135,10 @@ class Clscompstep extends Clsscriptitem {
 }
 
 class Clsactsetvelocity extends Clsscriptitem {
-  double? x;
-  double? y;
-  double? angular;
-  double? anglelimit;
+  double x;
+  double y;
+  double angular;
+  double anglelimit;
   String? expx;
   String? expy;
   String? expangular;
@@ -2150,10 +2150,10 @@ class Clsactsetvelocity extends Clsscriptitem {
   double? vswidth = 150;
 
   Clsactsetvelocity(
-      {this.x,
-      this.y,
-      this.angular,
-      this.anglelimit,
+      {this.x = double.nan,
+      this.y = double.nan,
+      this.angular = double.nan,
+      this.anglelimit = double.nan,
       this.expanglelimit,
       this.expangular,
       this.expx,
@@ -2175,10 +2175,10 @@ class Clsactsetvelocity extends Clsscriptitem {
   }
 
   Clsactsetvelocity.fromJson(Map<String, dynamic> json)
-      : x = fromjsondouble(json['x']),
-        y = fromjsondouble(json['y']),
-        angular = fromjsondouble(json['angular']),
-        anglelimit = fromjsondouble(json['anglelimit']),
+      : x = fromjsondouble(json['x']) ?? double.nan,
+        y = fromjsondouble(json['y']) ?? double.nan,
+        angular = fromjsondouble(json['angular']) ?? double.nan,
+        anglelimit = fromjsondouble(json['anglelimit']) ?? double.nan,
         expx = json['expx'],
         expy = json['expy'],
         expanglelimit = json['expanglelimit'],
@@ -2221,15 +2221,15 @@ class Clsactsetadvertisement extends Clsscriptitem {
 }
 
 class Clsactsettransform extends Clsscriptitem {
-  double? x;
+  double x;
   String? expx;
-  double? y;
+  double y;
   String? expy;
-  double? sx;
+  double sx;
   String? expsx;
-  double? sy;
+  double sy;
   String? expsy;
-  double? angle;
+  double angle;
   String? expangle;
 
   double? vsPosX = 0;
@@ -2273,11 +2273,11 @@ class Clsactsettransform extends Clsscriptitem {
   }
 
   Clsactsettransform.fromJson(Map<String, dynamic> json)
-      : x = fromjsondouble(json['x']),
-        y = fromjsondouble(json['y']),
-        sx = fromjsondouble(json['sx']),
-        sy = fromjsondouble(json['sy']),
-        angle = fromjsondouble(json['angle']),
+      : x = fromjsondouble(json['x']) ?? double.nan,
+        y = fromjsondouble(json['y']) ?? double.nan,
+        sx = fromjsondouble(json['sx']) ?? double.nan,
+        sy = fromjsondouble(json['sy']) ?? double.nan,
+        angle = fromjsondouble(json['angle']) ?? double.nan,
         expx = json['expx'],
         expy = json['expy'],
         expsx = json['expsx'],
@@ -3205,7 +3205,7 @@ class Clscompsound extends Clssoundcomponent {
   bool? isloop;
   AudioPlayer audioPlayer = AudioPlayer();
   void play() {
-    if (audioPlayer.state == AudioPlayerState.PLAYING) {
+    if (audioPlayer.state == PlayerState.PLAYING) {
     } else {
       if (volume > 0) {
         audioPlayer.play(soundspath + soundpath, isLocal: true);

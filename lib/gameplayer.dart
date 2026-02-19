@@ -46,11 +46,13 @@ class _GameplayerState extends State<Gameplayer> {
   StreamSubscription<List<int>>? listener;
 
   void start() async {
-    Stream<List<int>> stream = microphone(
+    Stream<List<int>>? stream = await MicStream.microphone(
         sampleRate: 16000, channelConfig: ChannelConfig.CHANNEL_IN_STEREO);
-    listener = stream.listen((samples) {
-      miclevel = samples.reduce(math.max).toDouble() - 130;
-    });
+    if (stream != null) {
+      listener = stream.listen((samples) {
+        miclevel = samples.reduce(math.max).toDouble() - 130;
+      });
+    }
   }
 
   void stop() async {
@@ -103,9 +105,9 @@ class _GameplayerState extends State<Gameplayer> {
       ismanaprojecsettingsloaded = true;
       setState(() {});
       if (getprojectsettingscore().orientation == "portrait") {
-        Flame.util.setPortrait();
+        Flame.device.setPortrait();
       } else if (getprojectsettingscore().orientation == "landscape") {
-        Flame.util.setLandscape();
+        Flame.device.setLandscape();
       }
       if (getprojectsettingscore()!.splashbackground != null) {
         // print(splashbackground);
@@ -149,7 +151,7 @@ class _GameplayerState extends State<Gameplayer> {
 
   @override
   void dispose() {
-    Flame.util.setLandscape();
+    Flame.device.setLandscape();
     for (int a = 0; a < soundslistscore.length; a++) {
       Clscompsound t = soundslistscore[a];
       t.stop();

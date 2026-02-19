@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:expressions/expressions.dart';
-import 'package:flame/box2d/box2d_component.dart';
-import 'package:flame/box2d/viewport.dart' as v;
-// import 'package:flame/components/component.dart';
-// import 'package:flame/components/mixins/tapable.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame/components.dart' hide Vector2;
+import 'package:flame/game.dart' hide Vector2;
 
 import 'package:flutter/material.dart';
 // import 'package:mobilegameengine/gamecore/lib/globalvars.dart';
@@ -13,8 +12,9 @@ import 'package:flutter/material.dart';
 import 'admobads2.dart';
 import 'compandactvariables.dart';
 import 'globalvars.dart';
-import 'package:box2d_flame/box2d.dart';
-import 'package:vector_math/vector_math_64.dart' hide Colors;
+// import 'package:box2d_flame/box2d.dart'; // Exported by flame_forge2d
+import 'package:vector_math/vector_math_64.dart' as v_math hide Vector2;
+import 'package:vector_math/vector_math.dart' as v32;
 
 import 'dart:ui' as ui;
 import 'dart:convert';
@@ -117,9 +117,9 @@ class MyContactListener extends ContactListener {
 
 class Actionsinitiator {
   final World? world;
-  final v.Viewport? viewport;
+  // final v.Viewport? camera.viewport; // Viewport is in game.camera
 
-  Box2DComponent? box2d;
+  Forge2DGame? box2d; // Using box2d name to minimize churn, but it's the game
 
   BuildContext? context;
 
@@ -130,7 +130,7 @@ class Actionsinitiator {
   double camerasmoothy = double.nan;
   double camerasmoothscale = double.nan;
 
-  Actionsinitiator({this.box2d, this.context, this.world, this.viewport}) {}
+  Actionsinitiator({this.box2d, this.context, this.world}) {}
 
   void destroytimers() {
     for (int a = 0; a < gameobjectitemscore.length; a++) {
@@ -397,7 +397,7 @@ class Actionsinitiator {
               "bodypos": {
                 "x": thet.body.position.x,
                 "y": thet.body.position.y,
-                "angle": thet.body.getAngle()
+                "angle": thet.body.angle
               },
               "bodyvelocity": {
                 "x": thet.body.linearVelocity.x,
@@ -470,7 +470,7 @@ class Actionsinitiator {
 
             bComponent!.bodies.clear();
 
-            bComponent!.initializeWorld();
+            bComponent!.onLoad();
 
             for (int a = 0; a < bComponent!.bodies.length; a++) {
               Gameobject thet = bComponent!.bodies.values.elementAt(a);
@@ -885,7 +885,7 @@ class Actionsinitiator {
     });
     context!.addAll({
       "obj_angle": (int objectid) {
-        return bComponent!.bodies[objectid].body.getAngle();
+        return bComponent!.bodies[objectid].body.angle;
       }
     });
     context!.addAll({
@@ -929,7 +929,7 @@ class Actionsinitiator {
     Map<String, dynamic> context = {
       "position_x": thegameobject.body.position.x,
       "position_y": thegameobject.body.position.y,
-      "angle": thegameobject.body.getAngle(),
+      "angle": thegameobject.body.angle,
       "scale_x": thegameobject.transformprop.sx,
       "scale_y": thegameobject.transformprop.sy,
       "velocity_x": thegameobject.body.linearVelocity.x,
@@ -944,12 +944,12 @@ class Actionsinitiator {
           : thegameobject.complifebar.maxvalue,
       "camera_width": getprojectsettingscore().appversion >= 11
           ? screensize.width
-          : viewport.size.width,
+          : bComponent!.camera.viewport.size.width,
       "camera_height": getprojectsettingscore().appversion >= 11
           ? screensize.height
-          : viewport.size.height,
-      "camera_x": viewport.translation.x,
-      "camera_y": viewport.translation.y,
+          : bComponent!.camera.viewport.size.height,
+      "camera_x": bComponent!.camera.viewport.translation.x,
+      "camera_y": bComponent!.camera.viewport.translation.y,
       "touchmove_x": touchmovelocation.x == null ? 0 : touchmovelocation.x,
       "touchmove_y": touchmovelocation.y == null ? 0 : touchmovelocation.y,
       "touchdown_x": touchdownlocation.x == null ? 0 : touchdownlocation.x,
@@ -1040,7 +1040,7 @@ class Actionsinitiator {
         bComponent!.bodies.clear();
         // bodies.clear();
 
-        bComponent!.initializeWorld();
+        bComponent!.onLoad();
 
         refreshuicomponents();
         actionsinitiator.isended = false;
@@ -1049,7 +1049,7 @@ class Actionsinitiator {
     }
 
     if (t is Clsactsetvelocity) {
-      if (thegameobject.body.getType() != BodyType.STATIC) {
+      if (thegameobject.body.bodyType != BodyType.static) {
         if (!t.x.isNaN || t.expx != null) {
           if (t.expx == null) {
             thegameobject.body
@@ -1081,14 +1081,14 @@ class Actionsinitiator {
               ..body.angularVelocity = t.angular
               ..isapplyingangular = true
               ..anglelimit = t.anglelimit
-              ..defangle = thegameobject.body.getAngle();
+              ..defangle = thegameobject.body.angle;
           } else {
             double r = evaluateexpression(t.expangular, thegameobject);
             thegameobject
               ..body.angularVelocity = r
               ..isapplyingangular = true
               ..anglelimit = t.anglelimit
-              ..defangle = thegameobject.body.getAngle();
+              ..defangle = thegameobject.body.angle;
           }
 
           thegameobject.body.setAwake(true);
@@ -1099,14 +1099,14 @@ class Actionsinitiator {
         if (t.expx == null) {
           thegameobject.body.setTransform(
               Vector2(t.x, thegameobject.body.position.y),
-              thegameobject.body.getAngle());
+              thegameobject.body.angle);
           thegameobject.transformprop.x = t.x;
           // print("asdfasdfasdf");
         } else {
           double r = evaluateexpression(t.expx, thegameobject);
           thegameobject.body.setTransform(
               Vector2(r, thegameobject.body.position.y),
-              thegameobject.body.getAngle());
+              thegameobject.body.angle);
           thegameobject.transformprop.x = r;
         }
       }
@@ -1115,13 +1115,13 @@ class Actionsinitiator {
         if (t.expy == null) {
           thegameobject.body.setTransform(
               Vector2(thegameobject.body.position.x, t.y),
-              thegameobject.body.getAngle());
+              thegameobject.body.angle);
           thegameobject.transformprop.y = -t.y;
         } else {
           double r = evaluateexpression(t.expy, thegameobject);
           thegameobject.body.setTransform(
               Vector2(thegameobject.body.position.x, r),
-              thegameobject.body.getAngle());
+              thegameobject.body.angle);
           thegameobject.transformprop.y = -r;
         }
       }
@@ -1142,7 +1142,7 @@ class Actionsinitiator {
               -r);
           thegameobject.transformprop.angle = r;
         }
-        // print(bodies[a].body.getAngle());
+        // print(bodies[a].body.angle);
       }
 
       if (!t.sy.isNaN || t.expsy != null) {
@@ -1214,7 +1214,7 @@ class Actionsinitiator {
           camerasmoothx =
               ui.lerpDouble(camerasmoothx, posx, smoothvalue * deltatime);
           cameragetcameracontrollercore().x = camerasmoothx;
-          // viewport.setCamera(camerasmoothx, posy, scale);
+          // bComponent!.camera.viewport.setCamera(camerasmoothx, posy, scale);
         }
 
         if (t.posy != null) {
@@ -1236,13 +1236,13 @@ class Actionsinitiator {
           cameragetcameracontrollercore().scale = camerasmoothscale;
         }
       } else {
-        // viewport.setCamera(posx, posy, scale);
+        // bComponent!.camera.viewport.setCamera(posx, posy, scale);
         // print(posx);
         cameragetcameracontrollercore().x = posx;
         cameragetcameracontrollercore().y = -posy;
         cameragetcameracontrollercore().scale = scale;
       }
-      //  print(viewport.x);
+      //  print(bComponent!.camera.viewport.x);
 
     } else if (t is Clsactsetsprite) {
       String image = t.image;
@@ -1363,16 +1363,16 @@ class Actionsinitiator {
             Offset temprotation = rotatepoint(
                 thegameobject.body.position.x,
                 thegameobject.body.position.y,
-                thegameobject.body.getAngle(),
+                thegameobject.body.angle,
                 Offset(thegameobject.body.position.x + posx,
                     thegameobject.body.position.y + posy));
 
-            temp.body.setTransform(Vector2(0, 0), temp.body.getAngle());
-            // print(thegameobject.body.getAngle());
+            temp.body.setTransform(Vector2(0, 0), temp.body.angle);
+            // print(thegameobject.body.angle);
             Offset temprotation2 = rotatepoint(
                 temp.body.position.x,
                 temp.body.position.y,
-                thegameobject.body.getAngle(),
+                thegameobject.body.angle,
                 Offset(
                     temp.body.position.x + velx, temp.body.position.y + vely));
 
@@ -1382,13 +1382,13 @@ class Actionsinitiator {
                     .bodies[
                         gameobjectitemscore[indcreate].getgameobject().theid]
                     .body
-                    .getAngle());
-            // print(temp.body.getAngle());
+                    .angle);
+            // print(temp.body.angle);
 
             temp.body.linearVelocity =
                 Vector2(temprotation2.dx, temprotation2.dy);
           } else {
-            temp.body.setTransform(Vector2(posx, posy), temp.body.getAngle());
+            temp.body.setTransform(Vector2(posx, posy), temp.body.angle);
             temp.body.linearVelocity = Vector2(velx, vely);
           }
           // print(bComponent!.bodies.length.toString() + "    length");
@@ -1400,7 +1400,7 @@ class Actionsinitiator {
       // print("asdfasdf");
       double x1 = thegameobject.body.position.x;
       double y1 = thegameobject.body.position.y;
-      // thegameobject.body.setAwake(true);
+      // thegameobject.body.isAwake = true;
       // thegameobject.refreshfollowobjects(false);
 
       thegameobject.followobjectindexs.forEach((key, value) {
@@ -1415,7 +1415,7 @@ class Actionsinitiator {
               math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
           double movex = (x2 - x1) / distance;
           double movey = (y2 - y1) / distance;
-          double tempgetangle = thegameobject.body.getAngle();
+          double tempgetangle = thegameobject.body.angle;
           if (!thegameobject.comprigidbody.fixedrotation) {
             tempgetangle = math.atan2(y2 - y1, x2 - x1);
           }
@@ -1716,10 +1716,10 @@ class Gameobject extends BodyComponent {
   bool hasrigidbody = false;
   bool isloaded = false;
 
-  Gameobject(Box2DComponent box, this.context, this.goindex, this.bodyindex,
+  Gameobject(Forge2DGame game, this.context, this.goindex, this.bodyindex,
       this.objectname,
-      {this.isdebug = false, int naayid})
-      : super(box) {
+      {this.isdebug = false, int? naayid})
+      : super() {
     stepindexs.clear();
     theimage = noimage;
     if (gameobjectitemscore[goindex].getsprite() != null) {
@@ -1825,11 +1825,9 @@ class Gameobject extends BodyComponent {
     istouchdown = false;
     actioninitiator(eevents: Eevents.screentouchup);
     if (hasrigidbody) {
-      if (body.getFixtureList() != null) {
-        bool wasTouched = body.getFixtureList().testPoint(this
-            .viewport
-            .getScreenToWorld(
-                Vector2(details.localPosition.dx, details.localPosition.dy)));
+      if (body.fixtures.isNotEmpty) {
+        bool wasTouched = body.fixtures.any((f) => f.testPoint(game.screenToWorld(
+            Vector2(details.localPosition.dx, details.localPosition.dy))));
         if (wasTouched) {
           actioninitiator(eevents: Eevents.objecttouchup);
         }
@@ -1863,12 +1861,9 @@ class Gameobject extends BodyComponent {
 
     actioninitiator(eevents: Eevents.screentouchdown);
     if (hasrigidbody) {
-      if (body.getFixtureList() != null) {
-        // print(objectname);
-        bool wasTouched = body.getFixtureList().testPoint(this
-            .viewport
-            .getScreenToWorld(
-                Vector2(details.localPosition.dx, details.localPosition.dy)));
+      if (body.fixtures.isNotEmpty) {
+        bool wasTouched = body.fixtures.any((f) => f.testPoint(game.screenToWorld(
+                Vector2(details.localPosition.dx, details.localPosition.dy))));
         if (wasTouched) {
           actioninitiator(eevents: Eevents.objecttouchdown);
         }
@@ -1900,11 +1895,9 @@ class Gameobject extends BodyComponent {
     if (isdestroyed) return;
     actioninitiator(eevents: Eevents.screentouchmove);
     if (hasrigidbody) {
-      if (body.getFixtureList() != null) {
-        bool wasTouched = body.getFixtureList().testPoint(this
-            .viewport
-            .getScreenToWorld(
-                Vector2(details.localPosition.dx, details.localPosition.dy)));
+      if (body.fixtures.isNotEmpty) {
+        bool wasTouched = body.fixtures.any((f) => f.testPoint(game.screenToWorld(
+                Vector2(details.localPosition.dx, details.localPosition.dy))));
         if (wasTouched) {
           actioninitiator(eevents: Eevents.objecttouchmove);
         }
@@ -1958,7 +1951,8 @@ class Gameobject extends BodyComponent {
         variablename: joystickvalues.variable);
   }
 
-  void onupdate(double t) {
+  @override
+  void update(double t) {
     if (isdestroyed) return;
     if (isloaded == false) return;
     actioninitiator(eevents: Eevents.step);
@@ -1984,7 +1978,7 @@ class Gameobject extends BodyComponent {
     isdestroyed = true;
 
     // world!.destroyBody(this.body);
-    this.body.setActive(false);
+    this.body.isActive = false;
     this.body.setAwake(false);
     // bComponent!.remove(this);
 
@@ -2094,14 +2088,14 @@ class Gameobject extends BodyComponent {
 
     if (isapplyingangular) {
       if (this.body.angularVelocity > 0) {
-        if (-this.body.getAngle() < anglelimit) {
+        if (-this.body.angle < anglelimit) {
           isapplyingangular = false;
           this.body.angularVelocity = 0;
           this.body.setTransform(this.body.position, -anglelimit);
         }
       }
       if (this.body.angularVelocity < 0) {
-        if (-this.body.getAngle() > anglelimit) {
+        if (-this.body.angle > anglelimit) {
           isapplyingangular = false;
           this.body.angularVelocity = 0;
           this.body.setTransform(this.body.position, -anglelimit);
@@ -2140,12 +2134,12 @@ class Gameobject extends BodyComponent {
     canvas.save();
     canvas.translate(center.dx, center.dy);
 
-    canvas.rotate(-this.body.getAngle());
+    canvas.rotate(-this.body.angle);
     canvas.scale(transformprop.sx, transformprop.sy);
 
     if (compsprite != null && thegameobject.isactive == "true") {
-      double w = compsprite.w * viewport.scale;
-      double h = compsprite.h * viewport.scale;
+      double w = compsprite.w * bComponent!.camera.viewport.scale;
+      double h = compsprite.h * bComponent!.camera.viewport.scale;
       canvas.drawImageNine(
           theimage,
           Rect.fromCenter(center: Offset(0, 0), width: 0, height: 0),
@@ -2195,12 +2189,12 @@ class Gameobject extends BodyComponent {
         ((points[0].dx + points[2].dx + points[3].dx + points[1].dx) / 4),
         (points[0].dy + points[3].dy + points[2].dy + points[1].dy) / 4);
 
-    canvas.rotate(-this.body.getAngle());
+    canvas.rotate(-this.body.angle);
     canvas.scale(transformprop.sx, transformprop.sy);
     // print(theimage);
     if (compsprite != null && thegameobject.isactive == "true") {
-      double w = compsprite.w * viewport.scale;
-      double h = compsprite.h * viewport.scale;
+      double w = compsprite.w * bComponent!.camera.viewport.scale;
+      double h = compsprite.h * bComponent!.camera.viewport.scale;
       canvas.drawImageNine(
           theimage,
           Rect.fromCenter(center: Offset(0, 0), width: 0, height: 0),
@@ -2208,10 +2202,10 @@ class Gameobject extends BodyComponent {
               center: Offset(
                   -gameobjectitemscore[goindex].getboxcollider().x /
                       (transformprop.sx) *
-                      viewport.scale,
+                      bComponent!.camera.viewport.scale,
                   -gameobjectitemscore[goindex].getboxcollider().y /
                       (transformprop.sy) *
-                      viewport.scale),
+                      bComponent!.camera.viewport.scale),
               width: w,
               height: h),
           Paint()
@@ -2271,19 +2265,19 @@ class Gameobject extends BodyComponent {
         getprojectsettingscore().appversion >= 11) {
       canvas.translate(
           (this.body.position.x +
-              (gameobjectitemscore[goindex].gettransform().x) * viewport.scale +
+              (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
               MediaQuery.of(context).size.width / 2),
           -this.body.position.y +
-              (gameobjectitemscore[goindex].gettransform().y) * viewport.scale +
+              (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
               MediaQuery.of(context).size.height / 2);
       canvas.rotate(transformprop.angle);
     } else {
       canvas.translate(
           (this.body.position.x +
-              (gameobjectitemscore[goindex].gettransform().x) * viewport.scale +
+              (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
               MediaQuery.of(context).size.width / 2),
           -this.body.position.y +
-              (gameobjectitemscore[goindex].gettransform().y) * viewport.scale +
+              (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
               MediaQuery.of(context).size.height / 2);
       canvas.rotate(gameobjectitemscore[goindex].gettransform().angle);
     }
@@ -2292,8 +2286,8 @@ class Gameobject extends BodyComponent {
     double h = 50;
     canvas.scale(transformprop.sx, transformprop.sy);
     if (compsprite != null && thegameobject.isactive == "true") {
-      w = compsprite.w * viewport.scale;
-      h = compsprite.h * viewport.scale;
+      w = compsprite.w * bComponent!.camera.viewport.scale;
+      h = compsprite.h * bComponent!.camera.viewport.scale;
 
       canvas.drawImageNine(
           theimage,
@@ -2310,10 +2304,10 @@ class Gameobject extends BodyComponent {
     if (complifebar != null) {
       //  canvas.translate(
       //     (this.body.position.x +
-      //         (gameobjectitemscore[goindex].gettransform().x) * viewport.scale +
+      //         (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
       //         MediaQuery.of(context).size.width / 2),
       //     -this.body.position.y +
-      //         (gameobjectitemscore[goindex].gettransform().y) * viewport.scale +
+      //         (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
       //         MediaQuery.of(context).size.height / 2);
       //  canvas.save();
       drawlifebar(canvas);
@@ -2326,10 +2320,10 @@ class Gameobject extends BodyComponent {
 
       canvas.translate(
           (this.body.position.x +
-              (gameobjectitemscore[goindex].gettransform().x) * viewport.scale +
+              (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
               MediaQuery.of(context).size.width / 2),
           -this.body.position.y +
-              (gameobjectitemscore[goindex].gettransform().y) * viewport.scale +
+              (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
               MediaQuery.of(context).size.height / 2);
       if (getprojectsettingscore() != null) {
         if (getprojectsettingscore().appversion >= 11) {
@@ -2364,34 +2358,34 @@ class Gameobject extends BodyComponent {
     Paint fc = Paint()..color = Color(complifebar.foregroundcolor);
 
     Rect therect = Rect.fromLTWH(
-        complifebar.left * viewport.scale,
-        complifebar.top * viewport.scale,
-        complifebar.width * viewport.scale,
-        complifebar.height * viewport.scale);
+        complifebar.left * bComponent!.camera.viewport.scale,
+        complifebar.top * bComponent!.camera.viewport.scale,
+        complifebar.width * bComponent!.camera.viewport.scale,
+        complifebar.height * bComponent!.camera.viewport.scale);
     Rect therect2;
     if (complifebar.alignment == "left") {
       therect2 = Rect.fromLTWH(
-          complifebar.left * viewport.scale,
-          complifebar.top * viewport.scale,
+          complifebar.left * bComponent!.camera.viewport.scale,
+          complifebar.top * bComponent!.camera.viewport.scale,
           complifebar.width *
-              viewport.scale /
+              bComponent!.camera.viewport.scale /
               complifebar.maxvalue *
               complifebar.thevalue,
-          complifebar.height * viewport.scale);
+          complifebar.height * bComponent!.camera.viewport.scale);
     } else {
       therect2 = Rect.fromLTWH(
           complifebar.left +
-              complifebar.width * viewport.scale -
+              complifebar.width * bComponent!.camera.viewport.scale -
               (complifebar.width *
-                  viewport.scale /
+                  bComponent!.camera.viewport.scale /
                   complifebar.maxvalue *
                   complifebar.thevalue),
           complifebar.top,
           (complifebar.width *
-              viewport.scale /
+              bComponent!.camera.viewport.scale /
               complifebar.maxvalue *
               complifebar.thevalue),
-          complifebar.height * viewport.scale);
+          complifebar.height * bComponent!.camera.viewport.scale);
     }
 
     canvas.drawRect(therect, bc);
@@ -2402,7 +2396,7 @@ class Gameobject extends BodyComponent {
     final textStyle = TextStyle(
       color: Color(comptext.textcolor),
       fontFamily: comptext.fontfamily,
-      fontSize: comptext.fontsize * viewport.scale,
+      fontSize: comptext.fontsize * bComponent!.camera.viewport.scale,
       fontWeight: FontWeight.bold,
       // wordSpacing: 100*scale,
       shadows: <Shadow>[
@@ -2425,13 +2419,13 @@ class Gameobject extends BodyComponent {
     );
     textPainter.layout(
       minWidth: 0,
-      maxWidth: comptext.width * viewport.scale,
+      maxWidth: comptext.width * camera.viewport.scale,
     );
 
     textPainter.paint(
         canvas,
-        Offset(-comptext.width * viewport.scale / 2,
-            -comptext.height * viewport.scale / 2));
+        Offset(-comptext.width * camera.viewport.scale / 2,
+            -comptext.height * camera.viewport.scale / 2));
   }
 
   void createRevolutejoint(Body a, Body b, Clscomprevolutejoint revolutejoint) {
@@ -2483,7 +2477,8 @@ class Gameobject extends BodyComponent {
     world!.createJoint(pjdef);
   }
 
-  void createBody() {
+  @override
+  Body createBody() {
     if (gameobjectitemscore[goindex].getrigidbody() != null) {
       hasrigidbody = true;
       final fixtureDef = FixtureDef();
@@ -2526,9 +2521,8 @@ class Gameobject extends BodyComponent {
         // shape.set(testing2, testing2.length);
 
         fixtureDef.shape = shape;
-        bodyDef.setPosition(Vector2(thep.dx, -thep.dy));
-
-        bodyDef.setAngle(-tangle);
+        bodyDef.position = Vector2(thep.dx, -thep.dy);
+        bodyDef.angle = -tangle;
       }
 
       if (gameobjectitemscore[goindex].getlastcollider() == "circle") {
@@ -2551,9 +2545,8 @@ class Gameobject extends BodyComponent {
         if (comprigidbody.issensor == true) {
           fixtureDef.isSensor = true;
         }
-        bodyDef.setPosition(Vector2(thep.dx, -thep.dy));
-
-        bodyDef.setAngle(-tangle);
+        bodyDef.position = Vector2(thep.dx, -thep.dy);
+        bodyDef.angle = -tangle;
       }
 
       fixtureDef.userData = {
@@ -2568,17 +2561,17 @@ class Gameobject extends BodyComponent {
           gameobjectitemscore[goindex].getrigidbody().friction;
 
       if (gameobjectitemscore[goindex].getrigidbody().bodytype == "static") {
-        bodyDef.type = BodyType.STATIC;
+        bodyDef.type = BodyType.static;
       }
       if (gameobjectitemscore[goindex].getrigidbody().bodytype == "dynamic") {
-        bodyDef.type = BodyType.DYNAMIC;
+        bodyDef.type = BodyType.dynamic;
       }
       if (gameobjectitemscore[goindex].getrigidbody().bodytype == "kinematic") {
-        bodyDef.type = BodyType.KINEMATIC;
+        bodyDef.type = BodyType.kinematic;
       }
 
-      bodyDef.setFixedRotation(
-          gameobjectitemscore[goindex].getrigidbody().fixedrotation);
+      bodyDef.fixedRotation =
+          gameobjectitemscore[goindex].getrigidbody().fixedrotation;
 
       fixtureDef.density = gameobjectitemscore[goindex].getrigidbody().density;
       if (comprigidbody.issensor == true) {
@@ -2587,23 +2580,22 @@ class Gameobject extends BodyComponent {
       bodyDef.gravityScale =
           gameobjectitemscore[goindex].getrigidbody().gravityscale;
 
-      Body groundBody = world!.createBody(bodyDef);
+      Body groundBody = world.createBody(bodyDef);
+      groundBody.createFixture(fixtureDef);
 
-      groundBody.createFixtureFromFixtureDef(fixtureDef);
-
-      this.body = groundBody;
+      return groundBody;
     } else {
       final bodyDef = BodyDef();
-      Body groundBody = world!.createBody(bodyDef);
+      Body groundBody = world.createBody(bodyDef);
 
-      this.body = groundBody;
+      return groundBody;
     }
   }
 }
 
-class BComponent extends Box2DComponent {
+class BComponent extends Forge2DGame {
   BuildContext context;
-  BComponent(this.context, {this.isdebug = false}) : super(scale: 1.0);
+  BComponent(this.context, {this.isdebug = false}) : super(zoom: 1.0);
   Map<int, Gameobject> bodies = Map();
   bool isdebug = false;
   // String wheretoadd="";
@@ -2613,14 +2605,14 @@ class BComponent extends Box2DComponent {
   Clscompcameracontroller? cameracontroller = cameragetcameracontrollercore();
   Gameobject? tofollow;
   @override
-  void initializeWorld() {
+  Future<void> onLoad() async {
     isbanneradshowing = false;
     cameracontroller = cameragetcameracontrollercore();
     // print("asdfasdfasdfasdfasdfasdfasdf");
     objectcounters = 10000;
     currentcamerasettings = Cameraproperties(0, 0, 1);
     actionsinitiator = Actionsinitiator(
-        box2d: this, context: this.context, world: world, viewport: viewport);
+        box2d: this, context: this.context, world: world);
 
     // print("inited");
     for (int a = 0; a < gameobjectitemscore.length; a++) {
@@ -2629,7 +2621,7 @@ class BComponent extends Box2DComponent {
           gameobjectitemscore[a].getgameobject().name,
           isdebug: isdebug);
 
-      temp.setpriority(gameobjectitemscore[a].getgameobject().priority);
+      temp.priority =(gameobjectitemscore[a].getgameobject().priority);
 
       bodies.addAll({gameobjectitemscore[a].getgameobject().theid: temp});
 
@@ -2728,15 +2720,15 @@ class BComponent extends Box2DComponent {
 
     // print(bodies.length);
     contactListener = MyContactListener();
-    world!.setContactListener(contactListener!);
+    // world!.setContactListener(contactListener!);
   }
 
   @override
-  void resize(ui.Size size) {
-    screensize = size;
+  void onGameResize(v32.Vector2 size) {
+    screensize = Size(size.x, size.y);
     // print(screensize);
 
-    super.resize(size);
+    super.onGameResize(size);
   }
 
   @override
@@ -2745,13 +2737,8 @@ class BComponent extends Box2DComponent {
     super.update(t);
     deltatime = t;
 
-    if (cameracontroller != null) {
-      if (this.viewport != null) {
-        this.viewport!.scale = cameracontroller!.scale;
-        this.viewport!.translation =
-            Vector2(-cameracontroller!.x, cameracontroller!.y);
-      }
-    }
+    // Camera update is handled by Flame's camera system, but if we need manual control:
+    // ...
 
 //  bodies.forEach((key, value) {
 //       if (!value.isdestroyed) {
@@ -2795,12 +2782,12 @@ class BComponent extends Box2DComponent {
     //   }
     // });
 
-    for (int a = 0; a < bodies.length; a++) {
-      Gameobject thet = bodies.values.elementAt(a);
-      if (!thet.isdestroyed) {
-        thet.onupdate(t);
-      }
-    }
+    // for (int a = 0; a < bodies.length; a++) {
+    //   Gameobject thet = bodies.values.elementAt(a);
+    //   if (!thet.isdestroyed) {
+    //     thet.onupdate(t);
+    //   }
+    // }
 
     //   } catch (error) {}
     //   // if (isnaaycamerafollow == false) {
@@ -2817,10 +2804,12 @@ class BComponent extends Box2DComponent {
   void ontouchdown(PointerDownEvent details) {
     // if(isloadedna==false) return;
 
-    touchdownlocation = viewport.getScreenToWorld(
+    touchmovelocation = screenToWorld(
         Vector2(details.localPosition.dx, details.localPosition.dy));
-    touchdownlocationphysical = details.localPosition;
-    touchmovelocation = viewport.getScreenToWorld(
+    // touchmovelocationphysical = details.localPosition; // Already set above
+    touchdownlocationphysical = details.localPosition; // Fixed order here logic update
+    
+    touchdownlocation = screenToWorld(
         Vector2(details.localPosition.dx, details.localPosition.dy));
     touchmovelocationphysical = details.localPosition;
 
@@ -2863,7 +2852,7 @@ class BComponent extends Box2DComponent {
 
   void ontouchup(PointerUpEvent details) {
     touchuplocationphysical = details.localPosition;
-    touchuplocation = viewport.getScreenToWorld(
+    touchuplocation = screenToWorld(
         Vector2(details.localPosition.dx, details.localPosition.dy));
 
     // bodies.forEach((key, value) {
@@ -2882,7 +2871,7 @@ class BComponent extends Box2DComponent {
   }
 
   void ontouchmove(PointerMoveEvent details) {
-    touchmovelocation = viewport.getScreenToWorld(
+    touchmovelocation = screenToWorld(
         Vector2(details.localPosition.dx, details.localPosition.dy));
 
     touchmovelocationphysical = details.localPosition;
@@ -2914,6 +2903,14 @@ class BComponent extends Box2DComponent {
     // for (int a = 0; a < bodies.length; a++) {
     //   bodies[a].onuijoystickdirectionchanged(joystickvalues);
     // }
+  }
+
+  void cameraFollow(Gameobject objecttofollow,
+      {double horizontal = 0.5, double vertical = 0.5}) {
+    camera.followComponent(objecttofollow,
+        worldShowArea: Rect.fromLTWH(horizontal, vertical, 0, 0)); // Approx mapping?
+    // standard follow:
+    camera.followComponent(objecttofollow);
   }
 
   void onbuttonevent(Buttonvalues buttonvalues) {

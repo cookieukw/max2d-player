@@ -9,22 +9,24 @@ import 'package:flutter/gestures.dart';
 
 // import 'flame2/lib/effects/effects.dart';
 // import 'package:flame/effects/move_effect.dart';
-import 'package:flame/components/component.dart';
+import 'package:flame/components.dart';
+import 'package:flame/game.dart'; // For FlameGame
 import 'actions.dart';
 import 'compandactvariables.dart';
 import 'globalvars.dart';
 
-class Gameview extends BaseGame {
+class Gameview extends FlameGame {
   BuildContext context;
   bool isdebug;
   bool recordFps() => true;
 
   Gameview(this.context, {this.isdebug = false}) {
-    initialize();
+    // initialize(); // Removed as onLoad is handled by Flame
     bComponent = BComponent(context, isdebug: isdebug);
 
     if (bComponent == null) return;
-    bComponent!.initializeWorld();
+    if (bComponent == null) return;
+    add(bComponent!); // Add BComponent (Forge2DGame) as a child component
 
     uicomponents.forEach((f) {
       if (f is Clsuijoystickdirectional) {
@@ -46,14 +48,14 @@ class Gameview extends BaseGame {
     gameisdebug = isdebug;
   }
 
-  @override
-  bool debugMode() {
-    // TODO: implement debugMode
-    return super.debugMode();
-  }
+  // @override
+  // bool debugMode() {
+  //   return super.debugMode;
+  // }
 
-  void initialize() async {
-    resize(await Flame.util.initialDimensions());
+  @override
+  Future<void> onLoad() async {
+    // resize(await Flame.device.initialDimensions()); // handled by system
   }
 
   @override
@@ -77,10 +79,10 @@ class Gameview extends BaseGame {
 
     // print(camera_getcameracontroller().backgroundcolor);
 
-    bComponent!.render(canvas);
+    // bComponent!.render(canvas); // handled by add()
 
     if (isdebug) {
-      drawtext(canvas, "fps: " + fps(1).toStringAsFixed(0), themargin);
+      // drawtext(canvas, "fps: " + fps(1).toStringAsFixed(0), themargin);
 
       if (getprojectsettingscore()!.usingmicrophone == true) {
         themargin = themargin + 20;
@@ -210,14 +212,13 @@ class Gameview extends BaseGame {
     super.update(t);
     if (bComponent == null) return;
 
-    bComponent!.update(t);
+    // bComponent!.update(t); // handled by add()
   }
 
   @override
-  void resize(Size size) {
-    if (bComponent == null) return;
-
-    bComponent!.resize(size);
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    // bComponent!.resize(size); // handled by add()
   }
 
   void onTouchDown(PointerDownEvent details) {

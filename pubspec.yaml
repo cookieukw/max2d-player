@@ -25,14 +25,19 @@ dependencies:
   mic_stream: ^0.7.2
   sensors_plus: ^6.0.0 # Replaces sensors
   flutter_archive: ^5.0.0
+  audioplayers: ^0.20.1
+  path_provider: ^2.0.0
   # draggable_fab: ^0.2.0 # Check if exists, or keep old for now and let resolver complain
   rename: ^2.0.1
   font_awesome_flutter: ^10.0.0
   google_mobile_ads: ^5.0.0 # Replaces firebase_admob
-  flame:
-    path: plugins/flame2/
+  # flame:
+  #   path: plugins/flame2/
+  flame: ^1.0.0
+  flame_forge2d: ^0.16.0
   control_pad:
     path: plugins/control_pad/
+  # control_pad: ^1.1.1+1 # Matches local version
   flutter:
     sdk: flutter
 
