@@ -35,7 +35,7 @@ typedef T AllocClosure<T>();
 
 class ParticleBufferInt {
   List<int> data = [];
-  int userSuppliedCapacity;
+  int userSuppliedCapacity = 0;
 }
 
 /// Connection between two particles
@@ -91,9 +91,9 @@ class NewIndices {
 }
 
 class DestroyParticlesInShapeCallback implements ParticleQueryCallback {
-  ParticleSystem system;
-  Shape shape;
-  Transform xf;
+  late ParticleSystem system;
+  late Shape shape;
+  late Transform xf;
   bool callDestructionListener = false;
   int destroyed = 0;
 
@@ -121,7 +121,7 @@ class DestroyParticlesInShapeCallback implements ParticleQueryCallback {
 }
 
 class UpdateBodyContactsCallback implements QueryCallback {
-  ParticleSystem system;
+  late ParticleSystem system;
 
   final Vector2 _tempVec = Vector2.zero();
 
@@ -260,9 +260,9 @@ class CreateParticleGroupCallback implements VoronoiDiagramCallback {
     }
   }
 
-  ParticleSystem system;
-  ParticleGroupDef def; // pointer
-  int firstIndex;
+  late ParticleSystem system;
+  late ParticleGroupDef def; // pointer
+  late int firstIndex;
 }
 
 // Callback used with VoronoiDiagram.
@@ -324,14 +324,14 @@ class JoinParticleGroupsCallback implements VoronoiDiagramCallback {
     }
   }
 
-  ParticleSystem system;
-  ParticleGroup groupA;
-  ParticleGroup groupB;
+  late ParticleSystem system;
+  late ParticleGroup groupA;
+  late ParticleGroup groupB;
 }
 
 class SolveCollisionCallback implements QueryCallback {
-  ParticleSystem system;
-  TimeStep step;
+  late ParticleSystem system;
+  late TimeStep step;
 
   final RayCastInput input = RayCastInput();
   final RayCastOutput output = RayCastOutput();
@@ -487,8 +487,8 @@ class ParticleSystem {
   Float64List depthBuffer = Float64List(0); // distance from the surface
 
   late ParticleBuffer<ParticleColor> colorBuffer;
-  List<ParticleGroup> groupBuffer = [];
-  late ParticleBuffer<Object> userDataBuffer;
+  List<ParticleGroup?> groupBuffer = [];
+  late ParticleBuffer<Object?> userDataBuffer;
 
   int proxyCount = 0;
   int proxyCapacity = 0;
@@ -513,18 +513,18 @@ class ParticleSystem {
   int groupCount = 0;
   ParticleGroup? groupList;
 
-  double pressureStrength;
-  double dampingStrength;
-  double elasticStrength;
-  double springStrength;
-  double viscousStrength;
-  double surfaceTensionStrengthA;
-  double surfaceTensionStrengthB;
-  double powderStrength;
-  double ejectionStrength;
-  double colorMixingStrength;
+  late double pressureStrength;
+  late double dampingStrength;
+  late double elasticStrength;
+  late double springStrength;
+  late double viscousStrength;
+  late double surfaceTensionStrengthA;
+  late double surfaceTensionStrengthB;
+  late double powderStrength;
+  late double ejectionStrength;
+  late double colorMixingStrength;
 
-  World world;
+  late World world;
 
   static Vector2 allocVec2() => Vector2.zero();
   static Object allocObject() => Object();
@@ -548,7 +548,7 @@ class ParticleSystem {
     positionBuffer = ParticleBuffer<Vector2>(allocVec2);
     velocityBuffer = ParticleBuffer<Vector2>(allocVec2);
     colorBuffer = ParticleBuffer<ParticleColor>(allocParticleColor);
-    userDataBuffer = ParticleBuffer<Object>(allocObject);
+    userDataBuffer = ParticleBuffer<Object?>(allocObject);
     
     accumulationBuffer = Float64List(0);
     accumulation2Buffer = [];
@@ -611,7 +611,9 @@ class ParticleSystem {
       if (colorBuffer.data != null || def.color != null) {
       colorBuffer.data =
           requestParticleBuffer(colorBuffer.data, colorBuffer.allocClosure);
-      colorBuffer.data[index].setParticleColor(def.color);
+      if (def.color != null) {
+        colorBuffer.data[index].setParticleColor(def.color!);
+      }
     }
     if (userDataBuffer.data != null || def.userData != null) {
       userDataBuffer.data = requestParticleBuffer(
@@ -704,7 +706,7 @@ class ParticleSystem {
     particleDef.flags = groupDef.flags;
     particleDef.color = groupDef.color;
     particleDef.userData = groupDef.userData;
-    Shape shape = groupDef.shape;
+    Shape shape = groupDef.shape!;
     transform.setVec2Angle(groupDef.position, groupDef.angle);
     AABB aabb = _temp;
     int childCount = shape.getChildCount();
@@ -753,7 +755,7 @@ class ParticleSystem {
     group._destroyAutomatically = groupDef.destroyAutomatically;
     group._prev = null;
     group._next = groupList;
-    groupList._prev = group;
+    groupList?._prev = group;
       groupList = group;
     ++groupCount;
     for (int i = firstIndex; i < lastIndex; i++) {
@@ -899,9 +901,13 @@ class ParticleSystem {
       groupBuffer[i] = null;
     }
 
-    group._prev._next = group._next;
-      group._next._prev = group._prev;
-      if (group == groupList) {
+    if (group._prev != null) {
+      group._prev!._next = group._next;
+    }
+    if (group._next != null) {
+      group._next!._prev = group._prev;
+    }
+    if (group == groupList) {
       groupList = group._next;
     }
 
@@ -1125,7 +1131,7 @@ class ParticleSystem {
       return;
     }
     allGroupFlags = 0;
-    for (ParticleGroup group = groupList;
+    for (ParticleGroup? group = groupList;
         group != null;
         group = group.getNext()) {
       allGroupFlags |= group._groupFlags;
@@ -1333,7 +1339,7 @@ class ParticleSystem {
   final Transform _tempXf2 = new Transform.zero();
 
   void solveRigid(final TimeStep step) {
-    for (ParticleGroup group = groupList;
+    for (ParticleGroup? group = groupList;
         group != null;
         group = group.getNext()) {
       if ((group._groupFlags & ParticleGroupType.b2_rigidParticleGroup) != 0) {
@@ -1772,7 +1778,7 @@ class ParticleSystem {
     triadCount = j;
 
     // update groups
-    for (ParticleGroup group = groupList;
+    for (ParticleGroup? group = groupList;
         group != null;
         group = group.getNext()) {
       int firstIndex = newCount;
@@ -1810,8 +1816,8 @@ class ParticleSystem {
     // _world._stackAllocator.Free(newIndices);
 
     // destroy bodies with no particles
-    for (ParticleGroup group = groupList; group != null;) {
-      ParticleGroup next = group.getNext();
+    for (ParticleGroup? group = groupList; group != null;) {
+      ParticleGroup? next = group.getNext();
       if (group._toBeDestroyed) {
         destroyParticleGroup(group);
       } else if (group._toBeSplit) {
@@ -1875,7 +1881,7 @@ class ParticleSystem {
     }
 
     // update groups
-    for (ParticleGroup group = groupList;
+    for (ParticleGroup? group = groupList;
         group != null;
         group = group.getNext()) {
       group._firstIndex = _newIndices.getIndex(group._firstIndex);
@@ -2014,7 +2020,7 @@ class ParticleSystem {
     setParticleBuffer(colorBuffer, buffer, capacity);
   }
 
-  List<ParticleGroup> getParticleGroupBuffer() {
+  List<ParticleGroup?> getParticleGroupBuffer() {
     return groupBuffer;
   }
 
@@ -2022,7 +2028,7 @@ class ParticleSystem {
     return groupCount;
   }
 
-  List<ParticleGroup> getParticleGroupList() {
+  List<ParticleGroup?> getParticleGroupList() {
     return groupBuffer;
   }
 

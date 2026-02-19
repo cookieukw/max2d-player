@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:control_pad/control_pad.dart';
-import 'package:draggable_fab/draggable_fab.dart';
+// import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +21,11 @@ import 'globalvars.dart';
 import 'package:mic_stream/mic_stream.dart';
 import 'dart:math' as math;
 
-import 'package:sensors/sensors.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 import 'dart:ui' as ui;
 
-BuildContext playercontext;
+late BuildContext playercontext;
 Offset listeneroffset = Offset(0, 0);
 
 class Gameplayer extends StatefulWidget {
@@ -43,7 +43,7 @@ class Gameplayer extends StatefulWidget {
 }
 
 class _GameplayerState extends State<Gameplayer> {
-  StreamSubscription<List<int>> listener;
+  StreamSubscription<List<int>>? listener;
 
   void start() async {
     Stream<List<int>> stream = microphone(
@@ -59,8 +59,8 @@ class _GameplayerState extends State<Gameplayer> {
     }
   }
 
-  StreamSubscription accelerometerEvent;
-  StreamSubscription gyroscopeEvent;
+  StreamSubscription? accelerometerEvent;
+  StreamSubscription? gyroscopeEvent;
   int splashbackground = Color(0xFF2A2E49).value;
   String splashtext = "M A D E  W I T H";
 
@@ -237,8 +237,7 @@ class _GameplayerState extends State<Gameplayer> {
         ],
       ),
       floatingActionButton: widget.isplayground == false
-          ? DraggableFab(
-              child: FloatingActionButton(
+          ? FloatingActionButton(
                 backgroundColor: Color.fromARGB(255, 70, 70, 70),
                 onPressed: () {
                   for (int a1 = 0; a1 < soundslistscore.length; a1++) {
@@ -258,8 +257,7 @@ class _GameplayerState extends State<Gameplayer> {
                   FontAwesomeIcons.stop,
                   size: 16,
                 ),
-              ),
-            )
+              )
           : Container(),
     );
   }

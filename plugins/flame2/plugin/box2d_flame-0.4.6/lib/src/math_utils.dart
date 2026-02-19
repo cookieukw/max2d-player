@@ -58,7 +58,8 @@ double translateAndScale(
   return res;
 }
 
-bool approxEquals(num expected, num actual, [num tolerance = null]) {
+bool approxEquals(num expected, num actual, [num? tolerance]) {
+  tolerance ??= 1e-8;
   return ((expected - actual).abs() <= tolerance);
 }
 

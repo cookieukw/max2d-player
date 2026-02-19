@@ -16,14 +16,15 @@ import 'util.dart';
 /// Most games should need only one instance of each, and should use this class to manage that reference.
 class Flame {
   // Flame asset bundle, defaults to root
-  static AssetBundle _bundle;
-  static AssetBundle get bundle => _bundle;
+  // Flame asset bundle, defaults to root
+  static AssetBundle? _bundle;
+  static AssetBundle? get bundle => _bundle;
 
   /// Access a shared instance of the [FlameAudio] class.
   static FlameAudio audio = FlameAudio();
 
   /// Access a shared instance of the [Bgm] class.
-  static Bgm _bgm;
+  static Bgm? _bgm;
   static Bgm get bgm => _bgm ??= Bgm();
 
   /// Access a shared instance of the [Images] class.
@@ -36,9 +37,9 @@ class Flame {
   static AssetsCache assets = AssetsCache();
 
   static Future<void> init(
-      {AssetBundle bundle,
+      {AssetBundle? bundle,
       bool fullScreen = true,
-      DeviceOrientation orientation}) async {
+      DeviceOrientation? orientation}) async {
     initializeWidget();
 
     if (fullScreen) {

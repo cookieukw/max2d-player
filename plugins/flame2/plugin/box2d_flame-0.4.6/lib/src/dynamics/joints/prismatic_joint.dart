@@ -95,11 +95,11 @@ part of box2d;
 /// and a joint motor to drive the motion or to model joint friction.
 class PrismaticJoint extends Joint {
   // Solver shared
-  final Vector2 _localAnchorA;
-  final Vector2 _localAnchorB;
-  final Vector2 _localXAxisA;
-  final Vector2 _localYAxisA;
-  double _referenceAngle;
+  final Vector2 _localAnchorA = new Vector2.zero();
+  final Vector2 _localAnchorB = new Vector2.zero();
+  final Vector2 _localXAxisA = new Vector2.zero();
+  final Vector2 _localYAxisA = new Vector2.zero();
+  late double _referenceAngle;
 
   // TODO(srdjan): Make fields below private.
   final Vector3 _impulse = new Vector3.zero();
@@ -110,7 +110,7 @@ class PrismaticJoint extends Joint {
   double _motorSpeed = 0.0;
   bool _enableLimit = false;
   bool _enableMotor = false;
-  LimitState _limitState;
+  late LimitState _limitState;
 
   // Solver temp
   int _indexA = 0;

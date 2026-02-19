@@ -48,18 +48,18 @@ class ParticleGroupDef {
   double angularVelocity = 0.0;
 
   /// The color of all particles in the group.
-  ParticleColor color;
+  ParticleColor? color;
 
   /// The strength of cohesion among the particles in a group with flag b2_elasticParticle or
   /// b2_springParticle.
   double strength = 1.0;
 
   /// Shape containing the particle group.
-  Shape shape;
+  Shape? shape;
 
   /// If true, destroy the group automatically after its last particle has been destroyed.
   bool destroyAutomatically = true;
 
   /// Use this to store application-specific group data.
-  Object userData;
+  Object? userData;
 }

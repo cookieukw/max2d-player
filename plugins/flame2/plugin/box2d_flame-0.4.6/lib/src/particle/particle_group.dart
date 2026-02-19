@@ -25,13 +25,13 @@
 part of box2d;
 
 class ParticleGroup {
-  ParticleSystem _system;
+  ParticleSystem? _system;
   int _firstIndex = 0;
   int _lastIndex = 0;
   int _groupFlags = 0;
   double _strength = 0.0;
-  ParticleGroup _prev;
-  ParticleGroup _next;
+  ParticleGroup? _prev;
+  ParticleGroup? _next;
 
   int _timestamp = 0;
   double _mass = 0.0;
@@ -45,7 +45,7 @@ class ParticleGroup {
   bool _toBeDestroyed = false;
   bool _toBeSplit = false;
 
-  Object _userData;
+  Object? _userData;
 
   ParticleGroup() {
     // _system = null;
@@ -65,7 +65,7 @@ class ParticleGroup {
     _toBeSplit = false;
   }
 
-  ParticleGroup getNext() {
+  ParticleGroup? getNext() {
     return _next;
   }
 
@@ -122,7 +122,7 @@ class ParticleGroup {
     return _transform.q.getAngle();
   }
 
-  Object getUserData() {
+  Object? getUserData() {
     return _userData;
   }
 

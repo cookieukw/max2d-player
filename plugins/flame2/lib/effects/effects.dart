@@ -12,28 +12,28 @@ export './scale_effect.dart';
 export './sequence_effect.dart';
 
 abstract class PositionComponentEffect {
-  PositionComponent component;
-  Function() onComplete;
+  late PositionComponent component;
+  late VoidCallback onComplete;
 
   bool _isDisposed = false;
   bool get isDisposed => _isDisposed;
 
   /// If the animation should first follow the initial curve and then follow the
   /// curve backwards
-  bool isInfinite;
-  bool isAlternating;
+  bool isInfinite = false;
+  bool isAlternating = false;
   final bool _initialIsInfinite;
   final bool _initialIsAlternating;
-  double percentage;
-  double travelTime;
+  double? percentage;
+  late double travelTime;
   double currentTime = 0.0;
   double driftTime = 0.0;
   int curveDirection = 1;
 
   /// Used to be able to determine the end state of a sequence of effects
-  Position endPosition;
-  double endAngle;
-  Position endSize;
+  late Position endPosition;
+  late double endAngle;
+  late Position endSize;
 
   /// If the effect is alternating the travel time is double the normal
   /// travel time
@@ -42,10 +42,11 @@ abstract class PositionComponentEffect {
   PositionComponentEffect(
     this._initialIsInfinite,
     this._initialIsAlternating, {
-    this.onComplete,
+    VoidCallback? onComplete,
   }) {
     isInfinite = _initialIsInfinite;
     isAlternating = _initialIsAlternating;
+    this.onComplete = onComplete ?? () {};
   }
 
   void update(double dt) {
@@ -58,7 +59,8 @@ abstract class PositionComponentEffect {
     final driftMultiplier = (isAlternating && isMax() ? 2 : 1) * curveDirection;
     if (!hasFinished()) {
       currentTime += dt * curveDirection + driftTime * driftMultiplier;
-      percentage = min(1.0, max(0.0, currentTime / travelTime));
+      final double nextPercentage = min(1.0, max(0.0, currentTime / travelTime));
+      percentage = nextPercentage;
       if (hasFinished()) {
         onComplete.call();
       }
@@ -71,7 +73,6 @@ abstract class PositionComponentEffect {
 
     /// You need to set the travelTime during the initialization of the
     /// extending effect
-    travelTime = null;
 
     /// If these aren't modified by the extending effect it is assumed that the
     /// effect didn't bring the component to another state than the one it

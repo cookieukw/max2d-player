@@ -29,7 +29,7 @@ class ParticleBodyContact {
   int index = 0;
 
   /// The body making contact.
-  Body body;
+  late Body body;
 
   /// Weight of the contact. A value between 0.0f and 1.0f.
   double weight = 0.0;

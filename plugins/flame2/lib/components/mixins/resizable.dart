@@ -6,7 +6,7 @@ import 'dart:ui';
 /// Also, it updates its [children], if any.
 class Resizable {
   /// This is the current updated screen size.
-  Size size;
+  late Size size;
 
   /// Implementation provided by this mixin to the resize hook.
   void resize(Size size) {

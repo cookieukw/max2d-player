@@ -32,15 +32,15 @@ part of box2d;
 class Fixture {
   double _density = 0.0;
 
-  Fixture _next;
-  Body _body;
+  Fixture? _next;
+  late Body _body;
 
-  Shape _shape;
+  late Shape _shape;
 
   double _friction = 0.0;
   double _restitution = 0.0;
 
-  List<FixtureProxy?> _proxies;
+  late List<FixtureProxy?> _proxies;
   int _proxyCount = 0;
 
   final Filter _filter = new Filter();
@@ -48,7 +48,7 @@ class Fixture {
   bool _isSensor = false;
 
   /// Use this to store your application specific data.
-  Object userData;
+  Object? userData;
 
   /// Get the type of the child shape. You can use this to down cast to the concrete shape.
   ///

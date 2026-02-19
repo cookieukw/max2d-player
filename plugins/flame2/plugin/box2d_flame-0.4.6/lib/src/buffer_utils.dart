@@ -66,9 +66,9 @@ List<T> reallocateBufferWithAllocDeferred<T>(
   assert(newCapacity > oldCapacity);
   assert(userSuppliedCapacity == 0 || newCapacity <= userSuppliedCapacity);
   if ((!deferred || buffer != null) && userSuppliedCapacity == 0) {
-    buffer = reallocateBufferWithAlloc(buffer, oldCapacity, newCapacity, alloc);
+    buffer = reallocateBufferWithAlloc(buffer!, oldCapacity, newCapacity, alloc);
   }
-  return buffer;
+  return buffer!;
 }
 
 /// Reallocate an int buffer. A 'deferred' buffer is reallocated only if it is not NULL.
@@ -78,9 +78,9 @@ List<int> reallocateBufferIntDeferred(List<int>? buffer,
   assert(newCapacity > oldCapacity);
   assert(userSuppliedCapacity == 0 || newCapacity <= userSuppliedCapacity);
   if ((!deferred || buffer != null) && userSuppliedCapacity == 0) {
-    buffer = reallocateBufferInt(buffer, oldCapacity, newCapacity);
+    buffer = reallocateBufferInt(buffer!, oldCapacity, newCapacity);
   }
-  return buffer;
+  return buffer!;
 }
 
 /// Reallocate a float buffer. A 'deferred' buffer is reallocated only if it is not NULL.
@@ -90,9 +90,9 @@ Float64List reallocateBufferFloat64Deferred(Float64List? buffer,
   assert(newCapacity > oldCapacity);
   assert(userSuppliedCapacity == 0 || newCapacity <= userSuppliedCapacity);
   if ((!deferred || buffer != null) && userSuppliedCapacity == 0) {
-    buffer = reallocateBuffer(buffer, oldCapacity, newCapacity);
+    buffer = reallocateBuffer(buffer!, oldCapacity, newCapacity);
   }
-  return buffer;
+  return buffer!;
 }
 
 /// Rotate an array, see std::rotate

@@ -32,16 +32,16 @@ class JointDef {
   }
 
   /// The joint type is set automatically for concrete joint types.
-  JointType type;
+  JointType? type;
 
   /// Use this to attach application specific data to your joints.
-  Object userData;
+  Object? userData;
 
   /// The first attached body.
-  Body bodyA;
+  Body? bodyA;
 
   /// The second attached body.
-  Body bodyB;
+  Body? bodyB;
 
   /// Set this flag to true if the attached bodies should collide.
   bool collideConnected = false;

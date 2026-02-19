@@ -44,18 +44,18 @@ abstract class Contact {
   int _flags = 0;
 
   // World pool and list pointers.
-  Contact _prev;
-  Contact _next;
+  Contact? _prev;
+  Contact? _next;
+
+  late final Fixture _fixtureA;
+  late final Fixture _fixtureB;
+
+  int _indexA = 0;
+  int _indexB = 0;
 
   // Nodes for connecting bodies.
   ContactEdge _nodeA = ContactEdge();
   ContactEdge _nodeB = ContactEdge();
-
-  Fixture _fixtureA;
-  Fixture _fixtureB;
-
-  int _indexA = 0;
-  int _indexB = 0;
 
   final Manifold _manifold = Manifold();
 

@@ -906,12 +906,12 @@ class Body {
   }
 
   /// Get the list of all fixtures attached to this body.
-  Fixture getFixture[] {
+  Fixture getFixtureList() {
     return _fixtureList;
   }
 
   /// Get the list of all joints attached to this body.
-  JointEdge getJoint[] {
+  JointEdge getJointList() {
     return _jointList;
   }
 
@@ -919,7 +919,7 @@ class Body {
   ///
   /// @warning this list changes during the time step and you may miss some collisions if you don't
   /// use ContactListener.
-  ContactEdge getContact[] {
+  ContactEdge getContactList() {
     return _contactList;
   }
 

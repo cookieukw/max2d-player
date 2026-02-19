@@ -36,9 +36,9 @@ class World {
 
   int _flags = 0;
 
-  ContactManager _contactManager;
-  Body bodyList;
-  Joint _jointList;
+  late ContactManager _contactManager;
+  Body? bodyList;
+  Joint? _jointList;
 
   int _bodyCount = 0;
   int _jointCount = 0;
@@ -48,9 +48,9 @@ class World {
 
   // Body _groundBody;
 
-  DestructionListener _destructionListener;
-  ParticleDestructionListener _particleDestructionListener;
-  DebugDraw debugDraw;
+  DestructionListener? _destructionListener;
+  ParticleDestructionListener? _particleDestructionListener;
+  DebugDraw? debugDraw;
 
   final IWorldPool _pool;
 
@@ -64,9 +64,9 @@ class World {
 
   bool _stepComplete = false;
 
-  Profile _profile;
+  late Profile _profile;
 
-  ParticleSystem _particleSystem;
+  late ParticleSystem _particleSystem;
 
   static List<List<ContactRegister>> _create2D(int a, int b) {
     var res = new List<List<ContactRegister>>(a);
@@ -755,7 +755,7 @@ class World {
   /// @return the head of the world contact list.
   /// @warning contacts are created and destroyed in the middle of a time step. Use ContactListener
   ///          to avoid missing contacts.
-  Contact getContact[] {
+  Contact getContactList() {
     return _contactManager.contactList;
   }
 
@@ -1548,8 +1548,8 @@ class World {
   /// the next group in the world list. A NULL group indicates the end of the list.
   ///
   /// @return the head of the world particle group list.
-  List<ParticleGroup> getParticleGroup[] {
-    return _particleSystem.getParticleGroup[];
+  List<ParticleGroup?> getParticleGroupList() {
+    return _particleSystem.getParticleGroupList();
   }
 
   /// Get the number of particle groups.
@@ -1734,8 +1734,8 @@ class WorldQueryWrapper implements TreeCallback {
     return callback.reportFixture(proxy.fixture);
   }
 
-  BroadPhase broadPhase;
-  QueryCallback callback;
+  late BroadPhase broadPhase;
+  late QueryCallback callback;
 }
 
 class WorldRayCastWrapper implements TreeRayCastCallback {
@@ -1767,6 +1767,6 @@ class WorldRayCastWrapper implements TreeRayCastCallback {
     return input.maxFraction;
   }
 
-  BroadPhase broadPhase;
-  RayCastCallback callback;
+  late BroadPhase broadPhase;
+  late RayCastCallback callback;
 }

@@ -25,11 +25,11 @@
 part of box2d;
 
 class ContactSolverDef {
-  TimeStep step;
-  List<Contact> contacts;
-  int count = 0;
-  List<Position> positions;
-  List<Velocity> velocities;
+  late TimeStep step;
+  late List<Contact> contacts;
+  late int count;
+  late List<Position> positions;
+  late List<Velocity> velocities;
 }
 
 class ContactSolver {
@@ -43,12 +43,12 @@ class ContactSolver {
   /// Ensure a reasonable condition number. for the block solver
   static final double k_maxConditionNumber = 100.0;
 
-  TimeStep _step;
-  List<Position> _positions;
-  List<Velocity> _velocities;
-  List<ContactPositionConstraint> _positionConstraints;
-  List<ContactVelocityConstraint> _velocityConstraints;
-  List<Contact> _contacts;
+  late TimeStep _step;
+  late List<Position> _positions;
+  late List<Velocity> _velocities;
+  late List<ContactPositionConstraint> _positionConstraints;
+  late List<ContactVelocityConstraint> _velocityConstraints;
+  late List<Contact> _contacts;
   int _count = 0;
 
   ContactSolver() {

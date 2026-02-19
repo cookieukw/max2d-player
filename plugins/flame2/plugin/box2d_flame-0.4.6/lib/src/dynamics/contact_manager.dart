@@ -29,8 +29,8 @@ class ContactManager implements PairCallback {
   BroadPhase broadPhase;
   Contact contactList;
   int contactCount = 0;
-  ContactFilter contactFilter;
-  ContactListener contactListener;
+  late ContactFilter contactFilter;
+  late ContactListener contactListener;
 
   final World _pool;
 

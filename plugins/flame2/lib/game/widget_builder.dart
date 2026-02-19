@@ -26,10 +26,10 @@ bool _hasMouseDetectors(Game game) =>
     game is MouseMovementDetector || game is ScrollDetector;
 
 class _GenericTapEventHandler {
-  void Function(int pointerId) onTap;
-  void Function(int pointerId) onTapCancel;
-  void Function(int pointerId, TapDownDetails details) onTapDown;
-  void Function(int pointerId, TapUpDetails details) onTapUp;
+  late void Function(int pointerId) onTap;
+  late void Function(int pointerId) onTapCancel;
+  late void Function(int pointerId, TapDownDetails details) onTapDown;
+  late void Function(int pointerId, TapUpDetails details) onTapUp;
 }
 
 Widget _applyAdvancedGesturesDetectors(Game game, Widget child) {
@@ -249,9 +249,9 @@ class WidgetBuilder {
 
 class OverlayGameWidget extends StatefulWidget {
   final Widget gameChild;
-  final HasWidgetsOverlay game;
+  final Game game;
 
-  OverlayGameWidget({Key key, this.gameChild, this.game}) : super(key: key);
+  OverlayGameWidget({Key? key, required this.gameChild, required this.game}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _OverlayGameWidgetState();
@@ -263,10 +263,14 @@ class _OverlayGameWidgetState extends State<OverlayGameWidget> {
   @override
   void initState() {
     super.initState();
-    widget.game.widgetOverlayController.stream.listen((overlay) {
+    (widget.game as HasWidgetsOverlay).widgetOverlayController.stream.listen((overlay) {
       setState(() {
-        _overlays[overlay.name] = overlay.widget;
-            });
+        if (overlay.widget == null) {
+          _overlays.remove(overlay.name);
+        } else {
+          _overlays[overlay.name] = overlay.widget!;
+        }
+      });
     });
   }
 
@@ -275,7 +279,7 @@ class _OverlayGameWidgetState extends State<OverlayGameWidget> {
     return Directionality(
         textDirection: TextDirection.ltr,
         child:
-            Stack(children: [widget.gameChild, ..._overlays.values.to[]]));
+            Stack(children: [widget.gameChild, ..._overlays.values.toList()]));
   }
 }
 

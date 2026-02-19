@@ -37,8 +37,8 @@ class ParticleDef {
   final Vector2 velocity = new Vector2.zero();
 
   /// The color of the particle.
-  ParticleColor color;
+  ParticleColor? color;
 
   /// Use this to store application-specific body data.
-  Object userData;
+  Object? userData;
 }

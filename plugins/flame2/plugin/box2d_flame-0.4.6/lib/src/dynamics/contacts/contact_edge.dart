@@ -30,14 +30,14 @@ part of box2d;
 ///
 class ContactEdge {
   /// provides quick access to the other body attached.
-  Body other;
+  late Body other;
 
   /// the contact
-  Contact contact;
+  late Contact contact;
 
   /// the previous contact edge in the body's contact list
-  ContactEdge prev;
+  ContactEdge? prev;
 
   /// the next contact edge in the body's contact list
-  ContactEdge next;
+  ContactEdge? next;
 }

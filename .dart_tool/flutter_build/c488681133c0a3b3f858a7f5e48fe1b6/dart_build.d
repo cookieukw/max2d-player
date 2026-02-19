@@ -1,0 +1,1 @@
+ /home/cookie/Documents/Projetos/max2d-player-main/.dart_tool/flutter_build/c488681133c0a3b3f858a7f5e48fe1b6/dart_build_result.json:  /home/cookie/Documents/Projetos/max2d-player-main/.dart_tool/package_config.json /home/cookie/Documents/Projetos/max2d-player-main/pubspec.yaml /mnt/devhd/flutter/bin/cache/dart-sdk/version

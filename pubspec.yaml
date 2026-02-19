@@ -22,7 +22,7 @@ environment:
 
 dependencies:
   expressions: ^0.2.4
-  # mic_stream: ^0.2.1 # Legacy, might need check
+  mic_stream: ^0.7.2
   sensors_plus: ^6.0.0 # Replaces sensors
   flutter_archive: ^5.0.0
   # draggable_fab: ^0.2.0 # Check if exists, or keep old for now and let resolver complain

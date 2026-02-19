@@ -6,9 +6,9 @@ import 'game.dart';
 import 'game_loop.dart';
 
 class GameRenderBox extends RenderBox with WidgetsBindingObserver {
-  BuildContext context;
-  Game game;
-  GameLoop gameLoop;
+  late BuildContext context;
+  late Game game;
+  late GameLoop gameLoop;
 
   GameRenderBox(this.context, this.game) {
     gameLoop = GameLoop(gameLoopCallback);

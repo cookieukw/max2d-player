@@ -262,7 +262,7 @@ class Clsgameobjectitem {
     return null;
   }
 
-  void setgameobject({String name}) {
+  void setgameobject({String? name}) {
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
       if (t is Clscompgameobject) {

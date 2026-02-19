@@ -30,7 +30,7 @@ class ViewportTransform {
         center = new Vector2.copy(c);
 
   /// if we flip the y axis when transforming.
-  bool yFlip;
+  bool yFlip = false;
 
   /// This is the half-width and half-height.
   /// This should be the actual half-width and

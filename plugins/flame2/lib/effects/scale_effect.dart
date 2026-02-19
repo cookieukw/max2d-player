@@ -12,19 +12,19 @@ double _size(double a, double b) => (a - b).abs();
 class ScaleEffect extends PositionComponentEffect {
   Size size;
   double speed;
-  Curve curve;
+  Curve? curve;
 
-  Size _original;
-  Size _diff;
+  late Size _original;
+  late Size _diff;
   final Position _dir = Position.empty();
 
   ScaleEffect({
-    @required this.size,
-    @required this.speed,
+    required this.size,
+    required this.speed,
     this.curve,
-    isInfinite = false,
-    isAlternating = false,
-    Function onComplete,
+    bool isInfinite = false,
+    bool isAlternating = false,
+    VoidCallback? onComplete,
   }) : super(isInfinite, isAlternating, onComplete: onComplete);
 
   @override
@@ -50,7 +50,7 @@ class ScaleEffect extends PositionComponentEffect {
   @override
   void update(double dt) {
     super.update(dt);
-    final double c = curve.transform(percentage) ?? 1.0;
+    final double c = curve?.transform(percentage!) ?? 1.0;
 
     component.width = _original.width + _diff.width * c * _dir.x;
     component.height = _original.height + _diff.height * c * _dir.y;

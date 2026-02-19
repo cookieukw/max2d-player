@@ -90,13 +90,13 @@ abstract class Game {
   /// Resumes the engine game loop execution
   void resumeEngine() => resumeEngineFn.call();
 
-  VoidCallback pauseEngineFn;
-  VoidCallback resumeEngineFn;
+  late VoidCallback pauseEngineFn;
+  late VoidCallback resumeEngineFn;
 }
 
 class OverlayWidget {
   final String name;
-  final Widget widget;
+  final Widget? widget;
 
   OverlayWidget(this.name, this.widget);
 }

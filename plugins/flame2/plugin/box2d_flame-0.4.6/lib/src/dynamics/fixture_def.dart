@@ -32,7 +32,7 @@ class FixtureDef {
   Shape shape = null;
 
   /// Use this to store application specific fixture data.
-  Object userData;
+  Object? userData;
 
   /// The friction coefficient, usually in the range [0,1].
   double friction = 0.2;

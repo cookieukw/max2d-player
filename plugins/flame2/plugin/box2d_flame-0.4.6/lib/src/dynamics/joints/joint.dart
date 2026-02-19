@@ -64,17 +64,17 @@ abstract class Joint {
   }
 
   final JointType _type;
-  Joint _prev;
-  Joint _next;
-  JointEdge _edgeA;
-  JointEdge _edgeB;
-  Body _bodyA;
-  Body _bodyB;
+  Joint? _prev;
+  Joint? _next;
+  late JointEdge _edgeA;
+  late JointEdge _edgeB;
+  late Body _bodyA;
+  late Body _bodyB;
 
   bool _islandFlag = false;
   bool _collideConnected = false;
 
-  IWorldPool pool;
+  late IWorldPool pool;
 
   Joint(IWorldPool worldPool, JointDef def) : _type = def.type {
     assert(def.bodyA != def.bodyB);

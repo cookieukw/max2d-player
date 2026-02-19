@@ -11,7 +11,7 @@ mixin Tapable {
   void onTapDown(TapDownDetails details) {}
   void onTapUp(TapUpDetails details) {}
 
-  int _currentPointerId;
+  int? _currentPointerId;
 
   bool _checkPointerId(int pointerId) => _currentPointerId == pointerId;
 

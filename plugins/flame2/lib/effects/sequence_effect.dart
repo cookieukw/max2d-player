@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
 import './effects.dart';
@@ -6,15 +7,15 @@ import '../components/component.dart';
 class SequenceEffect extends PositionComponentEffect {
   final List<PositionComponentEffect> effects;
   int _currentIndex = 0;
-  PositionComponentEffect currentEffect;
-  bool _currentWasAlternating;
+  late PositionComponentEffect currentEffect;
+  late bool _currentWasAlternating;
   double _driftModifier = 0.0;
 
   SequenceEffect({
-    @required this.effects,
-    isInfinite = false,
-    isAlternating = false,
-    Function onComplete,
+    required this.effects,
+    bool isInfinite = false,
+    bool isAlternating = false,
+    VoidCallback? onComplete,
   }) : super(isInfinite, isAlternating, onComplete: onComplete) {
     assert(
       effects.every((effect) => effect.component == null),
@@ -69,7 +70,7 @@ class SequenceEffect extends PositionComponentEffect {
         return;
       }
       final orderedEffects =
-          curveDirection.isNegative ? effects.reversed.to[] : effects;
+          curveDirection.isNegative ? effects.reversed.toList() : effects;
       currentEffect = orderedEffects[_currentIndex % effects.length];
       _currentWasAlternating = currentEffect.isAlternating;
       if (isAlternating &&

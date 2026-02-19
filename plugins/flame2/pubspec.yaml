@@ -7,7 +7,7 @@ dependencies:
   flutter:
     sdk: flutter
   audioplayers: ^0.20.1 # Migrated from 0.15.1
-  ordered_set: ^4.0.3 # Migrated from 2.0.1
+  ordered_set: ^5.0.0 # Migrated from 2.0.1
   box2d_flame:
     path: plugin/box2d_flame-0.4.6
   synchronized: ^3.0.0

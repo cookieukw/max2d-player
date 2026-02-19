@@ -144,14 +144,14 @@ part of box2d;
 
 /// This is an internal class.
 class Island {
-  ContactListener _listener;
+  late ContactListener _listener;
 
-  List<Body?> _bodies;
-  List<Contact?> _contacts;
-  List<Joint?> _joints;
+  late List<Body?> _bodies;
+  late List<Contact?> _contacts;
+  late List<Joint?> _joints;
 
-  List<Position?> _positions;
-  List<Velocity?> _velocities;
+  late List<Position?> _positions;
+  late List<Velocity?> _velocities;
 
   int _bodyCount = 0;
   int _jointCount = 0;

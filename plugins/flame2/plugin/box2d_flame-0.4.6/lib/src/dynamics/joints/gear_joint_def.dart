@@ -28,10 +28,10 @@ part of box2d;
 /// combination will work). The provided joints must attach a dynamic body to a static body.
 class GearJointDef extends JointDef {
   /// The first revolute/prismatic joint attached to the gear joint.
-  Joint joint1;
+  Joint? joint1;
 
   /// The second revolute/prismatic joint attached to the gear joint.
-  Joint joint2;
+  Joint? joint2;
 
   /// Gear ratio.
   ///

@@ -12,23 +12,23 @@ double _distance(double a, double b) => (a - b).abs();
 class MoveEffect extends PositionComponentEffect {
   Position destination;
   double speed;
-  Curve curve;
+  Curve? curve;
 
-  double _xOriginal;
-  double _xDistance;
-  double _xDirection;
+  late double _xOriginal;
+  late double _xDistance;
+  late double _xDirection;
 
-  double _yOriginal;
-  double _yDistance;
-  double _yDirection;
+  late double _yOriginal;
+  late double _yDistance;
+  late double _yDirection;
 
   MoveEffect({
-    @required this.destination,
-    @required this.speed,
+    required this.destination,
+    required this.speed,
     this.curve,
-    isInfinite = false,
-    isAlternating = false,
-    Function onComplete,
+    bool isInfinite = false,
+    bool isAlternating = false,
+    VoidCallback? onComplete,
   }) : super(isInfinite, isAlternating, onComplete: onComplete);
 
   @override
@@ -54,7 +54,7 @@ class MoveEffect extends PositionComponentEffect {
   @override
   void update(double dt) {
     super.update(dt);
-    final double c = curve.transform(percentage) ?? 1.0;
+    final double c = curve?.transform(percentage!) ?? 1.0;
 
     component.x = _xOriginal + _xDistance * c * _xDirection;
     component.y = _yOriginal + _yDistance * c * _yDirection;

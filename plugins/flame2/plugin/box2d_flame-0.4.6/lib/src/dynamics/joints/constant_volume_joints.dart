@@ -26,15 +26,15 @@ part of box2d;
 
 class ConstantVolumeJoint extends Joint {
   final List<Body> _bodies;
-  Float64List _targetLengths;
+  late Float64List _targetLengths;
   double _targetVolume = 0.0;
 
-  List<Vector2> _normals;
+  late List<Vector2> _normals;
   double _impulse = 0.0;
 
-  World _world;
+  late World _world;
 
-  List<DistanceJoint> _distanceJoints;
+  late List<DistanceJoint> _distanceJoints;
 
   List<Body> getBodies() {
     return _bodies;
