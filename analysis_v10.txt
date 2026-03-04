@@ -1,0 +1,641 @@
+Analyzing max2d-player-main...                                  
+
+warning • Unused import: 'package:flame/components.dart' • lib/actions.dart:5:8 • unused_import
+warning • Unused import: 'package:flame/game.dart' • lib/actions.dart:6:8 • unused_import
+warning • Unused import: 'package:vector_math/vector_math_64.dart' • lib/actions.dart:16:8 • unused_import
+  error • The non-nullable variable 'currentcamerasettings' must be initialized • lib/actions.dart:49:18 • not_initialized_non_nullable_variable
+  error • A value of type 'List<dynamic>' can't be assigned to a variable of type 'List<Contact>' • lib/actions.dart:56:33 • invalid_assignment
+  error • The class 'List' doesn't have an unnamed constructor • lib/actions.dart:56:33 • new_with_undefined_constructor_default
+  error • A value of type 'Object?' can't be assigned to a variable of type 'Map<String, dynamic>' • lib/actions.dart:68:40 • invalid_assignment
+  error • A value of type 'Object?' can't be assigned to a variable of type 'Map<String, dynamic>' • lib/actions.dart:69:40 • invalid_assignment
+  error • A value of type 'Object?' can't be assigned to a variable of type 'Map<String, dynamic>' • lib/actions.dart:90:40 • invalid_assignment
+  error • A value of type 'Object?' can't be assigned to a variable of type 'Map<String, dynamic>' • lib/actions.dart:91:40 • invalid_assignment
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:138:50 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:140:62 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:159:22 • invalid_assignment
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:165:56 • argument_type_not_assignable
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:190:52 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:203:21 • invalid_assignment
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:204:22 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:206:19 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:206:41 • unnecessary_null_comparison
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:213:52 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:219:52 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:227:21 • invalid_assignment
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:228:22 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:230:19 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:230:41 • unnecessary_null_comparison
+  error • A value of type 'Clsscriptitem' can't be assigned to a variable of type 'Clsactiscardinal' • lib/actions.dart:232:29 • invalid_assignment
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:240:39 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:245:49 • argument_type_not_assignable
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:249:52 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:255:52 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:263:21 • invalid_assignment
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:264:22 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:266:19 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:266:41 • unnecessary_null_comparison
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:270:47 • argument_type_not_assignable
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:275:52 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:281:52 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:289:22 • invalid_assignment
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:292:52 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:307:22 • invalid_assignment
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:310:52 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:323:22 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:326:25 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:327:25 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:328:20 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:329:22 • unnecessary_null_comparison
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:357:20 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:370:22 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:373:25 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:376:20 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:409:41 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:411:36 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:414:35 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:415:51 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:418:55 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:421:61 • unnecessary_null_comparison
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:435:58 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:446:22 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:449:25 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:451:20 • unnecessary_null_comparison
+  error • A value of type 'Clssoundcomponent' can't be assigned to a variable of type 'Clscompsound' • lib/actions.dart:460:30 • invalid_assignment
+  error • A value of type 'Clscomptext?' can't be assigned to a variable of type 'Clscomptext' • lib/actions.dart:503:31 • invalid_assignment
+  error • A value of type 'Clscomplifebar?' can't be assigned to a variable of type 'Clscomplifebar' • lib/actions.dart:507:34 • invalid_assignment
+  error • A value of type 'Clscompsprite?' can't be assigned to a variable of type 'Clscompsprite' • lib/actions.dart:513:33 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:516:35 • unnecessary_null_comparison
+  error • A value of type 'Clscomprigidbody?' can't be assigned to a variable of type 'Clscomprigidbody' • lib/actions.dart:520:36 • invalid_assignment
+  error • A value of type 'Clscompboxcollider?' can't be assigned to a variable of type 'Clscompboxcollider' • lib/actions.dart:524:38 • invalid_assignment
+  error • A value of type 'Clscompcirclecollider?' can't be assigned to a variable of type 'Clscompcirclecollider' • lib/actions.dart:529:19 • invalid_assignment
+  error • A value of type 'Clscompgameobject?' can't be assigned to a variable of type 'Clscompgameobject' • lib/actions.dart:534:36 • invalid_assignment
+  error • A value of type 'Clscompscript?' can't be assigned to a variable of type 'Clscompscript' • lib/actions.dart:539:32 • invalid_assignment
+  error • The argument type 'Forge2DGame<Forge2DWorld>?' can't be assigned to the parameter type 'Forge2DGame<Forge2DWorld>'.  • lib/actions.dart:554:44 • argument_type_not_assignable
+  error • The argument type 'BuildContext?' can't be assigned to the parameter type 'BuildContext'.  • lib/actions.dart:554:51 • argument_type_not_assignable
+  error • The property 'isdebug' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:558:68 • unchecked_use_of_nullable_value
+  error • A value of type 'Clscomptext?' can't be assigned to a variable of type 'Clscomptext' • lib/actions.dart:588:31 • invalid_assignment
+  error • A value of type 'Clscomplifebar?' can't be assigned to a variable of type 'Clscomplifebar' • lib/actions.dart:592:34 • invalid_assignment
+  error • A value of type 'Clscompsprite?' can't be assigned to a variable of type 'Clscompsprite' • lib/actions.dart:598:33 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:602:35 • unnecessary_null_comparison
+  error • A value of type 'Clscomprigidbody?' can't be assigned to a variable of type 'Clscomprigidbody' • lib/actions.dart:606:36 • invalid_assignment
+  error • A value of type 'Clscompboxcollider?' can't be assigned to a variable of type 'Clscompboxcollider' • lib/actions.dart:610:38 • invalid_assignment
+  error • A value of type 'Clscompcirclecollider?' can't be assigned to a variable of type 'Clscompcirclecollider' • lib/actions.dart:615:19 • invalid_assignment
+  error • A value of type 'Clscompgameobject?' can't be assigned to a variable of type 'Clscompgameobject' • lib/actions.dart:620:36 • invalid_assignment
+  error • The function can't be unconditionally invoked because it can be 'null' • lib/actions.dart:633:13 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:639:20 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:651:22 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:654:25 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:655:25 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:656:20 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:657:22 • unnecessary_null_comparison
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:711:20 • unchecked_use_of_nullable_value
+  error • The parameter 'goindex' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:795:12 • missing_default_value_for_parameter
+  error • The parameter 'thegameobject' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:796:18 • missing_default_value_for_parameter
+  error • The parameter 'eevents' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:797:15 • missing_default_value_for_parameter
+  error • The parameter 'variablename' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:798:14 • missing_default_value_for_parameter
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:800:28 • invalid_assignment
+  error • The property 'name' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:800:73 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:806:14 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:814:54 • unchecked_use_of_nullable_value
+  error • The property 'components' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:817:67 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:876:12 • unnecessary_non_null_assertion
+  error • The property 'body' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:878:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:881:12 • unnecessary_non_null_assertion
+  error • The property 'body' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:883:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:886:12 • unnecessary_non_null_assertion
+  error • The property 'body' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:888:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:891:12 • unnecessary_non_null_assertion
+  error • The property 'transformprop' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:893:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:896:12 • unnecessary_non_null_assertion
+  error • The property 'transformprop' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:898:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:901:12 • unnecessary_non_null_assertion
+  error • The property 'body' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:903:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:906:12 • unnecessary_non_null_assertion
+  error • The property 'body' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:908:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:911:12 • unnecessary_non_null_assertion
+  error • The property 'body' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:913:45 • unchecked_use_of_nullable_value
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:916:12 • unnecessary_non_null_assertion
+  error • The property 'compsprite' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:918:42 • unchecked_use_of_nullable_value
+  error • The property 'compsprite' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:919:47 • unchecked_use_of_nullable_value
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:939:50 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:942:48 • unnecessary_null_comparison
+  error • The property 'appversion' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:945:48 • unchecked_use_of_nullable_value
+  error • The operator '>=' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:945:59 • unchecked_use_of_nullable_value
+  error • The getter 'width' isn't defined for the type 'Vector2' • lib/actions.dart:947:46 • undefined_getter
+  error • The property 'appversion' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:948:49 • unchecked_use_of_nullable_value
+  error • The operator '>=' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:948:60 • unchecked_use_of_nullable_value
+  error • The getter 'height' isn't defined for the type 'Vector2' • lib/actions.dart:950:46 • undefined_getter
+  error • The getter 'translation' isn't defined for the type 'Viewport' • lib/actions.dart:951:47 • undefined_getter
+  error • The getter 'translation' isn't defined for the type 'Viewport' • lib/actions.dart:952:47 • undefined_getter
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:953:42 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:954:42 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:955:42 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:956:42 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:957:38 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:958:38 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:968:34 • unnecessary_null_comparison
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:969:14 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:977:16 • unnecessary_non_null_assertion
+  error • The element type 'String?' can't be assigned to the map key type 'String' • lib/actions.dart:977:26 • map_key_type_not_assignable
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:980:16 • unnecessary_non_null_assertion
+  error • The element type 'String?' can't be assigned to the map key type 'String' • lib/actions.dart:980:26 • map_key_type_not_assignable
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:986:16 • unnecessary_non_null_assertion
+  error • The element type 'String?' can't be assigned to the map key type 'String' • lib/actions.dart:986:26 • map_key_type_not_assignable
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:989:16 • unnecessary_non_null_assertion
+  error • The element type 'String?' can't be assigned to the map key type 'String' • lib/actions.dart:989:26 • map_key_type_not_assignable
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:995:14 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:996:14 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:997:14 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:998:14 • unnecessary_non_null_assertion
+  error • The parameter 't' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:1014:22 • missing_default_value_for_parameter
+  error • The parameter 'thegameobject' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:1014:36 • missing_default_value_for_parameter
+  error • The parameter 'goindex' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:1014:55 • missing_default_value_for_parameter
+  error • A value of type 'Clssoundcomponent' can't be assigned to a variable of type 'Clscompsound' • lib/actions.dart:1023:26 • invalid_assignment
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1028:24 • argument_type_not_assignable
+  error • The function can't be unconditionally invoked because it can be 'null' • lib/actions.dart:1045:9 • unchecked_use_of_nullable_value
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1059:43 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1072:43 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1086:43 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1106:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1121:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1138:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1153:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1164:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1178:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1188:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1199:41 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1209:20 • unnecessary_null_comparison
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1211:61 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1215:15 • invalid_assignment
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1216:43 • unchecked_use_of_nullable_value
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1220:20 • unnecessary_null_comparison
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1222:61 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1226:15 • invalid_assignment
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1227:43 • unchecked_use_of_nullable_value
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1230:21 • unnecessary_null_comparison
+  error • The property 'scale' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1232:65 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1235:15 • invalid_assignment
+  error • The property 'scale' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1236:43 • unchecked_use_of_nullable_value
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1241:41 • unchecked_use_of_nullable_value
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1242:41 • unchecked_use_of_nullable_value
+  error • The property 'scale' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1243:41 • unchecked_use_of_nullable_value
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:1248:22 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:1249:26 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'false' • lib/actions.dart:1252:19 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1257:19 • unnecessary_null_comparison
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1263:41 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1272:17 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1277:23 • unnecessary_null_comparison
+  error • The property 'name' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1305:60 • unchecked_use_of_nullable_value
+  error • The argument type 'Forge2DGame<Forge2DWorld>?' can't be assigned to the parameter type 'Forge2DGame<Forge2DWorld>'.  • lib/actions.dart:1309:15 • argument_type_not_assignable
+  error • The argument type 'BuildContext?' can't be assigned to the parameter type 'BuildContext'.  • lib/actions.dart:1309:22 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1309:58 • argument_type_not_assignable
+  error • The property 'isdebug' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1312:51 • unchecked_use_of_nullable_value
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1330:45 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1339:45 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1348:45 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1357:45 • argument_type_not_assignable
+  error • A nullable expression can't be used as a condition • lib/actions.dart:1362:15 • unchecked_use_of_nullable_value
+  error • The property 'bodies' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1382:22 • unchecked_use_of_nullable_value
+  error • The property 'theid' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1383:72 • unchecked_use_of_nullable_value
+  error • The property 'body' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1384:22 • unchecked_use_of_nullable_value
+  error • A nullable expression can't be used as a condition • lib/actions.dart:1419:16 • unchecked_use_of_nullable_value
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1430:45 • argument_type_not_assignable
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:1445:30 • invalid_assignment
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1532:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1541:41 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1581:46 • argument_type_not_assignable
+  error • A value of type 'Clssoundcomponent' can't be assigned to a variable of type 'Clscompsound' • lib/actions.dart:1662:27 • invalid_assignment
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1668:45 • argument_type_not_assignable
+  error • A value of type 'List<dynamic>' can't be assigned to a variable of type 'List<int>' • lib/actions.dart:1711:26 • invalid_assignment
+  error • The class 'List' doesn't have an unnamed constructor • lib/actions.dart:1711:26 • new_with_undefined_constructor_default
+  error • Non-nullable instance field 'compboxcollider' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'compcirclecollider' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'complifebar' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'comprigidbody' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'compsprite' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'comptext' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'firstimage' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'sp' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'thegameobject' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'theimage' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'thescript' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • Non-nullable instance field 'transformprop' must be initialized • lib/actions.dart:1719:3 • not_initialized_non_nullable_instance_field
+  error • A value of type 'Clscompsprite?' can't be assigned to a variable of type 'Clscompsprite' • lib/actions.dart:1726:20 • invalid_assignment
+  error • The property 'imagepath' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1727:52 • unchecked_use_of_nullable_value
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:1729:13 • invalid_assignment
+  error • The property 'spriteanimation' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1729:54 • unchecked_use_of_nullable_value
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1731:37 • unnecessary_null_comparison
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:1732:24 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1734:26 • unnecessary_null_comparison
+  error • A value of type 'Image?' can't be assigned to a variable of type 'Image' • lib/actions.dart:1736:26 • invalid_assignment
+  error • The argument type 'List<String>?' can't be assigned to the parameter type 'List<String>'.  • lib/actions.dart:1740:27 • argument_type_not_assignable
+  error • A value of type 'Image?' can't be assigned to a variable of type 'Image' • lib/actions.dart:1750:13 • invalid_assignment
+  error • The property 'imagepath' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1750:67 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1755:53 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1759:71 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1764:53 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1769:55 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1774:57 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1778:60 • unchecked_use_of_nullable_value
+  error • The property 'theid' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:1783:60 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1784:54 • unchecked_use_of_nullable_value
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1786:50 • unchecked_use_of_nullable_value
+  error • A value of type 'Null' can't be assigned to a variable of type 'Spriteanimation' • lib/actions.dart:1794:10 • invalid_assignment
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:1796:40 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1798:35 • unnecessary_null_comparison
+  error • A value of type 'String?' can't be assigned to a variable of type 'String' • lib/actions.dart:1799:22 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1802:24 • unnecessary_null_comparison
+  error • A value of type 'Image?' can't be assigned to a variable of type 'Image' • lib/actions.dart:1804:24 • invalid_assignment
+  error • The argument type 'List<String>?' can't be assigned to the parameter type 'List<String>'.  • lib/actions.dart:1808:25 • argument_type_not_assignable
+  error • A value of type 'Image?' can't be assigned to a variable of type 'Image' • lib/actions.dart:1816:18 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1836:27 • unnecessary_null_comparison
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1838:30 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:1838:32 • argument_type_not_assignable
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1838:71 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1841:30 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:1841:32 • argument_type_not_assignable
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1841:71 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1843:20 • invalid_assignment
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1844:20 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1872:27 • unnecessary_null_comparison
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1874:30 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:1874:32 • argument_type_not_assignable
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1874:71 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1877:30 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:1877:32 • argument_type_not_assignable
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1877:71 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1879:20 • invalid_assignment
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1880:20 • invalid_assignment
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1906:27 • unnecessary_null_comparison
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1908:30 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:1908:32 • argument_type_not_assignable
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1908:71 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1911:30 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:1911:32 • argument_type_not_assignable
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:1911:71 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1913:20 • invalid_assignment
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:1914:20 • invalid_assignment
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1936:9 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:1951:23 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:1964:12 • unnecessary_null_comparison
+  error • A value of type 'Image?' can't be assigned to a variable of type 'Image' • lib/actions.dart:1966:18 • invalid_assignment
+  error • There isn't a setter named 'isActive' in class 'Body' • lib/actions.dart:1981:15 • assignment_to_final_no_setter
+warning • The method doesn't override an inherited method • lib/actions.dart:2030:8 • override_on_non_overriding_member
+  error • The method 'destroy' isn't defined in a superclass of 'Gameobject' • lib/actions.dart:2031:18 • undefined_super_member
+warning • The method doesn't override an inherited method • lib/actions.dart:2035:8 • override_on_non_overriding_member
+  error • The method 'onDestroy' isn't defined in a superclass of 'Gameobject' • lib/actions.dart:2038:11 • undefined_super_member
+  error • The parameter 'eevents' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:2076:33 • missing_default_value_for_parameter
+  error • The parameter 'variablename' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/actions.dart:2076:49 • missing_default_value_for_parameter
+  error • The name 'update' is already defined • lib/actions.dart:2086:8 • duplicate_definition
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2138:18 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2140:20 • unnecessary_null_comparison
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2141:31 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2141:61 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2142:31 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2142:61 • undefined_getter
+  error • The method 'unary-' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2148:19 • unchecked_use_of_nullable_value
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2148:69 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2149:23 • argument_type_not_assignable
+  error • The method 'unary-' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2150:19 • unchecked_use_of_nullable_value
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2150:69 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2151:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2155:47 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2159:18 • unnecessary_null_comparison
+  error • The property 'imagequality' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2169:34 • unchecked_use_of_nullable_value
+  error • The property 'imagequality' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2172:34 • unchecked_use_of_nullable_value
+  error • The property 'imagequality' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2175:34 • unchecked_use_of_nullable_value
+  error • The property 'imagequality' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2178:34 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2193:18 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2195:20 • unnecessary_null_comparison
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2196:31 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2196:61 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2197:31 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2197:61 • undefined_getter
+  error • The method 'unary-' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2203:19 • unchecked_use_of_nullable_value
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2203:66 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2204:24 • argument_type_not_assignable
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2205:51 • undefined_getter
+  error • The method 'unary-' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2206:19 • unchecked_use_of_nullable_value
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2206:66 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2207:24 • argument_type_not_assignable
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2208:51 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2212:47 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2216:18 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2238:21 • unnecessary_null_comparison
+  error • The property 'appversion' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2265:34 • unchecked_use_of_nullable_value
+  error • The operator '>=' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2265:45 • unchecked_use_of_nullable_value
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2268:60 • unchecked_use_of_nullable_value
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2268:63 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2268:93 • undefined_getter
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2271:60 • unchecked_use_of_nullable_value
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2271:63 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2271:93 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2273:21 • argument_type_not_assignable
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2277:60 • unchecked_use_of_nullable_value
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2277:63 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2277:93 • undefined_getter
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2280:60 • unchecked_use_of_nullable_value
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2280:63 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2280:93 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2282:21 • argument_type_not_assignable
+  error • The property 'angle' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2282:65 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2287:18 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2288:20 • unnecessary_null_comparison
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2289:24 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2289:54 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2290:24 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2290:54 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2297:47 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2301:18 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2304:21 • unnecessary_null_comparison
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2323:60 • unchecked_use_of_nullable_value
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2323:63 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2323:93 • undefined_getter
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2326:60 • unchecked_use_of_nullable_value
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2326:63 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2326:93 • undefined_getter
+  error • The property 'appversion' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2329:38 • unchecked_use_of_nullable_value
+  error • The operator '>=' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2329:49 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2330:25 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2332:25 • argument_type_not_assignable
+  error • The property 'angle' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2332:69 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2335:23 • argument_type_not_assignable
+  error • The property 'angle' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2335:67 • unchecked_use_of_nullable_value
+warning • The operand can't be 'null', so the condition is always 'true' • lib/actions.dart:2338:27 • unnecessary_null_comparison
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2341:35 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2341:42 • argument_type_not_assignable
+  error • The operator '/' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2342:35 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2342:42 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2343:15 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2344:15 • argument_type_not_assignable
+  error • The argument type 'int?' can't be assigned to the parameter type 'int'.  • lib/actions.dart:2357:39 • argument_type_not_assignable
+  error • The argument type 'int?' can't be assigned to the parameter type 'int'.  • lib/actions.dart:2358:39 • argument_type_not_assignable
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2361:26 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2361:56 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2362:25 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2362:55 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2363:27 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2363:57 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2364:28 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2364:58 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2368:28 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2368:58 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2369:27 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2369:57 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2370:29 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2371:43 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2372:15 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2373:15 • argument_type_not_assignable
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2374:30 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2374:60 • undefined_getter
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2377:28 • unchecked_use_of_nullable_value
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2378:33 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2378:63 • undefined_getter
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2379:34 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2380:47 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2381:19 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2382:19 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2383:11 • argument_type_not_assignable
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2384:30 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2385:43 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2386:15 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2387:15 • argument_type_not_assignable
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2388:30 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2388:60 • undefined_getter
+  error • The argument type 'int?' can't be assigned to the parameter type 'int'.  • lib/actions.dart:2397:20 • argument_type_not_assignable
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2399:35 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2399:65 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2405:23 • argument_type_not_assignable
+  error • The operator '*' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2422:32 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2422:50 • undefined_getter
+  error • The method 'unary-' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2427:16 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2427:50 • undefined_getter
+  error • The method 'unary-' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2428:13 • unchecked_use_of_nullable_value
+  error • The getter 'scale' isn't defined for the type 'Viewport' • lib/actions.dart:2428:48 • undefined_getter
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2436:26 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2436:47 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2438:26 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2438:49 • argument_type_not_assignable
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:2440:10 • unnecessary_non_null_assertion
+  error • The argument type 'RevoluteJointDef<Body, Body>' can't be assigned to the parameter type 'Joint'.  • lib/actions.dart:2440:24 • argument_type_not_assignable
+  error • The operator '-' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2450:26 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2450:28 • argument_type_not_assignable
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2451:26 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2451:28 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2453:26 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2453:46 • argument_type_not_assignable
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2455:34 • invalid_assignment
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2456:33 • invalid_assignment
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:2458:10 • unnecessary_non_null_assertion
+  error • The argument type 'WheelJointDef<Body, Body>' can't be assigned to the parameter type 'Joint'.  • lib/actions.dart:2458:24 • argument_type_not_assignable
+warning • The '!' will have no effect because the receiver can't be null • lib/actions.dart:2477:10 • unnecessary_non_null_assertion
+  error • The argument type 'PrismaticJointDef<Body, Body>' can't be assigned to the parameter type 'Joint'.  • lib/actions.dart:2477:24 • argument_type_not_assignable
+  error • 1 positional argument expected by 'FixtureDef.new', but 0 found • lib/actions.dart:2484:37 • not_enough_positional_arguments
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2488:66 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2488:68 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2489:13 • argument_type_not_assignable
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2489:57 • unchecked_use_of_nullable_value
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2490:66 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2490:68 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2491:13 • argument_type_not_assignable
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2491:57 • unchecked_use_of_nullable_value
+  error • The property 'w' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2493:68 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2493:70 • unchecked_use_of_nullable_value
+  error • The property 'h' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2494:68 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2494:70 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2495:25 • invalid_assignment
+  error • The property 'angle' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2495:69 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2500:13 • argument_type_not_assignable
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2500:57 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2501:13 • argument_type_not_assignable
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2501:57 • unchecked_use_of_nullable_value
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2529:69 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2529:71 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2530:13 • argument_type_not_assignable
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2530:57 • unchecked_use_of_nullable_value
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2531:69 • unchecked_use_of_nullable_value
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/actions.dart:2531:71 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'num'.  • lib/actions.dart:2532:13 • argument_type_not_assignable
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2532:57 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2533:25 • invalid_assignment
+  error • The property 'angle' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2533:69 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2536:24 • invalid_assignment
+  error • The property 'radius' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2536:73 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2538:13 • argument_type_not_assignable
+  error • The property 'x' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2538:57 • unchecked_use_of_nullable_value
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/actions.dart:2539:13 • argument_type_not_assignable
+  error • The property 'y' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2539:57 • unchecked_use_of_nullable_value
+  error • The property 'name' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2553:68 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2559:11 • invalid_assignment
+  error • The property 'bounciness' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2559:55 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2561:11 • invalid_assignment
+  error • The property 'friction' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2561:55 • unchecked_use_of_nullable_value
+  error • The property 'bodytype' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2563:55 • unchecked_use_of_nullable_value
+  error • The property 'bodytype' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2566:55 • unchecked_use_of_nullable_value
+  error • The property 'bodytype' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2569:55 • unchecked_use_of_nullable_value
+  error • A value of type 'bool?' can't be assigned to a variable of type 'bool' • lib/actions.dart:2574:11 • invalid_assignment
+  error • The property 'fixedrotation' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2574:55 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/actions.dart:2576:28 • invalid_assignment
+  error • The property 'density' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2576:72 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'Vector2?' • lib/actions.dart:2581:11 • invalid_assignment
+  error • The property 'gravityscale' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2581:55 • unchecked_use_of_nullable_value
+  error • The argument type 'Forge2DWorld' can't be assigned to the parameter type 'World?'.  • lib/actions.dart:2615:52 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/actions.dart:2621:11 • argument_type_not_assignable
+  error • The property 'name' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2621:50 • unchecked_use_of_nullable_value
+  error • A value of type 'int?' can't be assigned to a variable of type 'int' • lib/actions.dart:2624:22 • invalid_assignment
+  error • The property 'priority' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2624:62 • unchecked_use_of_nullable_value
+  error • The element type 'int?' can't be assigned to the map key type 'int' • lib/actions.dart:2626:22 • map_key_type_not_assignable
+  error • The property 'theid' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2626:61 • unchecked_use_of_nullable_value
+  error • The property 'name' can't be unconditionally accessed because the receiver can be 'null' • lib/actions.dart:2701:65 • unchecked_use_of_nullable_value
+  error • The method 'followComponent' isn't defined for the type 'CameraComponent' • lib/actions.dart:2910:12 • undefined_method
+  error • The method 'followComponent' isn't defined for the type 'CameraComponent' • lib/actions.dart:2913:12 • undefined_method
+warning • Unused import: 'package:flutter/foundation.dart' • lib/admobads2.dart:3:8 • unused_import
+warning • Unused import: 'package:flutter/services.dart' • lib/admobads2.dart:6:8 • unused_import
+warning • Unused import: 'globalvars.dart' • lib/admobads2.dart:8:8 • unused_import
+warning • Unused import: 'actions.dart' • lib/compandactvariables.dart:7:8 • unused_import
+  error • The method '+' can't be unconditionally invoked because the receiver can be 'null' • lib/compandactvariables.dart:79:20 • unchecked_use_of_nullable_value
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:125:53 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:130:45 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:184:53 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:190:45 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/compandactvariables.dart:220:29 • unnecessary_null_comparison
+  error • The parameter 'x' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/compandactvariables.dart:287:15 • missing_default_value_for_parameter
+warning • The operand can't be 'null', so the condition is always 'true' • lib/compandactvariables.dart:295:15 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/compandactvariables.dart:305:16 • unnecessary_null_comparison
+warning • The operand can't be 'null', so the condition is always 'true' • lib/compandactvariables.dart:308:16 • unnecessary_null_comparison
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:340:40 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:346:49 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:355:43 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:361:52 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:482:34 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:488:43 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:497:37 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:503:46 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:515:56 • argument_type_not_assignable
+  error • The argument type 'Map<dynamic, dynamic>' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/compandactvariables.dart:521:48 • argument_type_not_assignable
+  error • The parameter 'images' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/compandactvariables.dart:741:32 • missing_default_value_for_parameter
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/compandactvariables.dart:744:34 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'Pattern'.  • lib/compandactvariables.dart:751:50 • argument_type_not_assignable
+  error • The parameter 'components' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/compandactvariables.dart:931:23 • missing_default_value_for_parameter
+  error • The parameter 'localvariables' can't have a value of 'null' because of its type, but the implicit default value is 'null' • lib/compandactvariables.dart:931:40 • missing_default_value_for_parameter
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1158:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1158:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1172:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1172:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1186:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1186:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1198:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1198:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1210:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1210:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1222:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1222:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1234:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1234:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1246:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1246:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1258:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1258:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1270:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1270:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1282:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1282:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1294:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1294:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1306:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1306:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1318:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1318:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1330:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1330:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1342:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1342:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1354:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1354:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1366:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1366:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1379:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1379:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1393:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1393:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1407:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1407:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1425:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1425:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1443:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1443:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1461:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1461:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1475:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1475:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1489:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1489:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1503:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1503:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1519:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1519:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1535:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1535:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1551:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1551:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1568:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1568:33 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1584:23 • argument_type_not_assignable
+  error • The argument type 'double?' can't be assigned to the parameter type 'double'.  • lib/compandactvariables.dart:1584:33 • argument_type_not_assignable
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/compandactvariables.dart:3211:39 • argument_type_not_assignable
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/compandactvariables.dart:3301:45 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/compandactvariables.dart:3361:33 • deprecated_member_use
+   info • The import of 'package:flutter/gestures.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' • lib/gameplayer.dart:7:8 • unnecessary_import
+   info • The import of 'package:flutter/rendering.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' • lib/gameplayer.dart:9:8 • unnecessary_import
+warning • Unused import: 'dart:ui' • lib/gameplayer.dart:26:8 • unused_import
+warning • The operand can't be 'null', so the condition is always 'true' • lib/gameplayer.dart:51:16 • unnecessary_null_comparison
+  error • The method 'cancel' can't be unconditionally invoked because the receiver can be 'null' • lib/gameplayer.dart:60:16 • unchecked_use_of_nullable_value
+   info • 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion • lib/gameplayer.dart:66:44 • deprecated_member_use
+  error • The property 'orientation' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:107:36 • unchecked_use_of_nullable_value
+  error • The property 'orientation' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:109:43 • unchecked_use_of_nullable_value
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/gameplayer.dart:119:23 • argument_type_not_assignable
+  error • The property 'startingscene' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:120:42 • unchecked_use_of_nullable_value
+  error • A nullable expression can't be used as a condition • lib/gameplayer.dart:131:13 • unchecked_use_of_nullable_value
+  error • The property 'usingmicrophone' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:131:38 • unchecked_use_of_nullable_value
+   info • 'accelerometerEvents' is deprecated and shouldn't be used. Use accelerometerEventStream() instead • lib/gameplayer.dart:137:26 • deprecated_member_use
+   info • 'gyroscopeEvents' is deprecated and shouldn't be used. Use gyroscopeEventStream() instead • lib/gameplayer.dart:143:22 • deprecated_member_use
+  error • A value of type 'Clssoundcomponent' can't be assigned to a variable of type 'Clscompsound' • lib/gameplayer.dart:156:24 • invalid_assignment
+  error • A nullable expression can't be used as a condition • lib/gameplayer.dart:159:9 • unchecked_use_of_nullable_value
+  error • The property 'usingmicrophone' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:159:34 • unchecked_use_of_nullable_value
+  error • The method 'cancel' can't be unconditionally invoked because the receiver can be 'null' • lib/gameplayer.dart:170:24 • unchecked_use_of_nullable_value
+  error • The method 'cancel' can't be unconditionally invoked because the receiver can be 'null' • lib/gameplayer.dart:171:20 • unchecked_use_of_nullable_value
+  error • The method 'setEnabledSystemUIOverlays' isn't defined for the type 'SystemChrome' • lib/gameplayer.dart:182:18 • undefined_method
+  error • The getter 'widget' isn't defined for the type 'Gameview' • lib/gameplayer.dart:212:37 • undefined_getter
+  error • A value of type 'Clssoundcomponent' can't be assigned to a variable of type 'Clscompsound' • lib/gameplayer.dart:246:38 • invalid_assignment
+  error • The getter 'util' isn't defined for the type 'Flame' • lib/gameplayer.dart:249:25 • undefined_getter
+  error • The property 'orientation' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:250:48 • unchecked_use_of_nullable_value
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:294:31 • unchecked_use_of_nullable_value
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:295:27 • unchecked_use_of_nullable_value
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:296:29 • unchecked_use_of_nullable_value
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:297:25 • unchecked_use_of_nullable_value
+  error • The argument type 'int?' can't be assigned to the parameter type 'int'.  • lib/gameplayer.dart:299:36 • argument_type_not_assignable
+  error • The argument type 'int?' can't be assigned to the parameter type 'int'.  • lib/gameplayer.dart:300:37 • argument_type_not_assignable
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:319:33 • unchecked_use_of_nullable_value
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:320:29 • unchecked_use_of_nullable_value
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:321:31 • unchecked_use_of_nullable_value
+  error • The property 'isNaN' can't be unconditionally accessed because the receiver can be 'null' • lib/gameplayer.dart:322:27 • unchecked_use_of_nullable_value
+  error • There isn't a setter named 'bannerid' in class 'Ads2' • lib/gameplayer.dart:330:21 • assignment_to_final_no_setter
+  error • A nullable expression can't be used as a condition • lib/gameplayer.dart:407:7 • unchecked_use_of_nullable_value
+  error • The function can't be unconditionally invoked because it can be 'null' • lib/gameplayer.dart:410:5 • unchecked_use_of_nullable_value
+  error • A nullable expression can't be used as a condition • lib/gameplayer.dart:416:7 • unchecked_use_of_nullable_value
+  error • The function can't be unconditionally invoked because it can be 'null' • lib/gameplayer.dart:419:5 • unchecked_use_of_nullable_value
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/gameplayer.dart:442:23 • invalid_assignment
+  error • A value of type 'double?' can't be assigned to a variable of type 'double' • lib/gameplayer.dart:443:22 • invalid_assignment
+  error • The argument type 'int?' can't be assigned to the parameter type 'int'.  • lib/gameplayer.dart:464:22 • argument_type_not_assignable
+warning • Unused import: 'dart:math' • lib/gameview.dart:1:8 • unused_import
+warning • Unused import: 'package:flame/flame.dart' • lib/gameview.dart:3:8 • unused_import
+   info • The import of 'package:flutter/gestures.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' • lib/gameview.dart:8:8 • unnecessary_import
+   info • The import of 'package:flame/components.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flame/game.dart' • lib/gameview.dart:12:8 • unnecessary_import
+warning • Duplicate import • lib/gameview.dart:13:8 • duplicate_import
+  error • The argument type 'int?' can't be assigned to the parameter type 'int'.  • lib/gameview.dart:75:23 • argument_type_not_assignable
+warning • The operand can't be 'null', so the condition is always 'true' • lib/gameview.dart:203:26 • unnecessary_null_comparison
+warning • The name ByteData is shown, but isn't used • lib/main.dart:3:45 • unused_shown_name
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • plugins/control_pad/lib/views/circle_view.dart:38:47 • argument_type_not_assignable
+   info • Unnecessary type annotation on a local variable • plugins/control_pad/lib/views/pad_button_view.dart:54:5 • omit_local_variable_types
+

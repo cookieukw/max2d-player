@@ -1,0 +1,9 @@
+/build
+.idea
+.vscode
+.DS_Store
+.env
+.env.*
+.gradle
+.dart_tool
+.pub-cache

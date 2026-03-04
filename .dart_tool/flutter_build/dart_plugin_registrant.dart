@@ -11,6 +11,7 @@ import 'package:webview_flutter_android/webview_flutter_android.dart' as webview
 import 'package:path_provider_foundation/path_provider_foundation.dart' as path_provider_foundation;
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart' as webview_flutter_wkwebview;
 import 'package:path_provider_linux/path_provider_linux.dart' as path_provider_linux;
+import 'package:record_linux/record_linux.dart' as record_linux;
 import 'package:path_provider_foundation/path_provider_foundation.dart' as path_provider_foundation;
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart' as webview_flutter_wkwebview;
 import 'package:path_provider_windows/path_provider_windows.dart' as path_provider_windows;
@@ -64,6 +65,15 @@ class _PluginRegistrant {
       } catch (err) {
         print(
           '`path_provider_linux` threw an error: $err. '
+          'The app may not function as expected until you remove this plugin from pubspec.yaml'
+        );
+      }
+
+      try {
+        record_linux.RecordLinux.registerWith();
+      } catch (err) {
+        print(
+          '`record_linux` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }

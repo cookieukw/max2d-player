@@ -35,7 +35,7 @@ class CircleView extends StatelessWidget {
       child: Center(
         child: buttonIcon ?? ((buttonImage != null)
                 ? buttonImage
-                : (buttonText != null) ? Text(buttonText) : null),
+                : (buttonText != null) ? Text(buttonText!) : null),
       ),
     );
   }

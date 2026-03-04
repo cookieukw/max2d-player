@@ -22,13 +22,9 @@ subprojects {
             }
         }
     }
-    afterEvaluate { project ->
-        if (project.plugins.hasPlugin('kotlin-android') || project.plugins.hasPlugin('kotlin')) {
-            project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-                kotlinOptions {
-                    jvmTarget = "1.8"
-                }
-            }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
         }
     }
 }
@@ -44,6 +40,18 @@ subprojects {
                     def xml = new XmlParser().parse(manifestFile)
                     project.android.namespace = xml.@package
                 }
+            }
+            project.android {
+                compileSdkVersion 34
+                compileOptions {
+                    sourceCompatibility 17
+                    targetCompatibility 17
+                }
+            }
+        }
+        project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions {
+                jvmTarget = "17"
             }
         }
     }

@@ -72,7 +72,7 @@ class Gameview extends FlameGame {
             MediaQuery.of(context).size.height),
         Paint()
           ..color = cameragetcameracontrollercore()!.backgroundcolor != null
-              ? Color(cameragetcameracontrollercore()!.backgroundcolor)
+              ? Color(cameragetcameracontrollercore()!.backgroundcolor ?? 0xFF000000)
               : Colors.blueGrey);
 
     super.render(canvas);
@@ -130,9 +130,9 @@ class Gameview extends FlameGame {
 
       bComponent!.bodies.forEach((key, value) {
         // print(key);
-        for (int a = 0; a < value.thescript.localvariables.length; a++) {
+        for (int a = 0; a < (value.thescript?.localvariables.length ?? 0); a++) {
           if (value.isdestroyed == false) {
-            Clsvariable t = value.thescript.localvariables[a];
+            Clsvariable t = value.thescript!.localvariables[a];
             if (t is Clsvariablenumber) {
               if (t.showdebug == null || t.showdebug == true) {
                 drawtext(canvas, "${t.name}: ${t.value}",

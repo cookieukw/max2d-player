@@ -22,7 +22,6 @@ environment:
 
 dependencies:
   expressions: ^0.2.4
-  mic_stream: ^0.7.2
   sensors_plus: ^6.0.0 # Replaces sensors
   flutter_archive: ^5.0.0
   audioplayers: ^0.20.1
@@ -34,7 +33,7 @@ dependencies:
   # flame:
   #   path: plugins/flame2/
   flame: ^1.0.0
-  flame_forge2d: ^0.16.0
+  flame_forge2d: ^0.19.2
   control_pad:
     path: plugins/control_pad/
   # control_pad: ^1.1.1+1 # Matches local version
@@ -44,6 +43,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  record: ^6.2.0
 
 dev_dependencies:
   flutter_test:
@@ -137,3 +137,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

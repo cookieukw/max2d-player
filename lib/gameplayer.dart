@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:control_pad/control_pad.dart';
 // import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/game.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -18,7 +19,7 @@ import 'gameview.dart';
 
 import 'globalvars.dart';
 
-import 'package:mic_stream/mic_stream.dart';
+import 'package:record/record.dart';
 import 'dart:math' as math;
 
 import 'package:sensors_plus/sensors_plus.dart';
@@ -43,22 +44,29 @@ class Gameplayer extends StatefulWidget {
 }
 
 class _GameplayerState extends State<Gameplayer> {
-  StreamSubscription<List<int>>? listener;
+  final _audioRecorder = AudioRecorder();
+  StreamSubscription<Uint8List>? listener;
 
   void start() async {
-    Stream<List<int>>? stream = await MicStream.microphone(
-        sampleRate: 16000, channelConfig: ChannelConfig.CHANNEL_IN_STEREO);
-    if (stream != null) {
+    if (await _audioRecorder.hasPermission()) {
+      final stream = await _audioRecorder.startStream(const RecordConfig(
+        encoder: AudioEncoder.pcm16bits,
+        sampleRate: 16000,
+        numChannels: 2,
+      ));
       listener = stream.listen((samples) {
-        miclevel = samples.reduce(math.max).toDouble() - 130;
+        if (samples.isNotEmpty) {
+          miclevel = samples.reduce(math.max).toDouble() - 130;
+        }
       });
     }
   }
 
   void stop() async {
     if (listener != null) {
-      listener.cancel();
+      listener!.cancel();
     }
+    await _audioRecorder.stop();
   }
 
   StreamSubscription? accelerometerEvent;
@@ -104,20 +112,23 @@ class _GameplayerState extends State<Gameplayer> {
       loadsplashimage();
       ismanaprojecsettingsloaded = true;
       setState(() {});
-      if (getprojectsettingscore().orientation == "portrait") {
-        Flame.device.setPortrait();
-      } else if (getprojectsettingscore().orientation == "landscape") {
-        Flame.device.setLandscape();
+      var settings = getprojectsettingscore();
+      if (settings != null) {
+        if (settings.orientation == "portrait") {
+          Flame.device.setPortrait();
+        } else if (settings.orientation == "landscape") {
+          Flame.device.setLandscape();
+        }
       }
-      if (getprojectsettingscore()!.splashbackground != null) {
+      if (settings != null && settings.splashbackground != null) {
         // print(splashbackground);
-        splashbackground = getprojectsettingscore()!.splashbackground ?? 0xFF2A2E49;
-        splashtext = getprojectsettingscore()!.splashtext ?? "M A D E  W I T H";
+        splashbackground = settings.splashbackground ?? 0xFF2A2E49;
+        splashtext = settings.splashtext ?? "M A D E  W I T H";
         // print(splashbackground);
       }
       await theads2.initialize(widget.isdebug);
       loadprojectcore(widget.isplayground
-              ? getprojectsettingscore().startingscene
+              ? (getprojectsettingscore()?.startingscene ?? "scene1")
               : widget.currentscene)
           .then((onValue) async {
         await loadimagesfromfile(context);
@@ -128,19 +139,19 @@ class _GameplayerState extends State<Gameplayer> {
           setState(() {});
         });
 
-        if (getprojectsettingscore().usingmicrophone) {
+        if (settings != null && (settings.usingmicrophone == true)) {
           start();
         }
       });
     });
 
-    accelerometerEvent = accelerometerEvents.listen((AccelerometerEvent event) {
+    accelerometerEvent = accelerometerEventStream().listen((AccelerometerEvent event) {
       accelerometervalue.x = event.x;
       accelerometervalue.y = event.y;
       accelerometervalue.z = event.z;
     });
 
-    gyroscopeEvent = gyroscopeEvents.listen((GyroscopeEvent event) {
+    gyroscopeEvent = gyroscopeEventStream().listen((GyroscopeEvent event) {
       gyroscopevalue.x = event.x;
       gyroscopevalue.y = event.y;
       gyroscopevalue.z = event.z;
@@ -153,10 +164,11 @@ class _GameplayerState extends State<Gameplayer> {
   void dispose() {
     Flame.device.setLandscape();
     for (int a = 0; a < soundslistscore.length; a++) {
-      Clscompsound t = soundslistscore[a];
+      Clscompsound t = soundslistscore[a] as Clscompsound;
       t.stop();
     }
-    if (getprojectsettingscore().usingmicrophone) {
+    var settings = getprojectsettingscore();
+    if (settings != null && (settings.usingmicrophone == true)) {
       stop();
     }
 
@@ -167,8 +179,8 @@ class _GameplayerState extends State<Gameplayer> {
 
     theads2.hideBannerAd();
 
-    accelerometerEvent.cancel();
-    gyroscopeEvent.cancel();
+    accelerometerEvent?.cancel();
+    gyroscopeEvent?.cancel();
 
     super.dispose();
   }
@@ -179,7 +191,7 @@ class _GameplayerState extends State<Gameplayer> {
       return Container();
     }
     playercontext = context;
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     if (isprojectloaded) {
       gv = Gameview(context, isdebug: widget.isdebug);
     }
@@ -209,7 +221,7 @@ class _GameplayerState extends State<Gameplayer> {
                             //   }
                           },
                           onPointerCancel: (event) {},
-                          child: gv.widget),
+                          child: GameWidget(game: gv)),
                       TheUIcomponents()
                     ],
                   )
@@ -243,11 +255,12 @@ class _GameplayerState extends State<Gameplayer> {
                 backgroundColor: Color.fromARGB(255, 70, 70, 70),
                 onPressed: () {
                   for (int a1 = 0; a1 < soundslistscore.length; a1++) {
-                    Clscompsound t = soundslistscore[a1];
+                    Clscompsound t = soundslistscore[a1] as Clscompsound;
                     t.stop();
                   }
-                  Flame.util.setLandscape();
-                  if (getprojectsettingscore().orientation == "portrait") {
+                  Flame.device.setLandscape();
+                  var settings = getprojectsettingscore();
+                  if (settings != null && settings.orientation == "portrait") {
                     Future.delayed(Duration(milliseconds: 100), () {
                       Navigator.of(context).pop();
                     });
@@ -291,14 +304,14 @@ class _TheUIcomponentsState extends State<TheUIcomponents> {
       Clsuicomponent t = uicomponentscore[index];
       if (t is Clsuijoystickdirectional) {
         return Positioned(
-          bottom: t.posbottom.isNaN ? null : t.posbottom,
-          left: t.posleft.isNaN ? null : t.posleft,
-          right: t.posright.isNaN ? null : t.posright,
-          top: t.postop.isNaN ? null : t.postop,
+          bottom: (t.posbottom ?? double.nan).isNaN ? null : t.posbottom!,
+          left: (t.posleft ?? double.nan).isNaN ? null : t.posleft!,
+          right: (t.posright ?? double.nan).isNaN ? null : t.posright!,
+          top: (t.postop ?? double.nan).isNaN ? null : t.postop!,
           child: JoystickView(
-            backgroundColor: Color(t.backgroundcolor),
-            innerCircleColor: Color(t.knobcolor),
-            size: t.size,
+            backgroundColor: Color(t.backgroundcolor ?? 0xFF000000),
+            innerCircleColor: Color(t.knobcolor ?? 0xFF000000),
+            size: t.size ?? 100.0,
             showArrows: false,
             interval: Duration(milliseconds: 16),
             onDirectionChanged: (val, val2, x, y) {
@@ -316,10 +329,10 @@ class _TheUIcomponentsState extends State<TheUIcomponents> {
       if (t is Clsuibutton) {
         // buttonlisteners.add(t);
         return Positioned(
-            bottom: t.posbottom.isNaN ? null : t.posbottom,
-            left: t.posleft.isNaN ? null : t.posleft,
-            right: t.posright.isNaN ? null : t.posright,
-            top: t.postop.isNaN ? null : t.postop,
+            bottom: (t.posbottom ?? double.nan).isNaN ? null : t.posbottom!,
+            left: (t.posleft ?? double.nan).isNaN ? null : t.posleft!,
+            right: (t.posright ?? double.nan).isNaN ? null : t.posright!,
+            top: (t.postop ?? double.nan).isNaN ? null : t.postop!,
             child: theuibutton(t));
       }
       if (t is Clsuiadbanner) {
@@ -327,7 +340,8 @@ class _TheUIcomponentsState extends State<TheUIcomponents> {
         theads2.bannersize = t.bannersize ?? "banner";
         if (t.bannerid != null) {
           if (t.bannerid!.length > 0) {
-            theads2.bannerid = t.bannerid!;
+            // bannerid is final - would need to recreate theads2 to change it
+            // theads2.bannerid = t.bannerid!;
           }
         }
         if (getprojectsettingscore()!.admobapplicationid != null) {
@@ -404,19 +418,19 @@ void buttononfocus(Clsuibutton t) {
 }
 
 void buttononfocusout(Clsuibutton t) {
-  if (t.isentering) {
+  if (t.isentering == true) {
     t.isentering = false;
     t.scale = 1;
-    refreshuicomponents();
+    refreshuicomponents?.call();
     gv.onButtonEvent(Buttonvalues(t.variablename, "tapup"));
   }
 }
 
 void buttononcancel(Clsuibutton t) {
-  if (t.isentering) {
+  if (t.isentering == true) {
     t.isentering = false;
     t.scale = 1;
-    refreshuicomponents();
+    refreshuicomponents?.call();
     gv.onButtonEvent(Buttonvalues(t.variablename, "tapcancel"));
   }
 }
@@ -439,8 +453,8 @@ Widget theuibutton(Clsuibutton t) {
       double left = t.posleft ?? double.nan;
       double right = t.posright ?? double.nan;
 
-      double height = t.height;
-      double width = t.width;
+      double height = t.height ?? 0;
+      double width = t.width ?? 0;
 
       if (top.isNaN) {
         top = screenheight - bottom - height;
@@ -459,11 +473,11 @@ Widget theuibutton(Clsuibutton t) {
       }
     },
     child: Transform.scale(
-      scale: t.scale,
+      scale: t.scale ?? 1.0,
       child: Container(
-        color: Color(t.color),
-        width: t.width,
-        height: t.height,
+        color: Color(t.color ?? 0xFF000000),
+        width: t.width ?? 0,
+        height: t.height ?? 0,
       ),
     ),
   );

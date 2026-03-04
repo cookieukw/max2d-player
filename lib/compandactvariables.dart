@@ -75,8 +75,8 @@ class Clsgameobjectitem {
     List<Clscomponent> components2 = [];
     json.forEach((key, value) {
       if (key == "compgameobject") {
-        components2.add(Clscompgameobject.fromJson(objectcount, value));
-        objectcount++;
+        components2.add(Clscompgameobject.fromJson(objectcount ?? 0, value));
+        objectcount = (objectcount ?? 0) + 1;
       }
       if (key == "comptransform") {
         components2.add(Clscomptransform.fromJson((value)));
@@ -116,7 +116,7 @@ class Clsgameobjectitem {
     return Clsgameobjectitem(components: components2);
   }
 
-  void setsprite(Map tvalue) {
+  void setsprite(Map<String, dynamic> tvalue) {
     bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
@@ -131,19 +131,19 @@ class Clsgameobjectitem {
     }
   }
 
-  Clscompsprite getsprite({bool isnullvalues = false}) {
-    Clscompsprite gameobject;
+  Clscompsprite? getsprite({bool isnullvalues = false}) {
+    Clscompsprite? gameobject;
     if (isnullvalues == false) {
       for (int a = 0; a < components.length; a++) {
         if (components[a] is Clscompsprite) {
-          gameobject = components[a];
+          gameobject = components[a] as Clscompsprite;
         }
       }
     }
     if (isnullvalues) {
       for (int a = 0; a < components.length; a++) {
         if (components[a] is Clscompsprite) {
-          gameobject = components[a];
+          gameobject = components[a] as Clscompsprite;
           if (gameobject.spriteanimation == null) {
             if (gameobject.imagepath == null) {
               return null;
@@ -154,7 +154,7 @@ class Clsgameobjectitem {
     }
     if (gameobject != null) {
       if (gameobject.imagepath != null) {
-        File f = File(imagespath + gameobject.imagepath);
+        File f = File(imagespath + gameobject.imagepath!);
         // print(f.path);
         if (!f.existsSync()) {
           gameobject.imagepath = "noimage";
@@ -165,17 +165,17 @@ class Clsgameobjectitem {
     return gameobject;
   }
 
-  Clscompscript getscript() {
-    Clscompscript gameobject;
+  Clscompscript? getscript() {
+    Clscompscript? gameobject;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscompscript) {
-        gameobject = components[a];
+        gameobject = components[a] as Clscompscript;
       }
     }
     return gameobject;
   }
 
-  void setscript(Map tvalue) {
+  void setscript(Map<String, dynamic> tvalue) {
     bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
@@ -191,21 +191,21 @@ class Clsgameobjectitem {
     }
   }
 
-  Clscomptext gettext() {
-    Clscomptext gameobject;
+  Clscomptext? gettext() {
+    Clscomptext? gameobject;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscomptext) {
-        gameobject = components[a];
+        gameobject = components[a] as Clscomptext;
       }
     }
     return gameobject;
   }
 
-  Clscomplifebar getlifebar() {
-    Clscomplifebar gameobject;
+  Clscomplifebar? getlifebar() {
+    Clscomplifebar? gameobject;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscomplifebar) {
-        gameobject = components[a];
+        gameobject = components[a] as Clscomplifebar;
       }
     }
     return gameobject;
@@ -232,7 +232,7 @@ class Clsgameobjectitem {
     return null;
   }
 
-  List<String> getspriteanimationimagelists(String animation) {
+  List<String>? getspriteanimationimagelists(String animation) {
     for (int b = 0; b < components.length; b++) {
       Clscomponent t = components[b];
       if (t is Clscompspriteanimation) {
@@ -273,18 +273,18 @@ class Clsgameobjectitem {
     }
   }
 
-  Clscompgameobject getgameobject() {
-    Clscompgameobject gameobject;
+  Clscompgameobject? getgameobject() {
+    Clscompgameobject? gameobject;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscompgameobject) {
-        gameobject = components[a];
+        gameobject = components[a] as Clscompgameobject;
       }
     }
     return gameobject;
   }
 
   void settransform(
-      {double x,
+      {double? x,
       double? y,
       double? angle,
       required double sx,
@@ -312,27 +312,27 @@ class Clsgameobjectitem {
     }
   }
 
-  Clscomptransform gettransform() {
-    Clscomptransform transform;
+  Clscomptransform? gettransform() {
+    Clscomptransform? transform;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscomptransform) {
-        transform = components[a];
+        transform = components[a] as Clscomptransform;
       }
     }
     return transform;
   }
 
-  Clscompboxcollider getboxcollider() {
-    Clscompboxcollider boxcollider;
+  Clscompboxcollider? getboxcollider() {
+    Clscompboxcollider? boxcollider;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscompboxcollider) {
-        boxcollider = components[a];
+        boxcollider = components[a] as Clscompboxcollider;
       }
     }
     return boxcollider;
   }
 
-  void setwheeljoint(Map tvalue) {
+  void setwheeljoint(Map<String, dynamic> tvalue) {
     bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
@@ -347,7 +347,7 @@ class Clsgameobjectitem {
     }
   }
 
-  void setrevolutejoint(Map tvalue) {
+  void setrevolutejoint(Map<String, dynamic> tvalue) {
     bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
@@ -419,11 +419,11 @@ class Clsgameobjectitem {
   }
 
   void setspriteanimation(
-      {List images,
+      {List? images, // nullable
       String? variablename,
       double? interval,
       bool? addifnone = false}) {
-    Map<int, dynamic> temp = images.as{};
+    Map<int, dynamic> temp = images?.asMap() ?? {}; // correct usage
 
     List<String> newlist = [];
     temp.forEach((index, value) {
@@ -464,17 +464,17 @@ class Clsgameobjectitem {
     return lastcollider;
   }
 
-  Clscompcirclecollider getcirclecollider() {
-    Clscompcirclecollider circlecollider;
+  Clscompcirclecollider? getcirclecollider() {
+    Clscompcirclecollider? circlecollider;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscompcirclecollider) {
-        circlecollider = components[a];
+        circlecollider = components[a] as Clscompcirclecollider;
       }
     }
     return circlecollider;
   }
 
-  void settext(Map tvalue) {
+  void settext(Map<String, dynamic> tvalue) {
     bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
@@ -489,7 +489,7 @@ class Clsgameobjectitem {
     }
   }
 
-  void setlifebar(Map tvalue) {
+  void setlifebar(Map<String, dynamic> tvalue) {
     bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
       Clscomponent t = components[a];
@@ -504,7 +504,7 @@ class Clsgameobjectitem {
     }
   }
 
-  void setrigidbody(Map tvalue) {
+  void setrigidbody(Map<String, dynamic> tvalue) {
     //
     bool? isnaa = false;
     for (int a = 0; a < components.length; a++) {
@@ -522,11 +522,11 @@ class Clsgameobjectitem {
     }
   }
 
-  Clscomprigidbody getrigidbody() {
-    Clscomprigidbody rigidbody;
+  Clscomprigidbody? getrigidbody() {
+    Clscomprigidbody? rigidbody;
     for (int a = 0; a < components.length; a++) {
       if (components[a] is Clscomprigidbody) {
-        rigidbody = components[a];
+        rigidbody = components[a] as Clscomprigidbody;
       }
     }
     return rigidbody;
@@ -738,17 +738,18 @@ class Clscompspriteanimation extends Clscomponent {
   List<String> images;
   double? interval;
   String? variablename;
-  Clscompspriteanimation({this.images, this.interval, this.variablename});
+  Clscompspriteanimation({List<String>? images, this.interval, this.variablename})
+      : images = images ?? [];
   Map<String, dynamic> toJson() {
     return {
-      "images": this.images.join(codeseparator),
+      "images": (this.images ?? []).join(codeseparator ?? ""),
       "interval": this.interval,
       "variablename": this.variablename
     };
   }
 
   Clscompspriteanimation.fromJson(Map<String, dynamic> json)
-      : images = json['images'].toString().split(codeseparator),
+      : images = json['images'].toString().split(codeseparator as Pattern? ?? ""),
         interval = json['interval'],
         variablename = json['variablename'];
 }
@@ -928,7 +929,9 @@ class Clscompscript extends Clscomponent {
   List<Clsscriptitem> components = [];
   List<Clsvariable> localvariables = [];
 
-  Clscompscript({this.components, this.localvariables});
+  Clscompscript({List<Clsscriptitem>? components, List<Clsvariable>? localvariables})
+      : components = components ?? [],
+        localvariables = localvariables ?? [];
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> thelist = {};
@@ -1155,7 +1158,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1169,7 +1172,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1183,7 +1186,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1195,7 +1198,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1207,7 +1210,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1219,7 +1222,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1231,7 +1234,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1243,7 +1246,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1255,7 +1258,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1267,7 +1270,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1279,7 +1282,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1291,7 +1294,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1303,7 +1306,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1315,7 +1318,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1327,7 +1330,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1339,7 +1342,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1351,7 +1354,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1363,7 +1366,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1376,7 +1379,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1390,7 +1393,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1404,7 +1407,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1422,7 +1425,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1440,7 +1443,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1458,7 +1461,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1472,7 +1475,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1486,7 +1489,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1500,7 +1503,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1516,7 +1519,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1532,7 +1535,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1548,7 +1551,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1565,7 +1568,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -1581,7 +1584,7 @@ class Clsscriptitem {
         if (t.vsPosX == null || t.vsPosY == null) {
           return Offset(0, 0);
         }
-        return Offset(t.vsPosX, t.vsPosY);
+        return Offset(t.vsPosX!, t.vsPosY!);
       } else if (whattoget == "childindex") {
         return t.childindex;
       } else if (whattoget == "vswidth") {
@@ -2321,7 +2324,7 @@ class Clsactiscollidingwith extends Clsscriptitem {
 }
 
 class Clsactiscardinal extends Clsscriptitem {
-  double? angle = double.nan;
+  double angle;
   String? expangle;
 
   double? vsPosX = 0;
@@ -2347,7 +2350,7 @@ class Clsactiscardinal extends Clsscriptitem {
 
   Clsactiscardinal.fromJson(Map<String, dynamic> json)
       : direction = json['direction'],
-        angle = fromjsondouble(json['angle']),
+        angle = fromjsondouble(json['angle']) ?? double.nan,
         expangle = json['expangle'],
         vsPosX = json['vsPosX'],
         vsPosY = json['vsPosY'],
@@ -2357,9 +2360,9 @@ class Clsactiscardinal extends Clsscriptitem {
 }
 
 class Clsacttimerdelayed extends Clsscriptitem {
-  double? seconds;
+  double seconds;
 
-  Timer timer;
+  Timer? timer;
 
   double? vsPosX = 0;
   double? vsPosY = 0;
@@ -2369,12 +2372,12 @@ class Clsacttimerdelayed extends Clsscriptitem {
   bool? cancel;
   bool? iscancelled = false;
 
-  Clsacttimerdelayed({this.seconds, this.cancel});
+  Clsacttimerdelayed({this.seconds = double.nan, this.cancel});
 
   void start(Function function) {
     if (cancel == true) {
       if (timer != null) {
-        timer.cancel();
+        timer!.cancel();
       }
     }
 
@@ -2387,7 +2390,7 @@ class Clsacttimerdelayed extends Clsscriptitem {
 
   void stop() {
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
     }
   }
 
@@ -2403,7 +2406,7 @@ class Clsacttimerdelayed extends Clsscriptitem {
   }
 
   Clsacttimerdelayed.fromJson(Map<String, dynamic> json)
-      : seconds = fromjsondouble(json['seconds']),
+      : seconds = fromjsondouble(json['seconds']) ?? double.nan,
         vsPosX = json['vsPosX'],
         vsPosY = json['vsPosY'],
         cancel = json['cancel'],
@@ -2412,9 +2415,9 @@ class Clsacttimerdelayed extends Clsscriptitem {
 }
 
 class Clsacttimerperiodic extends Clsscriptitem {
-  double? seconds;
+  double seconds;
 
-  Timer timer;
+  Timer? timer;
 
   double? vsPosX = 0;
   double? vsPosY = 0;
@@ -2423,12 +2426,12 @@ class Clsacttimerperiodic extends Clsscriptitem {
   double? vswidth = 150;
   bool? cancel;
   bool? iscancelled = false;
-  Clsacttimerperiodic({this.seconds, this.cancel});
+  Clsacttimerperiodic({this.seconds = double.nan, this.cancel});
 
   void start(Function function) {
     if (cancel == true) {
       if (timer != null) {
-        timer.cancel();
+        timer!.cancel();
       }
     }
     timer = Timer.periodic(Duration(milliseconds: (seconds * 1000).toInt()),
@@ -2441,7 +2444,7 @@ class Clsacttimerperiodic extends Clsscriptitem {
 
   void stop() {
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
       timer = null;
     }
   }
@@ -2458,7 +2461,7 @@ class Clsacttimerperiodic extends Clsscriptitem {
   }
 
   Clsacttimerperiodic.fromJson(Map<String, dynamic> json)
-      : seconds = fromjsondouble(json['seconds']),
+      : seconds = fromjsondouble(json['seconds']) ?? double.nan,
         vsPosX = json['vsPosX'],
         vsPosY = json['vsPosY'],
         childindex = json['childindex'],
@@ -2467,14 +2470,14 @@ class Clsacttimerperiodic extends Clsscriptitem {
 }
 
 class Clsactcreateobject extends Clsscriptitem {
-  double? x;
-  double? y;
+  double x;
+  double y;
   String? expx;
   String? expy;
   String? objectname;
   bool? isrelative;
-  double? velx;
-  double? vely;
+  double velx;
+  double vely;
   String? expvelx;
   String? expvely;
 
@@ -2485,12 +2488,12 @@ class Clsactcreateobject extends Clsscriptitem {
   Clsactcreateobject(
       {this.expx,
       this.expy,
-      this.x,
-      this.y,
+      this.x = double.nan,
+      this.y = double.nan,
       this.objectname,
       this.isrelative,
-      this.velx,
-      this.vely,
+      this.velx = double.nan,
+      this.vely = double.nan,
       this.expvelx,
       this.expvely});
   Map<String, dynamic> toJson() {
@@ -2512,12 +2515,12 @@ class Clsactcreateobject extends Clsscriptitem {
   }
 
   Clsactcreateobject.fromJson(Map<String, dynamic> json)
-      : x = fromjsondouble(json['x']),
-        y = fromjsondouble(json['y']),
+      : x = fromjsondouble(json['x']) ?? double.nan,
+        y = fromjsondouble(json['y']) ?? double.nan,
         expx = json['expx'],
         expy = json['expy'],
-        velx = fromjsondouble(json['velx']),
-        vely = fromjsondouble(json['vely']),
+        velx = fromjsondouble(json['velx']) ?? double.nan,
+        vely = fromjsondouble(json['vely']) ?? double.nan,
         expvelx = json['expvelx'],
         expvely = json['expvely'],
         objectname = json['objectname'],
@@ -2529,7 +2532,7 @@ class Clsactcreateobject extends Clsscriptitem {
 
 class Clsactfollowobject extends Clsscriptitem {
   String? objectname;
-  double? speed;
+  double speed;
   String? expspeed;
 
   double? vsPosX = 0;
@@ -2537,7 +2540,7 @@ class Clsactfollowobject extends Clsscriptitem {
   int? childindex = -1;
   double? vswidth = 150;
 
-  Clsactfollowobject({this.objectname, this.speed, this.expspeed});
+  Clsactfollowobject({this.objectname, this.speed = double.nan, this.expspeed});
   Map<String, dynamic> toJson() {
     return {
       "objectname": this.objectname,
@@ -2551,7 +2554,7 @@ class Clsactfollowobject extends Clsscriptitem {
 
   Clsactfollowobject.fromJson(Map<String, dynamic> json)
       : objectname = json['objectname'],
-        speed = fromjsondouble(json['speed']),
+        speed = fromjsondouble(json['speed']) ?? double.nan,
         expspeed = json['expspeed'],
         vsPosX = json['vsPosX'],
         vsPosY = json['vsPosY'],
@@ -2585,11 +2588,11 @@ class Clsactdestroyobject extends Clsscriptitem {
 class Clsactsettext extends Clsscriptitem {
   String? text;
   String? exptext;
-  double? width;
-  double? height;
+  double width;
+  double height;
 
-  double? blurradius;
-  double? fontsize;
+  double blurradius;
+  double fontsize;
   int? textcolor;
   String? fontfamily;
 
@@ -2600,10 +2603,10 @@ class Clsactsettext extends Clsscriptitem {
   Clsactsettext({
     this.text,
     this.exptext,
-    this.width,
-    this.height,
-    this.blurradius,
-    this.fontsize,
+    this.width = double.nan,
+    this.height = double.nan,
+    this.blurradius = double.nan,
+    this.fontsize = double.nan,
     this.textcolor,
     this.fontfamily,
   });
@@ -2626,10 +2629,10 @@ class Clsactsettext extends Clsscriptitem {
   Clsactsettext.fromJson(Map<String, dynamic> json)
       : text = json['text'],
         exptext = json['exptext'],
-        width = fromjsondouble(json['width']),
-        height = fromjsondouble(json['height']),
-        blurradius = fromjsondouble(json['blurradius']),
-        fontsize = fromjsondouble(json['fontsize']),
+        width = fromjsondouble(json['width']) ?? double.nan,
+        height = fromjsondouble(json['height']) ?? double.nan,
+        blurradius = fromjsondouble(json['blurradius']) ?? double.nan,
+        fontsize = fromjsondouble(json['fontsize']) ?? double.nan,
         textcolor = json['textcolor'],
         fontfamily = json['fontfamily'],
         vsPosX = json['vsPosX'],
@@ -2638,8 +2641,8 @@ class Clsactsettext extends Clsscriptitem {
 }
 
 class Clsactsetlifebar extends Clsscriptitem {
-  double? maxvalue;
-  double? thevalue;
+  double maxvalue;
+  double thevalue;
   int? backgroundcolor;
   int? foregroundcolor;
 
@@ -2651,8 +2654,8 @@ class Clsactsetlifebar extends Clsscriptitem {
   int? childindex = -1;
   double? vswidth = 150;
   Clsactsetlifebar({
-    this.maxvalue,
-    this.thevalue,
+    this.maxvalue = double.nan,
+    this.thevalue = double.nan,
     this.expmaxvalue,
     this.expthevalue,
     this.backgroundcolor,
@@ -2673,8 +2676,8 @@ class Clsactsetlifebar extends Clsscriptitem {
   }
 
   Clsactsetlifebar.fromJson(Map<String, dynamic> json)
-      : maxvalue = fromjsondouble(json['maxvalue']),
-        thevalue = fromjsondouble(json['thevalue']),
+      : maxvalue = fromjsondouble(json['maxvalue']) ?? double.nan,
+        thevalue = fromjsondouble(json['thevalue']) ?? double.nan,
         backgroundcolor = json['backgroundcolor'],
         foregroundcolor = json['foregroundcolor'],
         expmaxvalue = json['expmaxvalue'],
@@ -2686,7 +2689,7 @@ class Clsactsetlifebar extends Clsscriptitem {
 
 class Clsactsetvariable extends Clsscriptitem {
   String? variablename;
-  double? numbervalue;
+  double numbervalue;
   String? textvalue;
   bool? booleanvalue;
   String? expnumbervalue;
@@ -2698,7 +2701,7 @@ class Clsactsetvariable extends Clsscriptitem {
   double? vswidth = 150;
   Clsactsetvariable(
       {this.variablename,
-      this.numbervalue,
+      this.numbervalue = double.nan,
       this.textvalue,
       this.scope,
       this.booleanvalue,
@@ -2720,7 +2723,7 @@ class Clsactsetvariable extends Clsscriptitem {
   Clsactsetvariable.fromJson(Map<String, dynamic> json)
       : variablename = json['variablename'],
         scope = json['scope'],
-        numbervalue = fromjsondouble(json['numbervalue']),
+        numbervalue = fromjsondouble(json['numbervalue']) ?? double.nan,
         expnumbervalue = json['expnumbervalue'],
         textvalue = json['textvalue'],
         booleanvalue = json['booleanvalue'],
@@ -2731,10 +2734,10 @@ class Clsactsetvariable extends Clsscriptitem {
 
 class Clsactsetcamera extends Clsscriptitem {
   // String variablename;
-  double? posx;
-  double? posy;
-  double? scale;
-  double? smoothvalue;
+  double posx;
+  double posy;
+  double scale;
+  double smoothvalue;
 
   String? expposx;
   String? expposy;
@@ -2745,7 +2748,7 @@ class Clsactsetcamera extends Clsscriptitem {
   int? childindex = -1;
   double? vswidth = 150;
   Clsactsetcamera(
-      {this.posx, this.posy, this.scale, this.smoothvalue = double.nan});
+      {this.posx = double.nan, this.posy = double.nan, this.scale = double.nan, this.smoothvalue = double.nan});
   Map<String, dynamic> toJson() {
     return {
       "posx": tojsondouble(this.posx),
@@ -2762,10 +2765,10 @@ class Clsactsetcamera extends Clsscriptitem {
   }
 
   Clsactsetcamera.fromJson(Map<String, dynamic> json)
-      : posx = fromjsondouble(json['posx']),
-        posy = fromjsondouble(json['posy']),
-        scale = fromjsondouble(json['scale']),
-        smoothvalue = fromjsondouble(json['smoothvalue']),
+      : posx = fromjsondouble(json['posx']) ?? double.nan,
+        posy = fromjsondouble(json['posy']) ?? double.nan,
+        scale = fromjsondouble(json['scale']) ?? double.nan,
+        smoothvalue = fromjsondouble(json['smoothvalue']) ?? double.nan,
         vsPosX = json['vsPosX'],
         vsPosY = json['vsPosY'],
         expposx = json['expposx'],
@@ -2777,7 +2780,7 @@ class Clsactsetcamera extends Clsscriptitem {
 class Clsactsetsprite extends Clsscriptitem {
   String? image;
   String? animation;
-  double? opacity = 0;
+  double opacity;
   String? expopacity = "";
 
   double? vsPosX = 0;
@@ -2787,13 +2790,13 @@ class Clsactsetsprite extends Clsscriptitem {
   Clsactsetsprite({
     this.image,
     this.animation,
-    this.opacity,
+    this.opacity = 0,
   });
   Map<String, dynamic> toJson() {
     return {
       "image": this.image,
       "animation": this.animation,
-      "opacity": tojsondouble(this.opacity == null ? 1 : this.opacity),
+      "opacity": tojsondouble(this.opacity),
       "expopacity": this.expopacity,
       "vsPosX": this.vsPosX,
       "vsPosY": this.vsPosY,
@@ -2804,7 +2807,7 @@ class Clsactsetsprite extends Clsscriptitem {
   Clsactsetsprite.fromJson(Map<String, dynamic> json)
       : image = json['image'],
         animation = json['animation'],
-        opacity = fromjsondouble(json['opacity']),
+        opacity = fromjsondouble(json['opacity']) ?? 0,
         expopacity = json['expopacity'],
         vsPosX = json['vsPosX'],
         vsPosY = json['vsPosY'],
@@ -2814,7 +2817,7 @@ class Clsactsetsprite extends Clsscriptitem {
 class Clsactsetsound extends Clsscriptitem {
   String? variablename;
   String? playerstate;
-  double? volume;
+  double volume;
   String? expvolume;
 
   double? vsPosX = 0;
@@ -2822,7 +2825,7 @@ class Clsactsetsound extends Clsscriptitem {
   int? childindex = -1;
   double? vswidth = 150;
   Clsactsetsound(
-      {this.variablename, this.playerstate, this.volume, this.expvolume});
+      {this.variablename, this.playerstate, this.volume = double.nan, this.expvolume});
   Map<String, dynamic> toJson() {
     return {
       "variablename": this.variablename,
@@ -2839,7 +2842,7 @@ class Clsactsetsound extends Clsscriptitem {
       : variablename = json['variablename'],
         playerstate = json['playerstate'],
         expvolume = json['expvolume'],
-        volume = fromjsondouble(json['volume']),
+        volume = fromjsondouble(json['volume']) ?? double.nan,
         vsPosX = json['vsPosX'],
         vsPosY = json['vsPosY'],
         childindex = json['childindex'];
@@ -3045,14 +3048,14 @@ List<Clsvariable> globalvariables = [];
 
 class Clsvariablenumber extends Clsvariable {
   String? name;
-  double? value;
+  double value;
   bool? showdebug;
 
-  Clsvariablenumber({this.name, this.value, this.showdebug = false});
+  Clsvariablenumber({this.name, this.value = double.nan, this.showdebug = false});
   Map<String, dynamic> toJson() {
     return {
       "name": this.name,
-      "value": this.value,
+      "value": tojsondouble(this.value),
       "showdebug": this.showdebug
     };
   }
@@ -3060,7 +3063,7 @@ class Clsvariablenumber extends Clsvariable {
   Clsvariablenumber.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         showdebug = json['showdebug'],
-        value = json['value'];
+        value = fromjsondouble(json['value']) ?? double.nan;
 }
 
 class Clsvariabletext extends Clsvariable {
@@ -3105,40 +3108,40 @@ class Clscameracomponent {}
 
 class Clscompcameracontroller extends Clscameracomponent {
   String? objecttofollow;
-  double? x;
-  double? y;
-  double? scale;
-  double? h;
-  double? v;
+  double x;
+  double y;
+  double scale;
+  double h;
+  double v;
   int? backgroundcolor;
   Clscompcameracontroller(
       {this.objecttofollow,
       this.x = double.nan,
       this.y = double.nan,
-      this.h,
-      this.v,
+      this.h = double.nan,
+      this.v = double.nan,
       this.backgroundcolor = 0,
       this.scale = 1});
 
   Map<String, dynamic> toJson() {
     return {
       "objecttofollow": this.objecttofollow,
-      "x": this.x,
-      "y": this.y,
-      "scale": this.scale,
-      "h": this.h,
-      "v": this.v,
+      "x": tojsondouble(this.x),
+      "y": tojsondouble(this.y),
+      "scale": tojsondouble(this.scale),
+      "h": tojsondouble(this.h),
+      "v": tojsondouble(this.v),
       "backgroundcolor": this.backgroundcolor
     };
   }
 
   Clscompcameracontroller.fromJson(Map<String, dynamic> json)
       : objecttofollow = json['objecttofollow'],
-        x = json['x'],
-        y = json['y'],
-        scale = json['scale'],
-        h = json['h'],
-        v = json['v'],
+        x = fromjsondouble(json['x']) ?? double.nan,
+        y = fromjsondouble(json['y']) ?? double.nan,
+        scale = fromjsondouble(json['scale']) ?? 1.0,
+        h = fromjsondouble(json['h']) ?? double.nan,
+        v = fromjsondouble(json['v']) ?? double.nan,
         backgroundcolor = json['backgroundcolor'];
 }
 
@@ -3200,7 +3203,7 @@ class Clssoundcomponent {}
 class Clscompsound extends Clssoundcomponent {
   String? variablename;
   String? soundpath;
-  double? volume;
+  double volume;
   String? playertstate;
   bool? isloop;
   AudioPlayer audioPlayer = AudioPlayer();
@@ -3208,7 +3211,7 @@ class Clscompsound extends Clssoundcomponent {
     if (audioPlayer.state == PlayerState.PLAYING) {
     } else {
       if (volume > 0) {
-        audioPlayer.play(soundspath + soundpath, isLocal: true);
+        audioPlayer.play(soundspath + (soundpath ?? ""), isLocal: true);
         audioPlayer.setVolume(volume);
       }
     }
@@ -3230,7 +3233,7 @@ class Clscompsound extends Clssoundcomponent {
   Clscompsound(
       {this.variablename,
       this.soundpath,
-      this.volume,
+      this.volume = double.nan,
       this.playertstate,
       this.isloop});
   Map<String, dynamic> toJson() {
@@ -3246,7 +3249,7 @@ class Clscompsound extends Clssoundcomponent {
   Clscompsound.fromJson(Map<String, dynamic> json)
       : variablename = json['variablename'],
         soundpath = json['soundpath'],
-        volume = fromjsondouble(json['volume']),
+        volume = fromjsondouble(json['volume']) ?? double.nan,
         playertstate = json['playertstate'],
         isloop = json['isloop'];
 }

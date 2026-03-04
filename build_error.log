@@ -1,0 +1,70 @@
+Resolving dependencies...
+Downloading packages...
+  archive 4.0.7 (4.0.9 available)
+  audioplayers 0.20.1 (6.6.0 available)
+  flutter_archive 5.0.0 (6.0.4 available)
+  flutter_launcher_icons 0.13.1 (0.14.4 available)
+  google_mobile_ads 5.3.1 (7.0.0 available)
+  http 0.13.6 (1.6.0 available)
+  image 4.7.2 (4.8.0 available)
+  json_annotation 4.10.0 (4.11.0 available)
+  logger 1.4.0 (2.6.2 available)
+  matcher 0.12.18 (0.12.19 available)
+  meta 1.17.0 (1.18.1 available)
+  posix 6.0.3 (6.5.0 available)
+  rename 2.1.1 (3.1.0 available)
+  sensors_plus 6.1.2 (7.0.0 available)
+  test_api 0.7.9 (0.7.10 available)
+  uuid 3.0.7 (4.5.3 available)
+  webview_flutter_android 4.10.11 (4.10.13 available)
+  webview_flutter_wkwebview 3.23.6 (3.23.8 available)
+Got dependencies!
+18 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleRelease'...                        
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.2.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 8.6.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/cookie/Documents/Projetos/max2d-player-main/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/cookie/Documents/Projetos/max2d-player-main/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Font asset "Font-Awesome-7-Free-Solid-900.otf" was tree-shaken, reducing it from 410592 to 1312 bytes (99.7% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 1096 bytes (99.9% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':webview_flutter_android:generateReleaseLintModel'.
+> Could not resolve all files for configuration ':webview_flutter_android:releaseUnitTestRuntimeClasspath'.
+   > Failed to transform byte-buddy-1.17.7.jar (net.bytebuddy:byte-buddy:1.17.7) to match attributes {artifactType=processed-jar, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-runtime}.
+      > Execution failed for JetifyTransform: /home/cookie/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy/1.17.7/3856bfab61beb23e099a0d6629f2ba8de4b98ace/byte-buddy-1.17.7.jar.
+         > Failed to transform '/home/cookie/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy/1.17.7/3856bfab61beb23e099a0d6629f2ba8de4b98ace/byte-buddy-1.17.7.jar' using Jetifier. Reason: IllegalArgumentException, message: Unsupported class file major version 68. (Run with --stacktrace for more details.)
+           Suggestions:
+            - Check out existing issues at https://issuetracker.google.com/issues?q=componentid:460323&s=modified_time:desc, it's possible that this issue has already been filed there.
+            - If this issue has not been filed, please report it at https://issuetracker.google.com/issues/new?component=460323 (run with --stacktrace and provide a stack trace if possible).
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 34s
+Running Gradle task 'assembleRelease'...                           35,3s
+
+┌─ Flutter Fix ────────────────────────────────────────────────────────────────────────────────────┐
+│ [!] Your project's Gradle version is incompatible with the Java version that Flutter is using    │
+│ for Gradle.                                                                                      │
+│                                                                                                  │
+│ To fix this issue, first, check the Java version used by Flutter by running `flutter doctor      │
+│ --verbose`.                                                                                      │
+│                                                                                                  │
+│ Then, update the Gradle version specified in                                                     │
+│ /home/cookie/Documents/Projetos/max2d-player-main/android/gradle/wrapper/gradle-wrapper.properti │
+│ es to be compatible with that Java version. See the link below for more information on           │
+│ compatible Java/Gradle versions:                                                                 │
+│ https://docs.gradle.org/current/userguide/compatibility.html#java                                │
+│                                                                                                  │
+│                                                                                                  │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+Gradle task assembleRelease failed with exit code 1

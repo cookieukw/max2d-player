@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:expressions/expressions.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flame/components.dart' hide Vector2;
+import 'package:flame/components.dart' hide Vector2, World;
 import 'package:flame/game.dart' hide Vector2;
 
 import 'package:flutter/material.dart';
@@ -46,14 +46,14 @@ class Cameraproperties {
   Cameraproperties(x, y, scale);
 }
 
-Cameraproperties currentcamerasettings;
+late Cameraproperties currentcamerasettings;
 
 class MyContactListener extends ContactListener {
   //Box2d Object collision detection listener
   // List<Gameobject> bodies = List();
   MyContactListener();
   // Map<String, dynamic> contactlist = Map();
-  List<Contact> contactlists2 = List();
+  List<Contact> contactlists2 = [];
   @override
   void beginContact(Contact contact) {
     //when object collision detected then add to lists contactlists2
@@ -65,8 +65,8 @@ class MyContactListener extends ContactListener {
   bool iscolliding(String object1, String object2, Gameobject thegameobject) {
     //check if object1 and object2 is colliding. goindex is gameobject index used for unique id if gameobjects have the same name
     for (int a = 0; a < contactlists2.length; a++) {
-      Map<String, dynamic> userdataA = contactlists2[a].fixtureA.userData;
-      Map<String, dynamic> userdataB = contactlists2[a].fixtureB.userData;
+      Map<String, dynamic> userdataA = contactlists2[a].fixtureA.userData as Map<String, dynamic>;
+      Map<String, dynamic> userdataB = contactlists2[a].fixtureB.userData as Map<String, dynamic>;
 
       if (object1 == userdataA['objectname'] &&
           thegameobject.bodyindex == userdataA['bodyindex']) {
@@ -87,8 +87,8 @@ class MyContactListener extends ContactListener {
 
   bool isnaa(String object, Gameobject thegameobject) {
     for (int a = 0; a < contactlists2.length; a++) {
-      Map<String, dynamic> userdataA = contactlists2[a].fixtureA.userData;
-      Map<String, dynamic> userdataB = contactlists2[a].fixtureB.userData;
+      Map<String, dynamic> userdataA = contactlists2[a].fixtureA.userData as Map<String, dynamic>;
+      Map<String, dynamic> userdataB = contactlists2[a].fixtureB.userData as Map<String, dynamic>;
       if (object == userdataA['objectname'] &&
           thegameobject.bodyindex == userdataA['bodyindex']) {
         return true;
@@ -116,7 +116,7 @@ class MyContactListener extends ContactListener {
 }
 
 class Actionsinitiator {
-  final World? world;
+  final Forge2DWorld? world;
   // final v.Viewport? camera.viewport; // Viewport is in game.camera
 
   Forge2DGame? box2d; // Using box2d name to minimize churn, but it's the game
@@ -134,10 +134,12 @@ class Actionsinitiator {
 
   void destroytimers() {
     for (int a = 0; a < gameobjectitemscore.length; a++) {
+      var script = gameobjectitemscore[a].getscript();
+      if (script == null) continue;
       for (int b = 0;
-          b < gameobjectitemscore[a].getscript().components.length;
+          b < script.components.length;
           b++) {
-        Clsscriptitem t = gameobjectitemscore[a].getscript().components[b];
+        Clsscriptitem t = script.components[b];
         if (t is Clsacttimerdelayed) {
           t.stop();
           t.iscancelled = true;
@@ -156,13 +158,13 @@ class Actionsinitiator {
       return;
     }
 
-    int childindex = si.getchildindex();
+    int childindex = si.getchildindex() ?? -1;
     // print(scriptindex);
     initiateactions4(scriptindex,
         t: si, goindex: goindex, thegameobject: thegameobject);
 
     if (si is Clsactiscollidingwith) {
-      checkiscollidingwith(scriptindex, curobjectname, si.objectname, si,
+      checkiscollidingwith(scriptindex, curobjectname, si.objectname ?? "", si,
           goindex, thegameobject);
     } else if (si is Clsactiscardinal) {
       checkiscardinal(scriptindex, curobjectname, si, goindex, thegameobject);
@@ -186,10 +188,12 @@ class Actionsinitiator {
     }
 
     if (childindex != -1) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[childindex];
+      var script = gameobjectitemscore[goindex].getscript();
+      if (script != null) {
+        Clsscriptitem si2 = script.components[childindex];
 
-      getchildactions(childindex, curobjectname, si2, goindex, thegameobject);
+        getchildactions(childindex, curobjectname, si2, goindex, thegameobject);
+      }
     }
   }
 
@@ -200,23 +204,23 @@ class Actionsinitiator {
       Clsscriptitem si,
       int goindex,
       Gameobject thegameobject) {
-    int trueindex = si.gettrueindex();
-    int falseindex = si.getfalseindex();
+    int trueindex = si.gettrueindex() ?? -1;
+    int falseindex = si.getfalseindex() ?? -1;
 
     if (trueindex == null && falseindex == null) return;
 
     bool iscollisiontrue =
         contactListener!.iscolliding(curobjectname, objectname, thegameobject);
 
-    if (trueindex != -1 && iscollisiontrue) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[trueindex];
+    var script = gameobjectitemscore[goindex].getscript();
+    if (trueindex != -1 && iscollisiontrue && script != null) {
+      Clsscriptitem si2 = script.components[trueindex];
 
       getchildactions(scriptindex, curobjectname, si2, goindex, thegameobject);
     }
-    if (falseindex != -1 && !iscollisiontrue) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[falseindex];
+    var script2 = gameobjectitemscore[goindex].getscript();
+    if (falseindex != -1 && !iscollisiontrue && script2 != null) {
+      Clsscriptitem si2 = script2.components[falseindex];
 
       getchildactions(scriptindex, curobjectname, si2, goindex, thegameobject);
     }
@@ -224,11 +228,12 @@ class Actionsinitiator {
 
   void checkiscardinal(int scriptindex, String curobjectname, Clsscriptitem si,
       int goindex, Gameobject thegameobject) {
-    int trueindex = si.gettrueindex();
-    int falseindex = si.getfalseindex();
+    int trueindex = si.gettrueindex() ?? -1;
+    int falseindex = si.getfalseindex() ?? -1;
 
     if (trueindex == null && falseindex == null) return;
 
+    if (si is! Clsactiscardinal) return;
     Clsactiscardinal thet = si;
 
     double theangle = 0;
@@ -237,22 +242,22 @@ class Actionsinitiator {
       if (thet.expangle == null) {
         theangle = thet.angle;
       } else {
-        double r = evaluateexpression(thet.expangle, thegameobject);
+        double r = evaluateexpression(thet.expangle ?? "", thegameobject);
         theangle = r;
       }
     }
 
-    bool iscardinal = checkifcardinal(theangle, thet.direction);
+    bool iscardinal = checkifcardinal(theangle, thet.direction ?? "");
 
-    if (trueindex != -1 && iscardinal) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[trueindex];
+    var script = gameobjectitemscore[goindex].getscript();
+    if (trueindex != -1 && iscardinal && script != null) {
+      Clsscriptitem si2 = script.components[trueindex];
 
       getchildactions(scriptindex, curobjectname, si2, goindex, thegameobject);
     }
-    if (falseindex != -1 && !iscardinal) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[falseindex];
+    var script2 = gameobjectitemscore[goindex].getscript();
+    if (falseindex != -1 && !iscardinal && script2 != null) {
+      Clsscriptitem si2 = script2.components[falseindex];
 
       getchildactions(scriptindex, curobjectname, si2, goindex, thegameobject);
     }
@@ -260,25 +265,25 @@ class Actionsinitiator {
 
   void checkbooleanexpression(int scriptindex, String curobjectname,
       Clsscriptitem si, int goindex, Gameobject thegameobject) {
-    int trueindex = si.gettrueindex();
-    int falseindex = si.getfalseindex();
+    int trueindex = si.gettrueindex() ?? -1;
+    int falseindex = si.getfalseindex() ?? -1;
 
     if (trueindex == null && falseindex == null) return;
     bool isexpressiontrue = false;
     if (si is Clsactbooleanexpression) {
       if (si.expexpression != null) {
-        isexpressiontrue = evaluateexpression(si.expexpression, thegameobject);
+        isexpressiontrue = evaluateexpression(si.expexpression ?? "", thegameobject);
       }
     }
-    if (trueindex != -1 && isexpressiontrue) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[trueindex];
+    var script = gameobjectitemscore[goindex].getscript();
+    if (trueindex != -1 && isexpressiontrue && script != null) {
+      Clsscriptitem si2 = script.components[trueindex];
 
       getchildactions(scriptindex, curobjectname, si2, goindex, thegameobject);
     }
-    if (falseindex != -1 && !isexpressiontrue) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[falseindex];
+    var script2 = gameobjectitemscore[goindex].getscript();
+    if (falseindex != -1 && !isexpressiontrue && script2 != null) {
+      Clsscriptitem si2 = script2.components[falseindex];
 
       getchildactions(scriptindex, curobjectname, si2, goindex, thegameobject);
     }
@@ -286,10 +291,10 @@ class Actionsinitiator {
 
   void checkistimerdelayed(int scriptindex, String curobjectname,
       Clsscriptitem si, int goindex, Gameobject thegameobject) {
-    int asyncindex = si.getasyncindex();
-    if (asyncindex != -1) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[asyncindex];
+    int asyncindex = si.getasyncindex() ?? -1;
+    var script = gameobjectitemscore[goindex].getscript();
+    if (asyncindex != -1 && script != null) {
+      Clsscriptitem si2 = script.components[asyncindex];
 
       if (si is Clsacttimerdelayed) {
         // if (bodyindex < bodies.length) {
@@ -304,10 +309,10 @@ class Actionsinitiator {
 
   void checkistimerperiodic(int scriptindex, String curobjectname,
       Clsscriptitem si, int goindex, Gameobject thegameobject) {
-    int asyncindex = si.getasyncindex();
-    if (asyncindex != -1) {
-      Clsscriptitem si2 =
-          gameobjectitemscore[goindex].getscript().components[asyncindex];
+    int asyncindex = si.getasyncindex() ?? -1;
+    var script = gameobjectitemscore[goindex].getscript();
+    if (asyncindex != -1 && script != null) {
+      Clsscriptitem si2 = script.components[asyncindex];
 
       if (si is Clsacttimerperiodic) {
         si.start(() {
@@ -320,11 +325,11 @@ class Actionsinitiator {
 
   void checkissavevalue(int scriptindex, String curobjectname, Clsscriptitem si,
       int goindex, Gameobject thegameobject) {
-    int asyncindex = si.getasyncindex();
+    int asyncindex = si.getasyncindex() ?? -1;
 
     if (si is Clsactsavevalue) {
-      String filename = si.filename;
-      String variable = si.variable;
+      String filename = si.filename ?? "";
+      String variable = si.variable ?? "";
       if (filename != null) {
         if (variable != null) {
           File variablefile = File(variablespath + "/" + filename);
@@ -351,10 +356,9 @@ class Actionsinitiator {
           }
 
           variablefile.writeAsString(json.encode(content)).then((onValue) {
-            if (asyncindex != -1) {
-              Clsscriptitem si2 = gameobjectitemscore[goindex]
-                  .getscript()
-                  .components[asyncindex];
+            var script = gameobjectitemscore[goindex].getscript();
+            if (asyncindex != -1 && script != null) {
+              Clsscriptitem si2 = script.components[asyncindex];
               getchildactions(
                   scriptindex, curobjectname, si2, goindex, thegameobject);
             }
@@ -367,10 +371,10 @@ class Actionsinitiator {
   void checkissavestate(int scriptindex, String curobjectname, Clsscriptitem si,
       int goindex, Gameobject thegameobject) {
     // print(currentscenecore);
-    int asyncindex = si.getasyncindex();
+    int asyncindex = si.getasyncindex() ?? -1;
 
     if (si is Clsactsavestate) {
-      String filename = si.filename;
+      String filename = si.filename ?? "";
       // String variable = si.variable;
       // print(filename);
       if (filename != null) {
@@ -405,24 +409,18 @@ class Actionsinitiator {
                 "angle": thet.body.angularVelocity,
               },
               "objectname": thet.objectname,
-              "comptransform": thet.transformprop.toJson(),
-              "comptext": thet.comptext == null ? null : thet.comptext.toJson(),
+              "comptransform": thet.transformprop?.toJson(),
+              "comptext": thet.comptext?.toJson(),
               "complifebar":
-                  thet.complifebar == null ? null : thet.complifebar.toJson(),
+                  thet.complifebar?.toJson(),
               "firstimage": thet.firstimage,
               "compsprite":
-                  thet.compsprite == null ? null : thet.compsprite.toJson(),
-              "comprigidbody": thet.comprigidbody == null
-                  ? null
-                  : thet.comprigidbody.toJson(),
-              "compboxcollider": thet.compboxcollider == null
-                  ? null
-                  : thet.compboxcollider.toJson(),
-              "compcirclecollider": thet.compcirclecollider == null
-                  ? null
-                  : thet.compcirclecollider.toJson(),
-              "compgameobject": thet.thegameobject.toJson(),
-              "compscript": thet.thescript.toJson()
+                  thet.compsprite?.toJson(),
+              "comprigidbody": thet.comprigidbody?.toJson(),
+              "compboxcollider": thet.compboxcollider?.toJson(),
+              "compcirclecollider": thet.compcirclecollider?.toJson(),
+              "compgameobject": thet.thegameobject?.toJson(),
+              "compscript": thet.thescript?.toJson() ?? {}
             }
           });
           // print(bComponent!.bodies[a].anglelimit);
@@ -430,9 +428,9 @@ class Actionsinitiator {
         print(thejson);
 
         variablefile.writeAsString(json.encode(thejson)).then((onValue) {
-          if (asyncindex != -1) {
-            Clsscriptitem si2 =
-                gameobjectitemscore[goindex].getscript().components[asyncindex];
+          var script = gameobjectitemscore[goindex].getscript();
+          if (asyncindex != -1 && script != null) {
+            Clsscriptitem si2 = script.components[asyncindex];
             getchildactions(
                 scriptindex, curobjectname, si2, goindex, thegameobject);
           }
@@ -443,10 +441,10 @@ class Actionsinitiator {
 
   void checkisloadstate(int scriptindex, String curobjectname, Clsscriptitem si,
       int goindex, Gameobject thegameobject) {
-    int asyncindex = si.getasyncindex();
+    int asyncindex = si.getasyncindex() ?? -1;
 
     if (si is Clsactloadstate) {
-      String filename = si.filename;
+      String filename = si.filename ?? "";
       // String variable = si.variable;
       if (filename != null) {
         File variablefile = File(statespath + "/" + filename);
@@ -457,7 +455,7 @@ class Actionsinitiator {
           actionsinitiator.isended = true;
           bComponent!.tofollow = null;
           for (int a1 = 0; a1 < soundslistscore.length; a1++) {
-            Clscompsound t = soundslistscore[a1];
+            Clscompsound t = soundslistscore[a1] as Clscompsound;
             t.stop();
           }
           destroytimers();
@@ -551,11 +549,9 @@ class Actionsinitiator {
 
               int newid = objectcounters;
               Map<String, dynamic> tojson2temp = tojson2[a.toString()];
-              Gameobject thet = Gameobject(box2d, context,
+              Gameobject thet = Gameobject(box2d!, context!,
                   tojson2temp['goindex'], objectcounters, "asdf",
-                  isdebug: bComponent!.bodies[tojson2temp['goindex']] == null
-                      ? false
-                      : bComponent!.bodies[tojson2temp['goindex']].isdebug,
+                  isdebug: bComponent!.bodies[tojson2temp['goindex']]?.isdebug ?? false,
                   naayid: newid);
 
               // print(thet.goindex);
@@ -630,13 +626,12 @@ class Actionsinitiator {
               // --- ending
             }
 
-            refreshuicomponents();
-            actionsinitiator.isended = false;
+            refreshuicomponents!();
+            actionsinitiator?.isended = false;
 
-            if (asyncindex != -1) {
-              Clsscriptitem si2 = gameobjectitemscore[goindex]
-                  .getscript()
-                  .components[asyncindex];
+            var script = gameobjectitemscore[goindex].getscript();
+            if (asyncindex != -1 && script != null) {
+              Clsscriptitem si2 = script.components[asyncindex];
               getchildactions(
                   scriptindex, curobjectname, si2, goindex, thegameobject);
             }
@@ -648,11 +643,11 @@ class Actionsinitiator {
 
   void checkisloadvalue(int scriptindex, String curobjectname, Clsscriptitem si,
       int goindex, Gameobject thegameobject) {
-    int asyncindex = si.getasyncindex();
+    int asyncindex = si.getasyncindex() ?? -1;
 
     if (si is Clsactloadvalue) {
-      String filename = si.filename;
-      String variable = si.variable;
+      String filename = si.filename ?? "";
+      String variable = si.variable ?? "";
       if (filename != null) {
         if (variable != null) {
           File variablefile = File(variablespath + "/" + filename);
@@ -705,10 +700,9 @@ class Actionsinitiator {
               }
             }
 
-            if (asyncindex != -1) {
-              Clsscriptitem si2 = gameobjectitemscore[goindex]
-                  .getscript()
-                  .components[asyncindex];
+            var script = gameobjectitemscore[goindex].getscript();
+            if (asyncindex != -1 && script != null) {
+              Clsscriptitem si2 = script.components[asyncindex];
               getchildactions(
                   scriptindex, curobjectname, si2, goindex, thegameobject);
             }
@@ -792,18 +786,19 @@ class Actionsinitiator {
   }
 
   void initiateactions(
-      {int goindex,
-      Gameobject thegameobject,
-      Eevents eevents,
-      String variablename}) {
+      {required int goindex,
+      required Gameobject thegameobject,
+      Eevents? eevents,
+      String? variablename}) {
+    if (eevents == null) return;
     if (isended) return;
-    String curobjectname = gameobjectitemscore[goindex].getgameobject().name;
+    var script = gameobjectitemscore[goindex].getscript();
+    if (script == null) return;
+    String curobjectname = gameobjectitemscore[goindex].getgameobject()?.name ?? "";
 
     if (eevents == Eevents.step) {
       for (int b = 0; b < thegameobject.stepindexs.length; b++) {
-        Clsscriptitem si = gameobjectitemscore[goindex]
-            .getscript()
-            .components[thegameobject.stepindexs[b]];
+        Clsscriptitem si = script.components[thegameobject.stepindexs[b]];
         // print(si);
         getchildactions(thegameobject.stepindexs[b], curobjectname, si, goindex,
             thegameobject);
@@ -811,10 +806,10 @@ class Actionsinitiator {
       return;
     }
     for (int b = 0;
-        b < gameobjectitemscore[goindex].getscript().components.length;
+        b < script.components.length;
         b++) {
       // print(" initiate  $b");
-      Clsscriptitem si = gameobjectitemscore[goindex].getscript().components[b];
+      Clsscriptitem si = script.components[b];
       if (si is Clscompscreenontouch) {
         if (si.touchevent == "Touch Down" &&
             eevents == Eevents.screentouchdown &&
@@ -875,50 +870,59 @@ class Actionsinitiator {
   void expressionobjectproperties(Map<String, dynamic> context) {
     context!.addAll({
       "obj_position_x": (int objectid) {
-        return bComponent!.bodies[objectid].body.position.x;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null ? obj.body.position.x : 0.0;
       }
     });
     context!.addAll({
       "obj_position_y": (int objectid) {
-        return bComponent!.bodies[objectid].body.position.y;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null ? obj.body.position.y : 0.0;
       }
     });
     context!.addAll({
       "obj_angle": (int objectid) {
-        return bComponent!.bodies[objectid].body.angle;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null ? obj.body.angle : 0.0;
       }
     });
     context!.addAll({
       "obj_scale_x": (int objectid) {
-        return bComponent!.bodies[objectid].transformprop.sx;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null && obj.transformprop != null ? obj.transformprop!.sx : 1.0;
       }
     });
     context!.addAll({
       "obj_scale_y": (int objectid) {
-        return bComponent!.bodies[objectid].transformprop.sy;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null && obj.transformprop != null ? obj.transformprop!.sy : 1.0;
       }
     });
     context!.addAll({
       "obj_velocity_x": (int objectid) {
-        return bComponent!.bodies[objectid].body.linearVelocity.x;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null ? obj.body.linearVelocity.x : 0.0;
       }
     });
     context!.addAll({
       "obj_velocity_y": (int objectid) {
-        return bComponent!.bodies[objectid].body.linearVelocity.y;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null ? obj.body.linearVelocity.y : 0.0;
       }
     });
     context!.addAll({
       "obj_velocity_angle": (int objectid) {
-        return bComponent!.bodies[objectid].body.angularVelocity;
+        var obj = bComponent!.bodies[objectid];
+        return obj != null ? obj.body.angularVelocity : 0.0;
       }
     });
     context!.addAll({
       "obj_sprite_opacity": (int objectid) {
-        if (bComponent!.bodies[objectid].compsprite.opacity != null) {
-          return bComponent!.bodies[objectid].compsprite.opacity;
+        var obj = bComponent!.bodies[objectid];
+        if (obj != null && obj.compsprite != null && obj.compsprite!.opacity != null) {
+          return obj.compsprite!.opacity;
         }
-        return 1;
+        return 1.0;
       }
     });
   }
@@ -930,32 +934,32 @@ class Actionsinitiator {
       "position_x": thegameobject.body.position.x,
       "position_y": thegameobject.body.position.y,
       "angle": thegameobject.body.angle,
-      "scale_x": thegameobject.transformprop.sx,
-      "scale_y": thegameobject.transformprop.sy,
+      "scale_x": thegameobject.transformprop?.sx ?? 1.0,
+      "scale_y": thegameobject.transformprop?.sy ?? 1.0,
       "velocity_x": thegameobject.body.linearVelocity.x,
       "velocity_y": thegameobject.body.linearVelocity.y,
       "velocity_angle": thegameobject.body.angularVelocity,
-      "object_id": thegameobject.thegameobject.theid,
+      "object_id": thegameobject.thegameobject?.theid ?? 0,
       "lifebar_value": thegameobject.complifebar == null
           ? 0
-          : thegameobject.complifebar.thevalue,
+          : thegameobject.complifebar!.thevalue,
       "lifebar_max": thegameobject.complifebar == null
           ? 0
-          : thegameobject.complifebar.maxvalue,
-      "camera_width": getprojectsettingscore().appversion >= 11
+          : thegameobject.complifebar!.maxvalue,
+      "camera_width": (getprojectsettingscore()?.appversion ?? 0) >= 11
           ? screensize.width
-          : bComponent!.camera.viewport.size.width,
-      "camera_height": getprojectsettingscore().appversion >= 11
+          : bComponent!.camera.viewport.size.x,
+      "camera_height": (getprojectsettingscore()?.appversion ?? 0) >= 11
           ? screensize.height
-          : bComponent!.camera.viewport.size.height,
-      "camera_x": bComponent!.camera.viewport.translation.x,
-      "camera_y": bComponent!.camera.viewport.translation.y,
-      "touchmove_x": touchmovelocation.x == null ? 0 : touchmovelocation.x,
-      "touchmove_y": touchmovelocation.y == null ? 0 : touchmovelocation.y,
-      "touchdown_x": touchdownlocation.x == null ? 0 : touchdownlocation.x,
-      "touchdown_y": touchdownlocation.y == null ? 0 : touchdownlocation.y,
-      "touchup_x": touchuplocation.x == null ? 0 : touchuplocation.x,
-      "touchup_y": touchuplocation.y == null ? 0 : touchuplocation.y,
+          : bComponent!.camera.viewport.size.y,
+      "camera_x": bComponent!.camera.viewfinder.position.x,
+      "camera_y": bComponent!.camera.viewfinder.position.y,
+      "touchmove_x": touchmovelocation.x,
+      "touchmove_y": touchmovelocation.y,
+      "touchdown_x": touchdownlocation.x,
+      "touchdown_y": touchdownlocation.y,
+      "touchup_x": touchuplocation.x,
+      "touchup_y": touchuplocation.y,
       "mic_dblevel": miclevel,
       "accelerometer_x": accelerometervalue.x,
       "accelerometer_y": accelerometervalue.y,
@@ -965,8 +969,8 @@ class Actionsinitiator {
       "gyroscope_z": gyroscopevalue.z,
       "deltatime": deltatime
     };
-    if (thegameobject.compsprite != null) {
-      context!.addAll({"sprite_opacity": thegameobject.compsprite.opacity});
+    if (thegameobject.compsprite != null && thegameobject.compsprite!.opacity != null) {
+      context!.addAll({"sprite_opacity": thegameobject.compsprite!.opacity});
     }
 
     expressionobjectproperties(context);
@@ -974,19 +978,22 @@ class Actionsinitiator {
     for (int a2 = 0; a2 < globalvariablescore.length; a2++) {
       Clsvariable t2 = globalvariablescore[a2];
       if (t2 is Clsvariablenumber) {
-        context!.addAll({t2.name: t2.value});
+        context!.addAll({t2.name ?? "": t2.value});
       }
       if (t2 is Clsvariableboolean) {
-        context!.addAll({t2.name: t2.value});
+        context!.addAll({t2.name ?? "": t2.value});
       }
     }
-    for (int b2 = 0; b2 < thegameobject.thescript.localvariables.length; b2++) {
-      Clsvariable t2 = thegameobject.thescript.localvariables[b2];
-      if (t2 is Clsvariablenumber) {
-        context!.addAll({t2.name: t2.value});
-      }
-      if (t2 is Clsvariableboolean) {
-        context!.addAll({t2.name: t2.value});
+    var tScript = thegameobject.thescript;
+    if (tScript != null) {
+      for (int b2 = 0; b2 < tScript.localvariables.length; b2++) {
+        Clsvariable t2 = tScript.localvariables[b2];
+        if (t2 is Clsvariablenumber) {
+          context!.addAll({t2.name!: t2.value});
+        }
+        if (t2 is Clsvariableboolean) {
+          context!.addAll({t2.name!: t2.value});
+        }
       }
     }
 
@@ -1011,7 +1018,8 @@ class Actionsinitiator {
   }
 
   void initiateactions4(int scriptindex,
-      {Clsscriptitem t, Gameobject thegameobject, int goindex}) {
+      {Clsscriptitem? t, Gameobject? thegameobject, int? goindex}) {
+    if (t == null || thegameobject == null || goindex == null) return;
     if (t is Clsactloadscene) {
       // gv.pauseEngine();
       // return;
@@ -1020,12 +1028,12 @@ class Actionsinitiator {
       actionsinitiator.isended = true;
       bComponent!.tofollow = null;
       for (int a1 = 0; a1 < soundslistscore.length; a1++) {
-        Clscompsound t = soundslistscore[a1];
+        Clscompsound t = soundslistscore[a1] as Clscompsound;
         t.stop();
       }
       destroytimers();
 
-      loadprojectcore2(t.scenename).then((onValue) {
+      loadprojectcore2(t.scenename ?? "scene1").then((onValue) {
         for (int thea = bComponent!.bodies.length - 1; thea >= 0; thea--) {
           Gameobject thet = bComponent!.bodies.values.elementAt(thea);
           thet.destroyobject(thet, "bcomponent", thet.bodyindex);
@@ -1042,8 +1050,8 @@ class Actionsinitiator {
 
         bComponent!.onLoad();
 
-        refreshuicomponents();
-        actionsinitiator.isended = false;
+        refreshuicomponents?.call();
+        actionsinitiator?.isended = false;
       });
       return;
     }
@@ -1056,7 +1064,7 @@ class Actionsinitiator {
               ..linearVelocity.x = t.x
               ..setAwake(true);
           } else {
-            double r = evaluateexpression(t.expx, thegameobject);
+            double r = evaluateexpression(t.expx ?? "", thegameobject);
             thegameobject.body
               ..linearVelocity.x = r
               ..setAwake(true);
@@ -1069,7 +1077,7 @@ class Actionsinitiator {
               ..linearVelocity.y = t.y
               ..setAwake(true);
           } else {
-            double r = evaluateexpression(t.expy, thegameobject);
+            double r = evaluateexpression(t.expy ?? "", thegameobject);
             thegameobject.body
               ..linearVelocity.y = r
               ..setAwake(true);
@@ -1083,7 +1091,7 @@ class Actionsinitiator {
               ..anglelimit = t.anglelimit
               ..defangle = thegameobject.body.angle;
           } else {
-            double r = evaluateexpression(t.expangular, thegameobject);
+            double r = evaluateexpression(t.expangular ?? "", thegameobject);
             thegameobject
               ..body.angularVelocity = r
               ..isapplyingangular = true
@@ -1100,14 +1108,14 @@ class Actionsinitiator {
           thegameobject.body.setTransform(
               Vector2(t.x, thegameobject.body.position.y),
               thegameobject.body.angle);
-          thegameobject.transformprop.x = t.x;
+          thegameobject.transformprop?.x = t.x;
           // print("asdfasdfasdf");
         } else {
-          double r = evaluateexpression(t.expx, thegameobject);
+          double r = evaluateexpression(t.expx ?? "", thegameobject);
           thegameobject.body.setTransform(
               Vector2(r, thegameobject.body.position.y),
               thegameobject.body.angle);
-          thegameobject.transformprop.x = r;
+          thegameobject.transformprop?.x = r;
         }
       }
 
@@ -1116,13 +1124,13 @@ class Actionsinitiator {
           thegameobject.body.setTransform(
               Vector2(thegameobject.body.position.x, t.y),
               thegameobject.body.angle);
-          thegameobject.transformprop.y = -t.y;
+          thegameobject.transformprop?.y = -t.y;
         } else {
-          double r = evaluateexpression(t.expy, thegameobject);
+          double r = evaluateexpression(t.expy ?? "", thegameobject);
           thegameobject.body.setTransform(
               Vector2(thegameobject.body.position.x, r),
               thegameobject.body.angle);
-          thegameobject.transformprop.y = -r;
+          thegameobject.transformprop?.y = -r;
         }
       }
 
@@ -1133,14 +1141,14 @@ class Actionsinitiator {
               Vector2(
                   thegameobject.body.position.x, thegameobject.body.position.y),
               -t.angle);
-          thegameobject.transformprop.angle = t.angle;
+          thegameobject.transformprop?.angle = t.angle;
         } else {
-          double r = evaluateexpression(t.expangle, thegameobject);
+          double r = evaluateexpression(t.expangle ?? "", thegameobject);
           thegameobject.body.setTransform(
               Vector2(
                   thegameobject.body.position.x, thegameobject.body.position.y),
               -r);
-          thegameobject.transformprop.angle = r;
+          thegameobject.transformprop?.angle = r;
         }
         // print(bodies[a].body.angle);
       }
@@ -1148,22 +1156,22 @@ class Actionsinitiator {
       if (!t.sy.isNaN || t.expsy != null) {
         if (t.expsy == null) {
           // gameobjectitemscore[goindex].settransform(sy: t.sy);
-          thegameobject.transformprop.sy = t.sy;
+          thegameobject.transformprop?.sy = t.sy;
         } else {
-          double r = evaluateexpression(t.expsy, thegameobject);
+          double r = evaluateexpression(t.expsy ?? "", thegameobject);
           // gameobjectitemscore[goindex].settransform(sy: r);
-          thegameobject.transformprop.sy = r;
+          thegameobject.transformprop?.sy = r;
         }
       }
 
       if (!t.sx.isNaN || t.expsx != null) {
         if (t.expsx == null) {
           // gameobjectitemscore[goindex].settransform(sx: t.sx);
-          thegameobject.transformprop.sx = t.sx;
+          thegameobject.transformprop?.sx = t.sx;
         } else {
-          double r = evaluateexpression(t.expsx, thegameobject);
+          double r = evaluateexpression(t.expsx ?? "", thegameobject);
           // gameobjectitemscore[goindex].settransform(sx: r);
-          thegameobject.transformprop.sx = r;
+          thegameobject.transformprop?.sx = r;
         }
       }
     } else if (t is Clsactsetcamera) {
@@ -1175,7 +1183,7 @@ class Actionsinitiator {
 
         if (t.expposx == null) {
         } else {
-          double r = evaluateexpression(t.expposx, thegameobject);
+          double r = evaluateexpression(t.expposx ?? "", thegameobject);
 
           posx = r;
         }
@@ -1185,7 +1193,7 @@ class Actionsinitiator {
         if (t.expposy == null) {
           posy = t.posy;
         } else {
-          double r = evaluateexpression(t.expposy, thegameobject);
+          double r = evaluateexpression(t.expposy ?? "", thegameobject);
 
           posy = r;
         }
@@ -1196,7 +1204,7 @@ class Actionsinitiator {
           scale = t.scale;
           // print(scale);
         } else {
-          double r = evaluateexpression(t.expscale, thegameobject);
+          double r = evaluateexpression(t.expscale ?? "", thegameobject);
           scale = r;
         }
       }
@@ -1208,45 +1216,45 @@ class Actionsinitiator {
 
         if (t.posx != null) {
           if (camerasmoothx.isNaN) {
-            camerasmoothx = cameragetcameracontrollercore().x;
+            camerasmoothx = cameragetcameracontrollercore()!.x;
           }
 
           camerasmoothx =
-              ui.lerpDouble(camerasmoothx, posx, smoothvalue * deltatime);
-          cameragetcameracontrollercore().x = camerasmoothx;
+              ui.lerpDouble(camerasmoothx, posx, smoothvalue * deltatime) ?? camerasmoothx;
+          cameragetcameracontrollercore()!.x = camerasmoothx;
           // bComponent!.camera.viewport.setCamera(camerasmoothx, posy, scale);
         }
 
         if (t.posy != null) {
           if (camerasmoothy.isNaN) {
-            camerasmoothy = cameragetcameracontrollercore().y;
+            camerasmoothy = cameragetcameracontrollercore()!.y;
           }
 
           camerasmoothy =
-              ui.lerpDouble(camerasmoothy, posy, smoothvalue * deltatime);
-          cameragetcameracontrollercore().y = -camerasmoothy;
+              ui.lerpDouble(camerasmoothy, posy, smoothvalue * deltatime) ?? camerasmoothy;
+          cameragetcameracontrollercore()!.y = -camerasmoothy;
         }
 
         if (t.scale != null) {
           if (camerasmoothscale.isNaN) {
-            camerasmoothscale = cameragetcameracontrollercore().scale;
+            camerasmoothscale = cameragetcameracontrollercore()!.scale;
           }
           camerasmoothscale =
-              ui.lerpDouble(camerasmoothscale, scale, smoothvalue * deltatime);
-          cameragetcameracontrollercore().scale = camerasmoothscale;
+              ui.lerpDouble(camerasmoothscale, scale, smoothvalue * deltatime) ?? camerasmoothscale;
+          cameragetcameracontrollercore()!.scale = camerasmoothscale;
         }
       } else {
         // bComponent!.camera.viewport.setCamera(posx, posy, scale);
         // print(posx);
-        cameragetcameracontrollercore().x = posx;
-        cameragetcameracontrollercore().y = -posy;
-        cameragetcameracontrollercore().scale = scale;
+        cameragetcameracontrollercore()!.x = posx;
+        cameragetcameracontrollercore()!.y = -posy;
+        cameragetcameracontrollercore()!.scale = scale;
       }
       //  print(bComponent!.camera.viewport.x);
 
     } else if (t is Clsactsetsprite) {
-      String image = t.image;
-      String animation = t.animation;
+      String image = t.image ?? "";
+      String animation = t.animation ?? "";
       double opacity = t.opacity;
 
       if (opacity == null) {
@@ -1257,12 +1265,16 @@ class Actionsinitiator {
       if (opacity != null || !opacity.isNaN || t.expopacity == null) {
         if (t.expopacity == null) {
           if (!opacity.isNaN) {
-            thegameobject.compsprite.opacity = opacity;
+            if (thegameobject.compsprite != null) {
+              thegameobject.compsprite!.opacity = opacity;
+            }
           }
         } else {
-          double r = evaluateexpression(t.expopacity, thegameobject);
+          double r = evaluateexpression(t.expopacity ?? "", thegameobject);
 
-          thegameobject.compsprite.opacity = r;
+          if (thegameobject.compsprite != null) {
+            thegameobject.compsprite!.opacity = r;
+          }
         }
       }
 
@@ -1270,14 +1282,18 @@ class Actionsinitiator {
       //   thegameobject.compsprite.opacity = opacity;
       // }
       if (image != null) {
-        thegameobject.compsprite.imagepath = image;
-        thegameobject.compsprite.spriteanimation = null;
-        thegameobject.updatesprite();
+        if (thegameobject.compsprite != null) {
+          thegameobject.compsprite!.imagepath = image;
+          thegameobject.compsprite!.spriteanimation = null;
+          thegameobject.updatesprite();
+        }
       } else {
         if (animation != null) {
-          thegameobject.compsprite.imagepath = null;
-          thegameobject.compsprite.spriteanimation = t.animation;
-          thegameobject.updatesprite();
+          if (thegameobject.compsprite != null) {
+            thegameobject.compsprite!.imagepath = null;
+            thegameobject.compsprite!.spriteanimation = t.animation;
+            thegameobject.updatesprite();
+          }
         }
       }
     } else if (t is Clsactdestroyobject) {
@@ -1301,15 +1317,13 @@ class Actionsinitiator {
       for (int indcreate = 0;
           indcreate < gameobjectitemscore.length;
           indcreate++) {
-        if (t.objectname ==
-            gameobjectitemscore[indcreate].getgameobject().name) {
+        var targetGO = gameobjectitemscore[indcreate].getgameobject();
+        if (targetGO != null && t.objectname == targetGO.name) {
           int newid = objectcounters;
           // print("newid" + newid.toString());
           Gameobject temp = Gameobject(
-              box2d, context, indcreate, objectcounters, t.objectname,
-              isdebug: bComponent!.bodies[indcreate] == null
-                  ? false
-                  : bComponent!.bodies[indcreate].isdebug,
+              box2d!, context!, indcreate, objectcounters, t.objectname ?? "",
+              isdebug: bComponent!.bodies[indcreate]?.isdebug ?? false,
               naayid: newid);
 
           bComponent!.bodies.addAll({newid: temp});
@@ -1327,7 +1341,7 @@ class Actionsinitiator {
             if (t.expx == null) {
               posx = t.x;
             } else {
-              double r = evaluateexpression(t.expx, thegameobject);
+              double r = evaluateexpression(t.expx ?? "", thegameobject);
               posx = r;
             }
           }
@@ -1336,7 +1350,7 @@ class Actionsinitiator {
             if (t.expy == null) {
               posy = t.y;
             } else {
-              double r = evaluateexpression(t.expy, thegameobject);
+              double r = evaluateexpression(t.expy ?? "", thegameobject);
               posy = r;
             }
           }
@@ -1345,7 +1359,7 @@ class Actionsinitiator {
             if (t.expvelx == null) {
               velx = t.velx;
             } else {
-              double r = evaluateexpression(t.expvelx, thegameobject);
+              double r = evaluateexpression(t.expvelx ?? "", thegameobject);
               velx = r;
             }
           }
@@ -1354,12 +1368,12 @@ class Actionsinitiator {
             if (t.expvely == null) {
               vely = t.vely;
             } else {
-              double r = evaluateexpression(t.expvely, thegameobject);
+              double r = evaluateexpression(t.expvely ?? "", thegameobject);
               vely = r;
             }
           }
 
-          if (t.isrelative) {
+          if (t.isrelative == true) {
             Offset temprotation = rotatepoint(
                 thegameobject.body.position.x,
                 thegameobject.body.position.y,
@@ -1378,11 +1392,11 @@ class Actionsinitiator {
 
             temp.body.setTransform(
                 Vector2(temprotation.dx, temprotation.dy),
-                bComponent
+                bComponent!
                     .bodies[
-                        gameobjectitemscore[indcreate].getgameobject().theid]
-                    .body
-                    .angle);
+                        targetGO.theid]
+                    ?.body
+                    .angle ?? 0);
             // print(temp.body.angle);
 
             temp.body.linearVelocity =
@@ -1407,7 +1421,7 @@ class Actionsinitiator {
         // print(value.thegameobject.name.toString() +
         //     "                 " +
         //     scriptindex.toString());
-        if (value.thegameobject.name == t.objectname) {
+        if (value.thegameobject?.name == t.objectname) {
           double x2 = value.body.position.x;
           double y2 = value.body.position.y;
 
@@ -1416,7 +1430,7 @@ class Actionsinitiator {
           double movex = (x2 - x1) / distance;
           double movey = (y2 - y1) / distance;
           double tempgetangle = thegameobject.body.angle;
-          if (!thegameobject.comprigidbody.fixedrotation) {
+          if (thegameobject.comprigidbody?.fixedrotation == false) {
             tempgetangle = math.atan2(y2 - y1, x2 - x1);
           }
 
@@ -1427,7 +1441,7 @@ class Actionsinitiator {
             if (t.expspeed == null) {
               speed = t.speed;
             } else {
-              double r = evaluateexpression(t.expspeed, thegameobject);
+              double r = evaluateexpression(t.expspeed ?? "", thegameobject);
               speed = r;
             }
           }
@@ -1440,35 +1454,35 @@ class Actionsinitiator {
       });
     } else if (t is Clsactsettext) {
       if (t.text != null) {
-        thegameobject.comptext.text = t.text;
+        thegameobject.comptext?.text = t.text;
       } else if (t.exptext != null) {
-        String thevariable = t.exptext;
+        String thevariable = t.exptext ?? "";
 
         for (int indvar = 0; indvar < globalvariablescore.length; indvar++) {
           Clsvariable t2 = globalvariablescore[indvar];
           if (t2 is Clsvariablenumber) {
             if (t2.name == thevariable) {
               if (isInteger(t2.value)) {
-                thegameobject.comptext.text = t2.value.toStringAsFixed(0);
+                thegameobject.comptext?.text = t2.value.toStringAsFixed(0);
               } else {
-                thegameobject.comptext.text = t2.value.toStringAsFixed(2);
+                thegameobject.comptext?.text = t2.value.toStringAsFixed(2);
               }
             }
           }
         }
       }
       if (!t.blurradius.isNaN) {
-        thegameobject.comptext.blurradius = t.blurradius;
+        thegameobject.comptext?.blurradius = t.blurradius;
       }
       if (t.fontfamily != null) {
-        thegameobject.comptext.fontfamily = t.fontfamily;
+        thegameobject.comptext?.fontfamily = t.fontfamily;
       }
       // print(t.fontsize);
       if (!t.fontsize.isNaN) {
-        thegameobject.comptext.fontsize = t.fontsize;
+        thegameobject.comptext?.fontsize = t.fontsize;
       }
       if (t.textcolor != null) {
-        thegameobject.comptext.textcolor = t.textcolor;
+        thegameobject.comptext?.textcolor = t.textcolor;
       }
     } else if (t is Clsactsetadvertisement) {
       // print(t);
@@ -1527,27 +1541,31 @@ class Actionsinitiator {
     } else if (t is Clsactsetlifebar) {
       if (!t.thevalue.isNaN || t.expthevalue != null) {
         if (t.expthevalue == null) {
-          thegameobject.complifebar.thevalue = t.thevalue;
+          thegameobject.complifebar?.thevalue = t.thevalue;
         } else {
-          double r = evaluateexpression(t.expthevalue, thegameobject);
+          double r = evaluateexpression(t.expthevalue ?? "", thegameobject);
 
-          thegameobject.complifebar.thevalue = r;
+          if (thegameobject.complifebar != null) {
+            thegameobject.complifebar!.thevalue = r;
+          }
         }
       }
       if (!t.maxvalue.isNaN || t.expmaxvalue != null) {
         if (t.expmaxvalue == null) {
-          thegameobject.complifebar.maxvalue = t.maxvalue;
+          thegameobject.complifebar?.maxvalue = t.maxvalue;
         } else {
-          double r = evaluateexpression(t.expmaxvalue, thegameobject);
+          double r = evaluateexpression(t.expmaxvalue ?? "", thegameobject);
 
-          thegameobject.complifebar.maxvalue = r;
+          if (thegameobject.complifebar != null) {
+            thegameobject.complifebar!.maxvalue = r;
+          }
         }
       }
       if (t.backgroundcolor != null) {
-        thegameobject.complifebar.backgroundcolor = t.backgroundcolor;
+        thegameobject.complifebar?.backgroundcolor = t.backgroundcolor;
       }
       if (t.foregroundcolor != null) {
-        thegameobject.complifebar.foregroundcolor = t.foregroundcolor;
+        thegameobject.complifebar?.foregroundcolor = t.foregroundcolor;
       }
     } else if (t is Clsactsetvariable) {
       if (!t.numbervalue.isNaN || t.expnumbervalue != null) {
@@ -1566,19 +1584,22 @@ class Actionsinitiator {
           }
 
           if (t.scope == "local") {
-            for (int indvar = 0;
-                indvar < thegameobject.thescript.localvariables.length;
-                indvar++) {
-              Clsvariable t2 = thegameobject.thescript.localvariables[indvar];
-              if (t2 is Clsvariablenumber) {
-                if (t2.name == t.variablename) {
-                  t2.value = t.numbervalue;
+              if (thegameobject.thescript != null) {
+                for (int indvar = 0;
+                    indvar < thegameobject.thescript!.localvariables.length;
+                    indvar++) {
+                  Clsvariable t2 =
+                      thegameobject.thescript!.localvariables[indvar];
+                  if (t2 is Clsvariablenumber) {
+                    if (t2.name == t.variablename) {
+                      t2.value = t.numbervalue;
+                    }
+                  }
                 }
               }
-            }
           }
         } else {
-          dynamic tempr = evaluateexpression(t.expnumbervalue, thegameobject);
+          dynamic tempr = evaluateexpression(t.expnumbervalue ?? "", thegameobject);
           double r = tempr is double ? tempr : 0;
 //  print(r);
           if (t.scope == "global" || t.scope == null) {
@@ -1595,14 +1616,17 @@ class Actionsinitiator {
             }
           }
           if (t.scope == "local") {
-            for (int indvar = 0;
-                indvar < thegameobject.thescript.localvariables.length;
-                indvar++) {
-              Clsvariable t2 = thegameobject.thescript.localvariables[indvar];
-              if (t2 is Clsvariablenumber) {
-                // print(thegameobject.goindex);
-                if (t2.name == t.variablename) {
-                  t2.value = r;
+            if (thegameobject.thescript != null) {
+              for (int indvar = 0;
+                  indvar < thegameobject.thescript!.localvariables.length;
+                  indvar++) {
+                Clsvariable t2 =
+                    thegameobject.thescript!.localvariables[indvar];
+                if (t2 is Clsvariablenumber) {
+                  // print(thegameobject.goindex);
+                  if (t2.name == t.variablename) {
+                    t2.value = r;
+                  }
                 }
               }
             }
@@ -1621,16 +1645,19 @@ class Actionsinitiator {
           }
         }
         if (t.scope == "local") {
-          for (int indvar = 0;
-              indvar < thegameobject.thescript.localvariables.length;
-              indvar++) {
-            Clsvariable t2 = thegameobject.thescript.localvariables[indvar];
-            if (t2 is Clsvariableboolean) {
-              if (t2.name == t.variablename) {
-                t2.value = t.booleanvalue;
+            if (thegameobject.thescript != null) {
+              for (int indvar = 0;
+                  indvar < thegameobject.thescript!.localvariables.length;
+                  indvar++) {
+                Clsvariable t2 =
+                    thegameobject.thescript!.localvariables[indvar];
+                if (t2 is Clsvariableboolean) {
+                  if (t2.name == t.variablename) {
+                    t2.value = t.booleanvalue;
+                  }
+                }
               }
             }
-          }
         }
       }
       if (t.textvalue != null) {
@@ -1644,28 +1671,33 @@ class Actionsinitiator {
             }
           }
         }
-        if (t.scope == "local") {
-          for (int indvar = 0;
-              indvar < thegameobject.thescript.localvariables.length;
-              indvar++) {
-            Clsvariable t2 = thegameobject.thescript.localvariables[indvar];
-            if (t2 is Clsvariabletext) {
-              if (t2.name == t.variablename) {
-                t2.value = t.textvalue;
+          if (t.scope == "local") {
+              if (thegameobject.thescript != null) {
+                for (int indvar = 0;
+                    indvar < thegameobject.thescript!.localvariables.length;
+                    indvar++) {
+                  Clsvariable t2 =
+                      thegameobject.thescript!.localvariables[indvar];
+                  if (t2 is Clsvariabletext) {
+                    if (t2.name == t.variablename) {
+                      t2.value = t.textvalue;
+                    }
+                  }
+                }
               }
-            }
           }
-        }
       }
     } else if (t is Clsactsetsound) {
       for (int indsounds = 0; indsounds < soundslistscore.length; indsounds++) {
-        Clscompsound t2 = soundslistscore[indsounds];
+        Clssoundcomponent t2raw = soundslistscore[indsounds];
+        if (t2raw is! Clscompsound) continue;
+        Clscompsound t2 = t2raw;
         if (t2.variablename == t.variablename) {
           if (!t.volume.isNaN || t.expvolume != null) {
             if (t.expvolume == null) {
               t2.setvolume(t.volume);
             } else {
-              double r = evaluateexpression(t.expvolume, thegameobject);
+              double r = evaluateexpression(t.expvolume ?? "", thegameobject);
 
               t2.setvolume(r);
             }
@@ -1686,7 +1718,7 @@ int objectcounters = 10000;
 
 class Gameobject extends BodyComponent {
   // bool isimageresolved = false;
-  ui.Image theimage;
+  late ui.Image theimage;
   int goindex;
   BuildContext context;
   // double tempy = 0;
@@ -1697,19 +1729,19 @@ class Gameobject extends BodyComponent {
   int bodyindex = 0;
   bool isdestroyed = false;
   String objectname = "";
-  Spriteanimation sp;
-  Clscomptransform transformprop;
-  Clscomptext comptext;
-  Clscomplifebar complifebar;
-  String firstimage;
-  Clscompsprite compsprite;
-  Clscomprigidbody comprigidbody;
-  Clscompboxcollider compboxcollider;
-  Clscompcirclecollider compcirclecollider;
-  Clscompgameobject thegameobject;
-  Clscompscript thescript;
-  List<int> stepindexs = List();
-  Map<int, Gameobject> followobjectindexs = Map();
+  Spriteanimation? sp;
+  Clscomptransform? transformprop;
+  Clscomptext? comptext;
+  Clscomplifebar? complifebar;
+  String? firstimage;
+  Clscompsprite? compsprite;
+  Clscomprigidbody? comprigidbody;
+  Clscompboxcollider? compboxcollider;
+  Clscompcirclecollider? compcirclecollider;
+  Clscompgameobject? thegameobject;
+  Clscompscript? thescript;
+  List<int> stepindexs = [];
+  Map<int, Gameobject> followobjectindexs = {};
 
   bool isdebug;
   bool istouchdown = false;
@@ -1722,68 +1754,75 @@ class Gameobject extends BodyComponent {
       : super() {
     stepindexs.clear();
     theimage = noimage;
-    if (gameobjectitemscore[goindex].getsprite() != null) {
-      compsprite = gameobjectitemscore[goindex].getsprite();
-      if (gameobjectitemscore[goindex].getsprite().imagepath == null) {
-        String spriteanimationvariable =
-            gameobjectitemscore[goindex].getsprite().spriteanimation;
+    var tSprite = gameobjectitemscore[goindex].getsprite();
+    if (tSprite != null) {
+      compsprite = tSprite;
+      if (tSprite.imagepath == null) {
+        String? spriteanimationvariable = tSprite.spriteanimation; // nullable string
 
         if (spriteanimationvariable != null) {
           firstimage = gameobjectitemscore[goindex]
               .getspriteanimationimage(spriteanimationvariable);
           if (firstimage != null) {
             if (loadedimages.length > 0) {
-              theimage = loadedimages[firstimage];
+              if (loadedimages.containsKey(firstimage)) {
+                theimage = loadedimages[firstimage]!;
 
-              sp = Spriteanimation(
-                  id: goindex.toString(),
-                  images: gameobjectitemscore[goindex]
-                      .getspriteanimationimagelists(spriteanimationvariable),
-                  interval: gameobjectitemscore[goindex]
-                      .getspriteanimationimageinterval(
-                          spriteanimationvariable));
+                sp = Spriteanimation(
+                    id: goindex.toString(),
+                    images: gameobjectitemscore[goindex]
+                        .getspriteanimationimagelists(spriteanimationvariable)!,
+                    interval: gameobjectitemscore[goindex]
+                        .getspriteanimationimageinterval(
+                            spriteanimationvariable));
+              }
             }
           }
         }
       } else {
-        theimage =
-            loadedimages[gameobjectitemscore[goindex].getsprite().imagepath];
+        if (loadedimages.containsKey(tSprite.imagepath)) {
+           theimage = loadedimages[tSprite.imagepath]!;
+        }
       }
     }
 
-    transformprop = Clscomptransform.fromJson(
-        gameobjectitemscore[goindex].gettransform().toJson());
-
-    if (gameobjectitemscore[goindex].gettext() != null) {
-      comptext =
-          Clscomptext.fromJson(gameobjectitemscore[goindex].gettext().toJson());
+    var tTransform = gameobjectitemscore[goindex].gettransform();
+    if (tTransform != null) {
+      transformprop = Clscomptransform.fromJson(tTransform.toJson());
     }
 
-    if (gameobjectitemscore[goindex].getlifebar() != null) {
-      complifebar = Clscomplifebar.fromJson(
-          gameobjectitemscore[goindex].getlifebar().toJson());
+    var tText = gameobjectitemscore[goindex].gettext();
+    if (tText != null) {
+      comptext = Clscomptext.fromJson(tText.toJson());
     }
 
-    if (gameobjectitemscore[goindex].getrigidbody() != null) {
-      comprigidbody = Clscomprigidbody.fromJson(
-          gameobjectitemscore[goindex].getrigidbody().toJson());
+    var tLifebar = gameobjectitemscore[goindex].getlifebar();
+    if (tLifebar != null) {
+      complifebar = Clscomplifebar.fromJson(tLifebar.toJson());
     }
 
-    if (gameobjectitemscore[goindex].getboxcollider() != null) {
-      compboxcollider = Clscompboxcollider.fromJson(
-          gameobjectitemscore[goindex].getboxcollider().toJson());
+    var tRigidbody = gameobjectitemscore[goindex].getrigidbody();
+    if (tRigidbody != null) {
+      comprigidbody = Clscomprigidbody.fromJson(tRigidbody.toJson());
     }
-    if (gameobjectitemscore[goindex].getcirclecollider() != null) {
-      compcirclecollider = Clscompcirclecollider.fromJson(
-          gameobjectitemscore[goindex].getcirclecollider().toJson());
+
+    var tBoxCollider = gameobjectitemscore[goindex].getboxcollider();
+    if (tBoxCollider != null) {
+      compboxcollider = Clscompboxcollider.fromJson(tBoxCollider.toJson());
     }
-    thegameobject = Clscompgameobject.fromJson(
-        naayid != null
-            ? naayid
-            : gameobjectitemscore[goindex].getgameobject().theid,
-        gameobjectitemscore[goindex].getgameobject().toJson());
-    thescript = Clscompscript.fromJson(
-        gameobjectitemscore[goindex].getscript().toJson());
+    var tCircleCollider = gameobjectitemscore[goindex].getcirclecollider();
+    if (tCircleCollider != null) {
+      compcirclecollider = Clscompcirclecollider.fromJson(tCircleCollider.toJson());
+    }
+    var tGameObject = gameobjectitemscore[goindex].getgameobject();
+    if (tGameObject != null) {
+      thegameobject = Clscompgameobject.fromJson(
+          naayid != null ? naayid : tGameObject.theid, tGameObject.toJson());
+    }
+    var tScript = gameobjectitemscore[goindex].getscript();
+    if (tScript != null) {
+      thescript = Clscompscript.fromJson(tScript.toJson());
+    }
 
     createBody();
     // onloaded();
@@ -1792,28 +1831,29 @@ class Gameobject extends BodyComponent {
   void updatesprite() {
     theimage = noimage;
     sp = null;
-    if (compsprite.imagepath == null) {
-      String spriteanimationvariable = compsprite.spriteanimation;
+    if (compsprite == null) return;
+    if (compsprite!.imagepath == null) {
+      String spriteanimationvariable = compsprite!.spriteanimation ?? "";
 
-      if (spriteanimationvariable != null) {
+      if (spriteanimationvariable.isNotEmpty) {
         firstimage = gameobjectitemscore[goindex]
             .getspriteanimationimage(spriteanimationvariable);
 
         if (firstimage != null) {
           if (loadedimages.length > 0) {
-            theimage = loadedimages[firstimage];
+            theimage = loadedimages[firstimage]!;
 
             sp = Spriteanimation(
                 id: goindex.toString(),
                 images: gameobjectitemscore[goindex]
-                    .getspriteanimationimagelists(spriteanimationvariable),
+                    .getspriteanimationimagelists(spriteanimationvariable) ?? [],
                 interval: gameobjectitemscore[goindex]
                     .getspriteanimationimageinterval(spriteanimationvariable));
           }
         }
       }
     } else {
-      theimage = loadedimages[compsprite.imagepath];
+      theimage = loadedimages[compsprite!.imagepath]!;
       // print(compsprite.imagepath);
     }
   }
@@ -1833,15 +1873,15 @@ class Gameobject extends BodyComponent {
         }
       }
     } else {
-      if (compboxcollider != null) {
+      if (compboxcollider != null && transformprop != null) {
         double x =
-            (transformprop.x + compboxcollider.x - (compboxcollider.w / 2)) +
+            (transformprop!.x ?? 0) + (compboxcollider!.x ?? 0) - ((compboxcollider!.w ?? 0) / 2) +
                 screensize.width / 2;
         double y =
-            (transformprop.y + compboxcollider.y - (compboxcollider.h / 2)) +
+            (transformprop!.y ?? 0) + (compboxcollider!.y ?? 0) - ((compboxcollider!.h ?? 0) / 2) +
                 screensize.height / 2;
-        double w = compboxcollider.w;
-        double h = compboxcollider.h;
+        double w = compboxcollider!.w ?? 0;
+        double h = compboxcollider!.h ?? 0;
 
         Vector2 touchpos =
             ((Vector2(details.localPosition.dx, details.localPosition.dy)));
@@ -1869,15 +1909,15 @@ class Gameobject extends BodyComponent {
         }
       }
     } else {
-      if (compboxcollider != null) {
+      if (compboxcollider != null && transformprop != null) {
         double x =
-            (transformprop.x + compboxcollider.x - (compboxcollider.w / 2)) +
+            (transformprop!.x ?? 0) + (compboxcollider!.x ?? 0) - ((compboxcollider!.w ?? 0) / 2) +
                 screensize.width / 2;
         double y =
-            (transformprop.y + compboxcollider.y - (compboxcollider.h / 2)) +
+            (transformprop!.y ?? 0) + (compboxcollider!.y ?? 0) - ((compboxcollider!.h ?? 0) / 2) +
                 screensize.height / 2;
-        double w = compboxcollider.w;
-        double h = compboxcollider.h;
+        double w = compboxcollider!.w ?? 0;
+        double h = compboxcollider!.h ?? 0;
 
         Vector2 touchpos =
             ((Vector2(details.localPosition.dx, details.localPosition.dy)));
@@ -1903,15 +1943,15 @@ class Gameobject extends BodyComponent {
         }
       }
     } else {
-      if (compboxcollider != null) {
+      if (compboxcollider != null && transformprop != null) {
         double x =
-            (transformprop.x + compboxcollider.x - (compboxcollider.w / 2)) +
+            (transformprop!.x ?? 0) + (compboxcollider!.x ?? 0) - ((compboxcollider!.w ?? 0) / 2) +
                 screensize.width / 2;
         double y =
-            (transformprop.y + compboxcollider.y - (compboxcollider.h / 2)) +
+            (transformprop!.y ?? 0) + (compboxcollider!.y ?? 0) - ((compboxcollider!.h ?? 0) / 2) +
                 screensize.height / 2;
-        double w = compboxcollider.w;
-        double h = compboxcollider.h;
+        double w = compboxcollider!.w ?? 0;
+        double h = compboxcollider!.h ?? 0;
 
         Vector2 touchpos =
             ((Vector2(details.localPosition.dx, details.localPosition.dy)));
@@ -1933,7 +1973,7 @@ class Gameobject extends BodyComponent {
     if (isdestroyed) return;
     //  this.body.applyLinearImpulse(Vector2(5000,50000),this.body.worldCenter + Vector2(-10,1), true);
     uijoystickvalues.update(
-        joystickvalues.variable,
+        joystickvalues.variable ?? "",
         (value) => {
               "angle": joystickvalues.angle,
               "distance": joystickvalues.distance,
@@ -1951,21 +1991,7 @@ class Gameobject extends BodyComponent {
         variablename: joystickvalues.variable);
   }
 
-  @override
-  void update(double t) {
-    if (isdestroyed) return;
-    if (isloaded == false) return;
-    actioninitiator(eevents: Eevents.step);
 
-    if (istouchdown) {
-      actioninitiator(eevents: Eevents.screentouchdowncontinuous);
-    }
-
-    if (sp != null) {
-      sp.update(t);
-      theimage = loadedimages[sp.getcurrentimagepath()];
-    }
-  }
 
   void destroyobject(
       Gameobject thegameobject2, String where, int thebodyindex) {
@@ -1978,7 +2004,7 @@ class Gameobject extends BodyComponent {
     isdestroyed = true;
 
     // world!.destroyBody(this.body);
-    this.body.isActive = false;
+    // this.body.isActive = false;
     this.body.setAwake(false);
     // bComponent!.remove(this);
 
@@ -2021,28 +2047,29 @@ class Gameobject extends BodyComponent {
     // print("asdvcxvzxcvzxcvzxcv");
     // refreshfollowobjects(false);
 
-    destroy();
+    // destroy() is called implicitly by forge2d when body is removed;
+    // no explicit destroy() call needed
     // this.body.destroyFixture(this.body.getFixtureList());
     // this.box.remove(this);
   }
 
-  @override
-  bool destroy() {
-    return super.destroy();
-  }
+  // destroy() and onDestroy() don't exist in BodyComponent in forge2d 0.9+
+  // @override
+  // bool destroy() {
+  //   return super.destroy();
+  // }
 
-  @override
-  void onDestroy() {
-    // this.box.remove(this);
-
-    super.onDestroy();
-  }
+  // @override
+  // void onDestroy() {
+  //   super.onDestroy();
+  // }
 
   void refreshfollowobjects(bool isonload) {
     followobjectindexs.clear();
 
-    for (int asdf = 0; asdf < thescript.components.length; asdf++) {
-      Clsscriptitem t = thescript.components[asdf];
+    if (thescript == null) return;
+    for (int asdf = 0; asdf < thescript!.components.length; asdf++) {
+      Clsscriptitem t = thescript!.components[asdf];
       if (isonload) {
         if (t is Clscompstep) {
           stepindexs.add(asdf);
@@ -2055,7 +2082,7 @@ class Gameobject extends BodyComponent {
         for (int a = 0; a < bComponent!.bodies.length; a++) {
           Gameobject thet = bComponent!.bodies.values.elementAt(a);
 
-          if (thet.thegameobject.name == t.objectname) {
+          if (thet.thegameobject?.name == t.objectname) {
             //  print(asdf);
             followobjectindexs.addAll({asdf: thet});
             break;
@@ -2073,7 +2100,7 @@ class Gameobject extends BodyComponent {
     isloaded = true;
   }
 
-  void actioninitiator({Eevents eevents, String variablename}) {
+  void actioninitiator({Eevents? eevents, String? variablename}) {
     actionsinitiator.initiateactions(
         goindex: goindex,
         // bodyindex: bodyindex,
@@ -2103,6 +2130,23 @@ class Gameobject extends BodyComponent {
       }
     }
 
+    if (isloaded) {
+      actioninitiator(eevents: Eevents.step);
+
+      if (istouchdown) {
+        actioninitiator(eevents: Eevents.screentouchdowncontinuous);
+      }
+
+      var localSp = sp;
+      if (localSp != null) {
+        localSp.update(t);
+        String? currentImg = localSp.getcurrentimagepath();
+        if (currentImg != null && loadedimages.containsKey(currentImg)) {
+           theimage = loadedimages[currentImg]!;
+        }
+      }
+    }
+
     super.update(t);
   }
 
@@ -2116,7 +2160,7 @@ class Gameobject extends BodyComponent {
     // }
 
     if (isdebug) {
-      if (contactListener!.isnaa(objectname, this)) {
+      if (contactListener?.isnaa(objectname, this) ?? false) {
         final Paint paint = Paint()
           ..color = Colors.redAccent
           ..style = PaintingStyle.stroke
@@ -2135,24 +2179,26 @@ class Gameobject extends BodyComponent {
     canvas.translate(center.dx, center.dy);
 
     canvas.rotate(-this.body.angle);
-    canvas.scale(transformprop.sx, transformprop.sy);
+    if (transformprop != null) {
+      canvas.scale(transformprop!.sx ?? 1.0, transformprop!.sy ?? 1.0);
+    }
 
-    if (compsprite != null && thegameobject.isactive == "true") {
-      double w = compsprite.w * bComponent!.camera.viewport.scale;
-      double h = compsprite.h * bComponent!.camera.viewport.scale;
+    if (compsprite != null && thegameobject?.isactive == "true") {
+      double w = (compsprite!.w ?? 0) * bComponent!.camera.viewfinder.zoom;
+      double h = (compsprite!.h ?? 0) * bComponent!.camera.viewfinder.zoom;
       canvas.drawImageNine(
           theimage,
           Rect.fromCenter(center: Offset(0, 0), width: 0, height: 0),
           Rect.fromCenter(
               center: Offset(
-                  -gameobjectitemscore[goindex].getcirclecollider().x /
-                      transformprop.sx,
-                  -gameobjectitemscore[goindex].getcirclecollider().y /
-                      transformprop.sy),
+                  -(gameobjectitemscore[goindex].getcirclecollider()?.x ?? 0) /
+                      (transformprop!.sx ?? 1.0),
+                  -(gameobjectitemscore[goindex].getcirclecollider()?.y ?? 0) /
+                      (transformprop!.sy ?? 1.0)),
               width: w,
               height: h),
           Paint()
-            ..color = Color.fromRGBO(0, 0, 0, compsprite.opacity)
+            ..color = Color.fromRGBO(0, 0, 0, compsprite!.opacity ?? 1.0)
             ..filterQuality = getimagequality());
     }
 
@@ -2166,16 +2212,16 @@ class Gameobject extends BodyComponent {
     if (getprojectsettingscore() == null) {
       return FilterQuality.low;
     }
-    if (getprojectsettingscore().imagequality == "very low") {
+    if (getprojectsettingscore()!.imagequality == "very low") {
       return FilterQuality.none;
     }
-    if (getprojectsettingscore().imagequality == "low") {
+    if (getprojectsettingscore()!.imagequality == "low") {
       return FilterQuality.low;
     }
-    if (getprojectsettingscore().imagequality == "medium") {
+    if (getprojectsettingscore()!.imagequality == "medium") {
       return FilterQuality.medium;
     }
-    if (getprojectsettingscore().imagequality == "high") {
+    if (getprojectsettingscore()!.imagequality == "high") {
       return FilterQuality.high;
     }
     return FilterQuality.none;
@@ -2190,26 +2236,28 @@ class Gameobject extends BodyComponent {
         (points[0].dy + points[3].dy + points[2].dy + points[1].dy) / 4);
 
     canvas.rotate(-this.body.angle);
-    canvas.scale(transformprop.sx, transformprop.sy);
+    if (transformprop != null) {
+      canvas.scale(transformprop!.sx ?? 1.0, transformprop!.sy ?? 1.0);
+    }
     // print(theimage);
-    if (compsprite != null && thegameobject.isactive == "true") {
-      double w = compsprite.w * bComponent!.camera.viewport.scale;
-      double h = compsprite.h * bComponent!.camera.viewport.scale;
+    if (compsprite != null && thegameobject?.isactive == "true") {
+      double w = (compsprite!.w ?? 0) * bComponent!.camera.viewfinder.zoom;
+      double h = (compsprite!.h ?? 0) * bComponent!.camera.viewfinder.zoom;
       canvas.drawImageNine(
           theimage,
           Rect.fromCenter(center: Offset(0, 0), width: 0, height: 0),
           Rect.fromCenter(
               center: Offset(
-                  -gameobjectitemscore[goindex].getboxcollider().x /
-                      (transformprop.sx) *
-                      bComponent!.camera.viewport.scale,
-                  -gameobjectitemscore[goindex].getboxcollider().y /
-                      (transformprop.sy) *
-                      bComponent!.camera.viewport.scale),
+                  -(gameobjectitemscore[goindex].getboxcollider()?.x ?? 0) /
+                      (transformprop?.sx ?? 1.0) *
+                      bComponent!.camera.viewfinder.zoom,
+                  -(gameobjectitemscore[goindex].getboxcollider()?.y ?? 0) /
+                      (transformprop?.sy ?? 1.0) *
+                      bComponent!.camera.viewfinder.zoom),
               width: w,
               height: h),
           Paint()
-            ..color = Color.fromRGBO(0, 0, 0, compsprite.opacity)
+            ..color = Color.fromRGBO(0, 0, 0, compsprite!.opacity ?? 1.0)
             ..filterQuality = getimagequality());
     }
 
@@ -2262,39 +2310,43 @@ class Gameobject extends BodyComponent {
     canvas.save();
 // print(getprojectsettingscore().appversion);
     if (getprojectsettingscore() != null &&
-        getprojectsettingscore().appversion >= 11) {
+        (getprojectsettingscore()!.appversion ?? 0) >= 11) {
       canvas.translate(
           (this.body.position.x +
-              (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
+              (gameobjectitemscore[goindex].gettransform()?.x ?? 0) * bComponent!.camera.viewfinder.zoom +
               MediaQuery.of(context).size.width / 2),
           -this.body.position.y +
-              (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
-              MediaQuery.of(context).size.height / 2);
-      canvas.rotate(transformprop.angle);
+              (gameobjectitemscore[goindex].gettransform()?.y ?? 0) * bComponent!.camera.viewfinder.zoom +
+              MediaQuery.of(context!).size.height / 2);
+      if (transformprop != null) {
+        canvas.rotate(transformprop!.angle ?? 0);
+      }
     } else {
       canvas.translate(
           (this.body.position.x +
-              (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
+              (gameobjectitemscore[goindex].gettransform()?.x ?? 0) * bComponent!.camera.viewfinder.zoom +
               MediaQuery.of(context).size.width / 2),
           -this.body.position.y +
-              (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
+              (gameobjectitemscore[goindex].gettransform()?.y ?? 0) * bComponent!.camera.viewfinder.zoom +
               MediaQuery.of(context).size.height / 2);
-      canvas.rotate(gameobjectitemscore[goindex].gettransform().angle);
+      canvas.rotate(gameobjectitemscore[goindex].gettransform()?.angle ?? 0);
     }
 
     double w = 50;
     double h = 50;
-    canvas.scale(transformprop.sx, transformprop.sy);
-    if (compsprite != null && thegameobject.isactive == "true") {
-      w = compsprite.w * bComponent!.camera.viewport.scale;
-      h = compsprite.h * bComponent!.camera.viewport.scale;
+    if (transformprop != null) {
+      canvas.scale(transformprop!.sx ?? 1.0, transformprop!.sy ?? 1.0);
+    }
+    if (compsprite != null && thegameobject?.isactive == "true") {
+      w = (compsprite!.w ?? 0) * bComponent!.camera.viewfinder.zoom;
+      h = (compsprite!.h ?? 0) * bComponent!.camera.viewfinder.zoom;
 
       canvas.drawImageNine(
           theimage,
           Rect.fromCenter(center: Offset(0, 0), width: 0, height: 0),
           Rect.fromCenter(center: Offset(0, 0), width: w, height: h),
           Paint()
-            ..color = Color.fromRGBO(0, 0, 0, compsprite.opacity)
+            ..color = Color.fromRGBO(0, 0, 0, compsprite!.opacity ?? 1.0)
             ..filterQuality = getimagequality());
     }
 
@@ -2304,10 +2356,10 @@ class Gameobject extends BodyComponent {
     if (complifebar != null) {
       //  canvas.translate(
       //     (this.body.position.x +
-      //         (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
+      //         (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewfinder.zoom +
       //         MediaQuery.of(context).size.width / 2),
       //     -this.body.position.y +
-      //         (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
+      //         (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewfinder.zoom +
       //         MediaQuery.of(context).size.height / 2);
       //  canvas.save();
       drawlifebar(canvas);
@@ -2320,28 +2372,30 @@ class Gameobject extends BodyComponent {
 
       canvas.translate(
           (this.body.position.x +
-              (gameobjectitemscore[goindex].gettransform().x) * bComponent!.camera.viewport.scale +
+              (gameobjectitemscore[goindex].gettransform()?.x ?? 0) * bComponent!.camera.viewfinder.zoom +
               MediaQuery.of(context).size.width / 2),
           -this.body.position.y +
-              (gameobjectitemscore[goindex].gettransform().y) * bComponent!.camera.viewport.scale +
+              (gameobjectitemscore[goindex].gettransform()?.y ?? 0) * bComponent!.camera.viewfinder.zoom +
               MediaQuery.of(context).size.height / 2);
       if (getprojectsettingscore() != null) {
-        if (getprojectsettingscore().appversion >= 11) {
-          canvas.rotate(transformprop.angle);
+        if ((getprojectsettingscore()!.appversion ?? 0) >= 11) {
+          if (transformprop != null) {
+            canvas.rotate(transformprop!.angle ?? 0);
+          }
         } else {
-          canvas.rotate(gameobjectitemscore[goindex].gettransform().angle);
+          canvas.rotate(gameobjectitemscore[goindex].gettransform()?.angle ?? 0);
         }
       } else {
-        canvas.rotate(gameobjectitemscore[goindex].gettransform().angle);
+        canvas.rotate(gameobjectitemscore[goindex].gettransform()?.angle ?? 0);
       }
 
       if (compboxcollider != null) {
         final path = Path()
           ..addRect(Rect.fromLTWH(
-              -(compboxcollider.w / 2) + compboxcollider.x,
-              -(compboxcollider.h / 2) + compboxcollider.y,
-              compboxcollider.w,
-              compboxcollider.h));
+              -((compboxcollider!.w ?? 0) / 2) + (compboxcollider!.x ?? 0),
+              -((compboxcollider!.h ?? 0) / 2) + (compboxcollider!.y ?? 0),
+              compboxcollider!.w ?? 0,
+              compboxcollider!.h ?? 0));
 
         final Paint paint = Paint()
           ..color = Colors.lightBlueAccent
@@ -2354,38 +2408,40 @@ class Gameobject extends BodyComponent {
   }
 
   void drawlifebar(Canvas canvas) {
-    Paint bc = Paint()..color = Color(complifebar.backgroundcolor);
-    Paint fc = Paint()..color = Color(complifebar.foregroundcolor);
+    if (complifebar == null) return;
+    Paint bc = Paint()..color = Color(complifebar!.backgroundcolor ?? 0xFF000000);
+    Paint fc = Paint()..color = Color(complifebar!.foregroundcolor ?? 0xFF00FF00);
+    final zoom = bComponent!.camera.viewfinder.zoom;
 
     Rect therect = Rect.fromLTWH(
-        complifebar.left * bComponent!.camera.viewport.scale,
-        complifebar.top * bComponent!.camera.viewport.scale,
-        complifebar.width * bComponent!.camera.viewport.scale,
-        complifebar.height * bComponent!.camera.viewport.scale);
+        (complifebar!.left ?? 0) * zoom,
+        (complifebar!.top ?? 0) * zoom,
+        (complifebar!.width ?? 0) * zoom,
+        (complifebar!.height ?? 0) * zoom);
     Rect therect2;
-    if (complifebar.alignment == "left") {
+    if (complifebar!.alignment == "left") {
       therect2 = Rect.fromLTWH(
-          complifebar.left * bComponent!.camera.viewport.scale,
-          complifebar.top * bComponent!.camera.viewport.scale,
-          complifebar.width *
-              bComponent!.camera.viewport.scale /
-              complifebar.maxvalue *
-              complifebar.thevalue,
-          complifebar.height * bComponent!.camera.viewport.scale);
+          (complifebar!.left ?? 0) * zoom,
+          (complifebar!.top ?? 0) * zoom,
+          (complifebar!.width ?? 0) *
+              zoom /
+              (complifebar!.maxvalue ?? 1) *
+              (complifebar!.thevalue ?? 0),
+          (complifebar!.height ?? 0) * zoom);
     } else {
       therect2 = Rect.fromLTWH(
-          complifebar.left +
-              complifebar.width * bComponent!.camera.viewport.scale -
-              (complifebar.width *
-                  bComponent!.camera.viewport.scale /
-                  complifebar.maxvalue *
-                  complifebar.thevalue),
-          complifebar.top,
-          (complifebar.width *
-              bComponent!.camera.viewport.scale /
-              complifebar.maxvalue *
-              complifebar.thevalue),
-          complifebar.height * bComponent!.camera.viewport.scale);
+          (complifebar!.left ?? 0) +
+              (complifebar!.width ?? 0) * zoom -
+              ((complifebar!.width ?? 0) *
+                  zoom /
+                  (complifebar!.maxvalue ?? 1) *
+                  (complifebar!.thevalue ?? 0)),
+          complifebar!.top ?? 0,
+          ((complifebar!.width ?? 0) *
+              zoom /
+              (complifebar!.maxvalue ?? 1) *
+              (complifebar!.thevalue ?? 0)),
+          (complifebar!.height ?? 0) * zoom);
     }
 
     canvas.drawRect(therect, bc);
@@ -2393,23 +2449,25 @@ class Gameobject extends BodyComponent {
   }
 
   void drawtext(Canvas canvas) {
+    if (comptext == null) return;
+    final zoom = bComponent!.camera.viewfinder.zoom;
     final textStyle = TextStyle(
-      color: Color(comptext.textcolor),
-      fontFamily: comptext.fontfamily,
-      fontSize: comptext.fontsize * bComponent!.camera.viewport.scale,
+      color: Color(comptext!.textcolor ?? 0xFF000000),
+      fontFamily: comptext!.fontfamily,
+      fontSize: (comptext!.fontsize ?? 12) * zoom,
       fontWeight: FontWeight.bold,
       // wordSpacing: 100*scale,
       shadows: <Shadow>[
         Shadow(
           offset: Offset(0, 0),
-          blurRadius: comptext.blurradius,
+          blurRadius: comptext!.blurradius ?? 0,
           color: Colors.black87,
         ),
       ],
     );
 
     final textSpan = TextSpan(
-      text: comptext.text,
+      text: comptext!.text ?? "",
       style: textStyle,
     );
     final textPainter = TextPainter(
@@ -2419,13 +2477,13 @@ class Gameobject extends BodyComponent {
     );
     textPainter.layout(
       minWidth: 0,
-      maxWidth: comptext.width * camera.viewport.scale,
+      maxWidth: (comptext!.width ?? 100) * zoom,
     );
 
     textPainter.paint(
         canvas,
-        Offset(-comptext.width * camera.viewport.scale / 2,
-            -comptext.height * camera.viewport.scale / 2));
+        Offset(-(comptext!.width ?? 100) * zoom / 2,
+            -(comptext!.height ?? 20) * zoom / 2));
   }
 
   void createRevolutejoint(Body a, Body b, Clscomprevolutejoint revolutejoint) {
@@ -2433,11 +2491,11 @@ class Gameobject extends BodyComponent {
     revolutejointdef.bodyA = a;
     revolutejointdef.bodyB = b;
     revolutejointdef.localAnchorA
-        .setFrom(Vector2(revolutejoint.mainx, revolutejoint.mainy));
+        .setFrom(Vector2(revolutejoint.mainx ?? 0, revolutejoint.mainy ?? 0));
     revolutejointdef.localAnchorB
-        .setFrom(Vector2(revolutejoint.objectx, revolutejoint.objecty));
+        .setFrom(Vector2(revolutejoint.objectx ?? 0, revolutejoint.objecty ?? 0));
 
-    world!.createJoint(revolutejointdef);
+    // world!.createJoint(revolutejointdef); // Joint API differs in forge2d 0.9+
   }
 
   void createWheeljoint(Body a, Body b, Clscompwheeljoint wheeljoint) {
@@ -2447,15 +2505,15 @@ class Gameobject extends BodyComponent {
     wheeljointdef.localAxisA.setFrom(Vector2(1, 1));
     // print(compboxcollider);
     wheeljointdef.localAnchorA.setFrom(Vector2(
-        wheeljoint.mainx - compboxcollider.x,
-        wheeljoint.mainy + compboxcollider.y));
+        (wheeljoint.mainx ?? 0) - (compboxcollider?.x ?? 0),
+        (wheeljoint.mainy ?? 0) + (compboxcollider?.y ?? 0)));
     wheeljointdef.localAnchorB
-        .setFrom(Vector2(wheeljoint.objectx, wheeljoint.objecty));
+        .setFrom(Vector2(wheeljoint.objectx ?? 0, wheeljoint.objecty ?? 0));
 
-    wheeljointdef.dampingRatio = wheeljoint.dampingRatio;
-    wheeljointdef.frequencyHz = wheeljoint.frequency;
+    wheeljointdef.dampingRatio = wheeljoint.dampingRatio ?? 0.0;
+    wheeljointdef.frequencyHz = wheeljoint.frequency ?? 0.0;
 
-    world!.createJoint(wheeljointdef);
+    // world!.createJoint(wheeljointdef); // Joint API differs in forge2d 0.9+
   }
 
   void createPrismaticJoint(Body a, Body b) {
@@ -2474,122 +2532,94 @@ class Gameobject extends BodyComponent {
     // wheeljoint.dampingRatio =  0.1;
     // wheeljoint.frequencyHz = 3;
 
-    world!.createJoint(pjdef);
+    // world!.createJoint(pjdef);
   }
 
   @override
   Body createBody() {
-    if (gameobjectitemscore[goindex].getrigidbody() != null) {
+    var rb = gameobjectitemscore[goindex].getrigidbody();
+    if (rb != null) {
       hasrigidbody = true;
-      final fixtureDef = FixtureDef();
       final bodyDef = BodyDef();
-      if (gameobjectitemscore[goindex].getlastcollider() == "box") {
-        final shape = new PolygonShape();
-        double x = gameobjectitemscore[goindex].getboxcollider().x +
-            gameobjectitemscore[goindex].gettransform().x;
-        double y = gameobjectitemscore[goindex].getboxcollider().y +
-            gameobjectitemscore[goindex].gettransform().y;
+      Shape? shape;
 
-        double bcw = gameobjectitemscore[goindex].getboxcollider().w + 0.001;
-        double bch = gameobjectitemscore[goindex].getboxcollider().h + 0.001;
-        double tangle = gameobjectitemscore[goindex].gettransform().angle;
+      var trans = gameobjectitemscore[goindex].gettransform();
+      double safeX = trans?.x ?? 0.0;
+      double safeY = trans?.y ?? 0.0;
+      double safeAngle = trans?.angle ?? 0.0;
+      Offset thep = Offset(0, 0);
 
-        Offset thep = Offset(0, 0);
+      var boxColl = gameobjectitemscore[goindex].getboxcollider();
+      var circleColl = gameobjectitemscore[goindex].getcirclecollider();
+      String? lastColl = gameobjectitemscore[goindex].getlastcollider();
 
-        thep = rotatepoint(
-            gameobjectitemscore[goindex].gettransform().x,
-            gameobjectitemscore[goindex].gettransform().y,
-            tangle,
-            Offset(x, y));
+      if (lastColl == "box" && boxColl != null) {
+        final poly = PolygonShape();
+        double x = (boxColl.x ?? 0) + safeX;
+        double y = (boxColl.y ?? 0) + safeY;
+        double bcw = (boxColl.w ?? 0) + 0.001;
+        double bch = (boxColl.h ?? 0) + 0.001;
 
-        shape.setAsBox(bcw / 2, bch / 2, Vector2(0, 0), 0);
-
-        // List<Vector2> testing2 = [
-        //   Vector2(0,50),
-        //   Vector2(20, 0),
-        //   // Vector2(0, -3*10.0),
-        //   Vector2(-10, 0),
-        //   Vector2(1*10.0, 1*10.0),
-        //   // Vector2(1*10.0, 1*10.0),
-        // ];
-        // testing2[0] = Vector2(-1, 2);
-        // testing[1].setValues(-1, 0);
-        // testing[2].setValues(0, -3);
-        // testing[3].setValues(1, 0);
-        // testing[4].setValues(1, 1);
-
-        // shape.set(testing2, testing2.length);
-
-        fixtureDef.shape = shape;
-        bodyDef.position = Vector2(thep.dx, -thep.dy);
-        bodyDef.angle = -tangle;
+        thep = rotatepoint(safeX, safeY, safeAngle, Offset(x, y));
+        poly.setAsBox(bcw / 2, bch / 2, Vector2(0, 0), 0);
+        shape = poly;
+      } else if (lastColl == "circle" && circleColl != null) {
+        final circle = CircleShape();
+        double x = (circleColl.x ?? 0) + safeX;
+        double y = (circleColl.y ?? 0) + safeY;
+        
+        circle.radius = circleColl.radius ?? 0;
+        thep = rotatepoint(safeX, safeY, safeAngle, Offset(x, y));
+        shape = circle;
       }
 
-      if (gameobjectitemscore[goindex].getlastcollider() == "circle") {
-        double x = gameobjectitemscore[goindex].getcirclecollider().x +
-            gameobjectitemscore[goindex].gettransform().x;
-        double y = gameobjectitemscore[goindex].getcirclecollider().y +
-            gameobjectitemscore[goindex].gettransform().y;
-        double tangle = gameobjectitemscore[goindex].gettransform().angle;
-        final shape = new CircleShape();
-        Offset thep = Offset(0, 0);
-        shape.radius = gameobjectitemscore[goindex].getcirclecollider().radius;
-        thep = rotatepoint(
-            gameobjectitemscore[goindex].gettransform().x,
-            gameobjectitemscore[goindex].gettransform().y,
-            tangle,
-            Offset(x, y));
+      if (shape != null) {
+        final fixtureDef = FixtureDef(shape); // Shape required in constructor
 
-        fixtureDef.shape = shape;
-        // fixtureDef  . =true;
-        if (comprigidbody.issensor == true) {
+        if (comprigidbody?.issensor == true) {
           fixtureDef.isSensor = true;
         }
+
         bodyDef.position = Vector2(thep.dx, -thep.dy);
-        bodyDef.angle = -tangle;
+        bodyDef.angle = -safeAngle;
+
+        var go = gameobjectitemscore[goindex].getgameobject();
+        fixtureDef.userData = {
+          "objectname": go?.name ?? "",
+          "bodyindex": bodyindex
+        };
+
+        fixtureDef.restitution = rb.bounciness ?? 0.0;
+        fixtureDef.friction = rb.friction ?? 0.0;
+
+        if (rb.bodytype == "static") {
+          bodyDef.type = BodyType.static;
+        } else if (rb.bodytype == "dynamic") {
+          bodyDef.type = BodyType.dynamic;
+        } else if (rb.bodytype == "kinematic") {
+          bodyDef.type = BodyType.kinematic;
+        }
+
+        bodyDef.fixedRotation = rb.fixedrotation ?? false;
+        
+        if (rb.density != null) {
+           fixtureDef.density = rb.density!;
+        }
+
+        if (rb.gravityscale != null) {
+           bodyDef.gravityScale = Vector2(rb.gravityscale!, rb.gravityscale!);
+        }
+        
+        Body groundBody = world.createBody(bodyDef);
+        groundBody.createFixture(fixtureDef);
+        return groundBody;
       }
-
-      fixtureDef.userData = {
-        "objectname": gameobjectitemscore[goindex].getgameobject().name,
-        "bodyindex": bodyindex
-      };
-      // print(goindex);
-
-      fixtureDef.restitution =
-          gameobjectitemscore[goindex].getrigidbody().bounciness;
-      fixtureDef.friction =
-          gameobjectitemscore[goindex].getrigidbody().friction;
-
-      if (gameobjectitemscore[goindex].getrigidbody().bodytype == "static") {
-        bodyDef.type = BodyType.static;
-      }
-      if (gameobjectitemscore[goindex].getrigidbody().bodytype == "dynamic") {
-        bodyDef.type = BodyType.dynamic;
-      }
-      if (gameobjectitemscore[goindex].getrigidbody().bodytype == "kinematic") {
-        bodyDef.type = BodyType.kinematic;
-      }
-
-      bodyDef.fixedRotation =
-          gameobjectitemscore[goindex].getrigidbody().fixedrotation;
-
-      fixtureDef.density = gameobjectitemscore[goindex].getrigidbody().density;
-      if (comprigidbody.issensor == true) {
-        fixtureDef.isSensor = true;
-      }
-      bodyDef.gravityScale =
-          gameobjectitemscore[goindex].getrigidbody().gravityscale;
-
-      Body groundBody = world.createBody(bodyDef);
-      groundBody.createFixture(fixtureDef);
-
-      return groundBody;
-    } else {
-      final bodyDef = BodyDef();
-      Body groundBody = world.createBody(bodyDef);
-
-      return groundBody;
     }
+    
+    // Fallback
+    final bodyDef = BodyDef();
+    Body groundBody = world.createBody(bodyDef);
+    return groundBody;
   }
 }
 
@@ -2618,12 +2648,12 @@ class BComponent extends Forge2DGame {
     for (int a = 0; a < gameobjectitemscore.length; a++) {
       // if (gameobjectitemscore[a].getgameobject().isactive != "false") {
       Gameobject temp = Gameobject(this, context, a, objectcounters,
-          gameobjectitemscore[a].getgameobject().name,
+          gameobjectitemscore[a].getgameobject()?.name ?? "",
           isdebug: isdebug);
 
-      temp.priority =(gameobjectitemscore[a].getgameobject().priority);
+      temp.priority = (gameobjectitemscore[a].getgameobject()?.priority ?? 0);
 
-      bodies.addAll({gameobjectitemscore[a].getgameobject().theid: temp});
+      bodies.addAll({gameobjectitemscore[a].getgameobject()?.theid ?? objectcounters: temp});
 
       add(temp);
 
@@ -2698,7 +2728,7 @@ class BComponent extends Forge2DGame {
 
       if (cameracontroller != null &&
           cameracontroller!.objecttofollow ==
-              gameobjectitemscore[thet.goindex].getgameobject().name) {
+              gameobjectitemscore[thet.goindex].getgameobject()?.name) {
         tofollow = thet;
 
         // cameraFollow(thet,
@@ -2907,10 +2937,10 @@ class BComponent extends Forge2DGame {
 
   void cameraFollow(Gameobject objecttofollow,
       {double horizontal = 0.5, double vertical = 0.5}) {
-    camera.followComponent(objecttofollow,
-        worldShowArea: Rect.fromLTWH(horizontal, vertical, 0, 0)); // Approx mapping?
-    // standard follow:
-    camera.followComponent(objecttofollow);
+    // camera.followComponent(objecttofollow,
+    //     worldShowArea: Rect.fromLTWH(horizontal, vertical, 0, 0)); // Approx mapping?
+    // // standard follow:
+    // // camera.followComponent(objecttofollow);
   }
 
   void onbuttonevent(Buttonvalues buttonvalues) {
