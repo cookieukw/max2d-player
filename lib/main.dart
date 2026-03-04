@@ -17,8 +17,8 @@ void main() async {
 Future uncompressfiles() async {
   final Directory docDir = await getApplicationDocumentsDirectory();
   final String localPath = docDir.path;
-  File file = File(localPath + '/files.zip');
-  final imageBytes = await rootBundle.load("files.zip");
+  File file = File(localPath + '/files2.zip');
+  final imageBytes = await rootBundle.load("files2.zip");
   final buffer = imageBytes.buffer;
   await file.writeAsBytes(
       buffer.asUint8List(imageBytes.offsetInBytes, imageBytes.lengthInBytes));
